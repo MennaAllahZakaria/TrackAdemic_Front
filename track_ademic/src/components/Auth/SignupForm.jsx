@@ -5,6 +5,9 @@ import Input from "./Input";
 import PasswordInput from "./PasswordInput";
 import api from "../../services/api";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 
 function SignupForm() {
   const [serverError, setServerError] = useState("");
@@ -17,17 +20,26 @@ function SignupForm() {
     resolver: zodResolver(signupSchema),
   });
 
+  const { login } = useAuth();
   const onSubmit = async (data) => {
     setServerError("");
 
     try {
       const res = await api.post("/auth/signup", data);
       console.log(res.data);
+      login(res.data);
+      //navigate("/dashboard");
     } catch (err) {
       setServerError(
         err.response?.data?.message || "Something went wrong"
       );
     }
+  };
+
+  const navigate = useNavigate(); 
+
+  const goToLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -109,7 +121,7 @@ function SignupForm() {
 
       <p className="text-center text-sm mt-4">
         Already have an account?{" "}
-        <span className="text-blue-600 cursor-pointer">
+        <span className="text-blue-600 cursor-pointer" onClick={goToLogin}>
           Sign In
         </span>
       </p>
