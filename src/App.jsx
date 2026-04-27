@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Verify from "./pages/Verify";
-//import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            {/* <Dashboard /> */}
+            <Dashboard />
           </ProtectedRoute>
         }
       />
