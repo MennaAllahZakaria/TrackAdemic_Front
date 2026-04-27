@@ -27,8 +27,9 @@ function SignupForm() {
     try {
       const res = await api.post("/auth/signup", data);
       console.log(res.data);
-      login(res.data);
-      //navigate("/dashboard");
+      navigate("/verify", {
+        state: { email: data.email },
+      });
     } catch (err) {
       setServerError(
         err.response?.data?.message || "Something went wrong"
