@@ -1,6 +1,6 @@
 import MainLayout from "../layouts/MainLayout";
-import FeatureCard from "../components/FeatureCard";
-import TrackCard from "../components/TrackCard";
+import FeatureCard from "../components/dashboard/FeatureCard";
+import TrackCard from "../components/dashboard/TrackCard";
 import { useNavigate } from "react-router-dom";
 function Dashboard() {
     const navigate = useNavigate();
@@ -41,7 +41,7 @@ function Dashboard() {
             shadow-[0_10px_25px_rgba(37,99,235,0.3)]
             hover:shadow-[0_12px_30px_rgba(37,99,235,0.4)]
             hover:-translate-y-0.5
-            transition-all duration-200">
+            transition-all duration-200" onClick={() => navigate("/onboarding")}>
             Start Your Track
             </button>
 
