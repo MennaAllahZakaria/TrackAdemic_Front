@@ -1,5 +1,7 @@
 import MainLayout from "../layouts/MainLayout";
 import FieldCard from "../components/onboarding/FieldCard";
+import ProgressOverlay from "../components/onboarding/ProgressOverlay";
+import { toast } from "react-hot-toast";
 
 import { useEffect, useState } from "react";
 import api from "../services/api";
@@ -12,10 +14,19 @@ function Onboarding() {
 
   const [loading, setLoading] = useState(true);
 
+  const [isNewUser, setIsNewUser] = useState(false);
+
   const [selectedField, setSelectedField] = useState("");
   const [level, setLevel] = useState("beginner");
   const [hours, setHours] = useState(2);
   const [goal, setGoal] = useState("");
+
+  const [language, setLanguage] = useState("Both");
+  const [months, setMonths] = useState(3);
+  const [background, setBackground] = useState("");
+
+  const [generating, setGenerating] = useState(false);
+  const [progress, setProgress] = useState(0);
 
 
   const fields = [
@@ -72,16 +83,16 @@ function Onboarding() {
 
         const data = res.data.data;
 
-        //  fill الفورم
         setSelectedField(data.field);
         setLevel(data.level);
         setGoal(data.goal);
         setHours(data.hoursPerDay);
 
+        setIsNewUser(false); // 🟢 عنده داتا
+
       } catch (err) {
-        //  لو مفيش داتا
         if (err.response?.data?.message === "User context not found") {
-          console.log("New user - onboarding required");
+          setIsNewUser(true); //  user جديد
         } else {
           console.error(err);
         }
@@ -96,11 +107,14 @@ function Onboarding() {
   //  submit
   const handleSubmit = async () => {
     if (!selectedField || !goal) {
-      alert("Please complete all fields");
+      toast.error("Please complete all fields");
       return;
     }
 
     try {
+      setGenerating(true);
+      setProgress(10);
+
       await api.put("/user-context", {
         goal,
         field: selectedField,
@@ -108,16 +122,46 @@ function Onboarding() {
         hours_per_day: hours,
       });
 
-      navigate("/dashboard");
+      setProgress(40);
+
+      try {
+        await api.post("/learning-path/generate", {
+          field: selectedField,
+          level,
+          goal,
+          hours_per_day: hours,
+          language,
+          target_months: months,
+          background,
+        });
+      } catch (err) {
+        if (
+          err.response?.data?.message ===
+          "Active learning path already exists"
+        ) {
+          toast.success("You already have a learning path ✔️");
+        } else {
+          throw err;
+        }
+      }
+
+      setProgress(90);
+
+      setTimeout(() => {
+        setProgress(100);
+        navigate("/dashboard");
+      }, 500);
 
     } catch (err) {
-      console.error(err);
+      toast.error("Something went wrong");
+      setGenerating(false);
     }
   };
 
   if (loading) {
     return <p className="text-center mt-20">Loading...</p>;
   }
+  {generating && <ProgressOverlay progress={progress} />}
 
   return (
     <MainLayout>
@@ -212,6 +256,55 @@ function Onboarding() {
             className="w-full mt-4 p-3 rounded-xl bg-gray-100 outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+          {/* LANGUAGE */}
+        <div className="mt-12">
+          <h3 className="font-semibold text-lg mb-4">
+            Preferred Language
+          </h3>
+
+          <div className="flex gap-4">
+            {["Arabic", "English", "Both"].map((l) => (
+              <div
+                key={l}
+                onClick={() => setLanguage(l)}
+                className={`
+                  flex items-center justify-center
+                  w-[160px] h-[50px]
+                  rounded-full cursor-pointer transition
+
+                  ${language === l
+                    ? "border-2 border-blue-500 bg-white"
+                    : "bg-gray-100 hover:bg-gray-200"}
+                `}
+              >
+                {l}
+              </div>
+            ))}
+          </div>
+        </div>
+
+          {/* MONTHS */}
+        <div className="mt-12 bg-white p-6 rounded-2xl shadow-sm">
+
+          <h3 className="font-semibold">
+            Target Duration
+          </h3>
+
+          <p className="text-blue-600 mt-3 font-medium">
+            {months} months
+          </p>
+
+          <input
+            type="range"
+            min="1"
+            max="12"
+            value={months}
+            onChange={(e) => setMonths(e.target.value)}
+            className="w-full mt-4"
+          />
+
+        </div>
+
 
         {/* SLIDER */}
         <div className="mt-12 bg-white p-6 rounded-2xl shadow-sm">
@@ -243,6 +336,20 @@ function Onboarding() {
             <span>INTENSE (20H)</span>
           </div>
 
+        </div>
+
+        {/* BACKGROUND */}
+        <div className="mt-12">
+          <h3 className="font-semibold text-lg">
+            Your Background
+          </h3>
+
+          <input
+            value={background}
+            onChange={(e) => setBackground(e.target.value)}
+            placeholder="e.g. HTML basics"
+            className="w-full mt-4 p-3 rounded-xl bg-gray-100 outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
         {/* BUTTON */}

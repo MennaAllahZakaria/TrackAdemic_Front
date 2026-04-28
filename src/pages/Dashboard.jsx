@@ -2,10 +2,17 @@ import MainLayout from "../layouts/MainLayout";
 import FeatureCard from "../components/dashboard/FeatureCard";
 import TrackCard from "../components/dashboard/TrackCard";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 function Dashboard() {
     const navigate = useNavigate();
 
   return (
+     <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 0.4 }}
+    >
     <MainLayout>
     {/* Hero */}
     <div className="flex flex-col items-center justify-center text-center min-h-[70vh] px-4">
@@ -164,6 +171,7 @@ function Dashboard() {
       </div>
 
     </MainLayout>
+    </motion.div>
   );
 }
 
