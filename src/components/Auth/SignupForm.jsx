@@ -56,7 +56,7 @@ function SignupForm() {
 
       {/* Google */}
       <button className="w-full flex items-center justify-center gap-2 bg-gray-100 py-3.5 rounded-full mb-4">
-        <img src="../../assets/google-icon.svg" className="w-5 h-5" />
+        <img src="/google-logo.svg" className="w-5 h-5" />
         Continue with Google
       </button>
 
