@@ -149,7 +149,7 @@ function Onboarding() {
 
       setTimeout(() => {
         setProgress(100);
-        navigate("/dashboard");
+        navigate("/my-learning");
       }, 500);
 
     } catch (err) {

@@ -1,0 +1,31 @@
+function YoutubeModal({ videoId, onClose }) {
+  if (!videoId) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+
+      <div className="relative w-[90%] max-w-4xl">
+
+        {/* close */}
+        <button
+          onClick={onClose}
+          className="absolute -top-10 right-0 text-white text-xl"
+        >
+          ✕
+        </button>
+
+        {/* video */}
+        <iframe
+          className="w-full h-[500px] rounded-xl"
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+        />
+
+      </div>
+
+    </div>
+  );
+}
+
+export default YoutubeModal;

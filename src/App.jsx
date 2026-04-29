@@ -6,6 +6,8 @@ import Dashboard from "./pages/Dashboard";
 import Onboarding from "./pages/Onboarding";
 import Chat from "./pages/Chat";
 import ProtectedRoute from "./components/ProtectedRoute";
+import MyLearning from "./pages/MyLearning";
+import CourseDetails from "./pages/CourseDetails";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
@@ -40,6 +42,22 @@ function App() {
         element={
           <ProtectedRoute>
             <Chat />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-learning"
+        element={
+          <ProtectedRoute>
+            <MyLearning />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/course/:id"
+        element={
+          <ProtectedRoute>
+            <CourseDetails />
           </ProtectedRoute>
         }
       />
