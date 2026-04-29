@@ -11,6 +11,7 @@ import CourseDetails from "./pages/CourseDetails";
 import ProgressPage from "./pages/ProgressPage";
 import FinalProject from "./pages/FinalProject";
 import PhaseProject from "./pages/PhaseProject";
+import { ProgressProvider } from "./context/ProgressContext";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
@@ -18,11 +19,12 @@ function App() {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/verify" element={<Verify />} />
+    <ProgressProvider>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/verify" element={<Verify />} />
 
       <Route
         path="/dashboard"
@@ -91,6 +93,7 @@ function App() {
 
     </Routes>
     </AnimatePresence>
+    </ProgressProvider>
   );
 }
 

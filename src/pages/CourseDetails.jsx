@@ -5,12 +5,13 @@ import { getYoutubeVideoId } from "../utils/youtube";
 import YoutubeModal from "../components/learning/YoutubeModal";
 import { useNavigate } from "react-router-dom";
 import TopicsChecklist from "../components/learning/TopicsChecklist";
+import { useProgress } from "../context/ProgressContext";
 import api from "../services/api";
 
 function CourseDetails() {
   const { state } = useLocation();
 
-  const [progress, setProgress] = useState(null);
+  const { progress, setProgress, loading } = useProgress();
   const [loadingProgress, setLoadingProgress] = useState(false);
 
   const [videoId, setVideoId] = useState(null);

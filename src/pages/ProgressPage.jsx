@@ -1,7 +1,9 @@
 import MainLayout from "../layouts/MainLayout";
 import api from "../services/api";
+import { useProgress } from "../context/ProgressContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BookOpen, Lock, CheckCircle } from "lucide-react";
 
 function ProgressPage() {
   const [path, setPath] = useState(null);
@@ -116,126 +118,60 @@ function ProgressPage() {
       <div className="max-w-[1100px] mx-auto">
 
         {/* ================= HEADER ================= */}
-        <div className="mb-16">
+        <div className="mb-20">
           <div className="flex items-center gap-3 mb-4">
             <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-medium">
               ACTIVE PATH
             </span>
 
-            <span className="text-gray-500 text-sm">
+            <span className="text-gray-400 text-sm">
               {safeProgress.overallProgress.toFixed(0)}% Completed
             </span>
           </div>
 
-          <h1 className="text-[48px] font-bold leading-tight">
+          <h1 className="text-[56px] font-bold leading-tight tracking-tight">
             {mainTitle}
             <br />
             <span className="text-blue-600">{subTitle}</span>
           </h1>
 
-          <p className="text-gray-500 mt-4 max-w-xl">
+          <p className="text-gray-500 mt-6 max-w-xl text-lg">
             {path.generatedFrom.goal}
           </p>
         </div>
 
         {/* ================= TIMELINE ================= */}
-        <div className="relative">
+        <div className="relative mt-20">
 
-          {/* LINE */}
-          <div className="absolute left-1/2 top-0 w-[2px] h-full bg-gray-200 -translate-x-1/2" />
+          {/* CENTER LINE */}
+          <div className="absolute left-1/2 top-0 h-full w-[2px] bg-gray-200 -translate-x-1/2" />
 
-          <div className="space-y-24">
+          <div className="space-y-32">
 
             {phases.map((phase, index) => {
               const isLeft = index % 2 === 0;
-              const { isCompleted, isCurrent, isLocked } = getPhaseStatus(phase, index);
+              const { isCompleted, isCurrent, isLocked } =
+                getPhaseStatus(phase, index);
 
               return (
-                <div
-                  key={phase.phase_number}
-                  className={`flex ${
-                    isLeft ? "justify-start" : "justify-end"
-                  } relative`}
-                >
+                <div key={index} className="relative flex items-center">
 
-                  {/* CARD */}
-                  <div className="w-[420px]">
-
-                    {/* COMPLETED */}
-                    {isCompleted && (
-                      <div className="bg-green-50 p-5 rounded-xl shadow-sm">
-                        <p className="text-xs text-green-600 mb-2">
-                          MODULE {phase.phase_number} • COMPLETED
-                        </p>
-
-                        <h3 className="font-semibold">
-                          {phase.phase_title}
-                        </h3>
-
-                        <ul className="text-sm text-gray-600 mt-2 space-y-1">
-                          {phase.courses?.[0]?.topics?.map((t, i) => (
-                            <li key={i}>• {t}</li>
-                          ))}
-                        </ul>
-
-                        <button
-                          onClick={() =>
-                            navigate(`/project/${phase.phase_number}`)
-                          }
-                          className="mt-4 w-full bg-green-600 text-white py-2 rounded-full"
-                        >
-                          View Project →
-                        </button>
-                      </div>
-                    )}
-
-                    {/* CURRENT */}
-                    {isCurrent && (
-                      <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-200">
-
-                        <p className="text-xs text-blue-600 mb-2">
-                          MODULE {phase.phase_number} • IN PROGRESS
-                        </p>
-
-                        <h3 className="font-semibold mb-2">
-                          {phase.phase_title}
-                        </h3>
-
-                        <p className="text-sm text-gray-500 mb-4">
-                          {phase.objective}
-                        </p>
-
-                        <button
-                          onClick={() =>
-                            navigate(`/my-learning`)
-                          }
-                          className="w-full bg-blue-600 text-white py-3 rounded-full"
-                        >
-                          Continue Learning →
-                        </button>
-                      </div>
-                    )}
-
-                    {/* LOCKED */}
-                    {isLocked && (
-                      <div className="bg-gray-100 p-5 rounded-xl opacity-60">
-                        <p className="text-xs text-gray-500 mb-2">
-                          MODULE {phase.phase_number} • LOCKED
-                        </p>
-
-                        <h3 className="font-medium">
-                          {phase.phase_title}
-                        </h3>
-                      </div>
-                    )}
-
-                  </div>
+                  {/* LEFT SIDE */}
+                  {isLeft && (
+                    <div className="w-1/2 pr-12 text-right">
+                      <h3 className="text-lg font-semibold">
+                        {phase.phase_title}
+                      </h3>
+                      <p className="text-gray-500 text-sm mt-1">
+                        {phase.objective}
+                      </p>
+                    </div>
+                  )}
 
                   {/* ICON */}
-                  <div className="absolute left-1/2 -translate-x-1/2">
-
+                  <div className="absolute left-1/2 -translate-x-1/2 z-10">
                     <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center text-white shadow-md
+                      className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg text-white
                       ${
                         isCompleted
                           ? "bg-green-500"
@@ -244,11 +180,73 @@ function ProgressPage() {
                           : "bg-gray-300"
                       }`}
                     >
-                      {isCompleted ? "✔" : isCurrent ? "📘" : "🔒"}
+                      {isCompleted ? <CheckCircle /> : isCurrent ? <BookOpen /> : <Lock />}
                     </div>
-
                   </div>
 
+                  {/* CARD */}
+                  <div
+                    className={`w-1/2 ${
+                      isLeft ? "pl-12" : "pr-12"
+                    }`}
+                  >
+                    <div
+                      className={`rounded-2xl p-6 shadow-lg transition
+                      ${
+                        isCompleted
+                          ? "bg-green-50"
+                          : isCurrent
+                          ? "bg-white border border-blue-200"
+                          : "bg-gray-100 opacity-70"
+                      }`}
+                    >
+                      <p className="text-xs mb-2 text-gray-400">
+                        MODULE {phase.phase_number}
+                      </p>
+
+                      <div className="space-y-2 text-sm text-gray-600">
+                        <p className="font-medium">The topics covered in this module are:</p>
+                        {phase.courses?.[0]?.topics?.map((t, i) => (
+                          <div key={i} className="flex items-center gap-2">
+                            <span className="text-green-600">✓</span>
+                            {t}
+                          </div>
+                        ))}
+                      </div>
+
+                      {isCurrent && (
+                        <button
+                          onClick={() => navigate("/my-learning")}
+                          className="w-full bg-blue-600 text-white py-3 rounded-full hover:opacity-90 transition"
+                        >
+                          Continue Learning →
+                        </button>
+                      )}
+
+                      {isCompleted && (
+                        <button
+                          onClick={() =>
+                            navigate(`/project/${phase.phase_number}`)
+                          }
+                          className="w-full bg-green-600 text-white py-3 rounded-full"
+                        >
+                          View Project →
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* RIGHT TEXT */}
+                  {!isLeft && (
+                    <div className="w-1/2 pl-12">
+                      <h3 className="text-lg font-semibold">
+                        {phase.phase_title}
+                      </h3>
+                      <p className="text-gray-500 text-sm mt-1">
+                        {phase.objective}
+                      </p>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -256,30 +254,28 @@ function ProgressPage() {
         </div>
 
         {/* ================= FINAL PROJECT CARD ================= */}
-        <div className="flex justify-center mt-32">
+        <div className="flex justify-center mt-40">
+          <div className="bg-gradient-to-br from-purple-300 to-purple-500 w-[420px] rounded-3xl p-10 text-center shadow-2xl">
+            
+            <div className="w-16 h-16 mx-auto mb-4 bg-white/30 rounded-full flex items-center justify-center text-white text-2xl">
+              🏆
+            </div>
 
-          <div className="bg-gradient-to-br from-purple-300 to-purple-400
-            w-[420px] rounded-3xl p-8 text-center shadow-xl">
-
-            <div className="text-white text-4xl mb-3">🏆</div>
-
-            <h3 className="text-white font-semibold">
-              Final Project
+            <h3 className="text-white text-lg font-semibold">
+              Final Thesis: Digital Project
             </h3>
 
-            <p className="text-purple-100 text-sm mt-2">
+            <p className="text-purple-100 text-sm mt-3">
               {path.success_metrics.final_outcome}
             </p>
 
             <button
               onClick={() => navigate("/project/3")}
-              className="mt-6 bg-white text-purple-600 px-6 py-2 rounded-full"
+              className="mt-6 bg-white text-purple-600 px-6 py-2 rounded-full font-medium"
             >
               Start Final Project →
             </button>
-
           </div>
-
         </div>
 
         {/* ================= FOOTER ================= */}
