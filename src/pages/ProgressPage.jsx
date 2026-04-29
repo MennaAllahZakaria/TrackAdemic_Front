@@ -52,6 +52,27 @@ function ProgressPage() {
     fetchData();
   }, []);
 
+  
+  const getPhaseStatus = (phase, index) => {
+    const completed = progress?.completedTopics || [];
+
+    const topics = phase.courses?.[0]?.topics || [];
+
+    const completedCount = topics.filter((t) =>
+      completed.includes(t)
+    ).length;
+
+    const isCompleted = completedCount === topics.length;
+
+    const isCurrent =
+      completedCount > 0 && !isCompleted;
+
+    const isLocked =
+      completedCount === 0 && index !== 0;
+
+    return { isCompleted, isCurrent, isLocked };
+  };
+
   // ================= LOADING =================
   if (loading)
     return (
@@ -73,9 +94,16 @@ function ProgressPage() {
   };
 
   // ✅ current phase calculated
-  const currentIndex = Math.floor(
-    (safeProgress.overallProgress / 100) * phases.length
-  );
+  const currentIndex = phases.findIndex((phase) => {
+      const topics = phase.courses?.[0]?.topics || [];
+      const completed = progress?.completedTopics || [];
+
+      const completedCount = topics.filter((t) =>
+        completed.includes(t)
+      ).length;
+
+      return completedCount < topics.length;
+    });
 
   // ✅ title
   const title = path?.meta?.path_title || "Learning Path";
@@ -120,9 +148,7 @@ function ProgressPage() {
 
             {phases.map((phase, index) => {
               const isLeft = index % 2 === 0;
-              const isCompleted = index < currentIndex;
-              const isCurrent = index === currentIndex;
-              const isLocked = index > currentIndex;
+              const { isCompleted, isCurrent, isLocked } = getPhaseStatus(phase, index);
 
               return (
                 <div

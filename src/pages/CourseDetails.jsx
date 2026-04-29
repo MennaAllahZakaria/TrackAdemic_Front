@@ -4,9 +4,14 @@ import { useEffect, useState } from "react";
 import { getYoutubeVideoId } from "../utils/youtube";
 import YoutubeModal from "../components/learning/YoutubeModal";
 import { useNavigate } from "react-router-dom";
+import TopicsChecklist from "../components/learning/TopicsChecklist";
+import api from "../services/api";
 
 function CourseDetails() {
   const { state } = useLocation();
+
+  const [progress, setProgress] = useState(null);
+  const [loadingProgress, setLoadingProgress] = useState(false);
 
   const [videoId, setVideoId] = useState(null);
   const [open, setOpen] = useState(false);
@@ -29,10 +34,63 @@ function CourseDetails() {
     loadVideo();
   }, [course]);
 
+  useEffect(() => {
+    const fetchProgress = async () => {
+      try {
+        const res = await api.get("/progress/me");
+        setProgress(res.data.data);
+      } catch (err) {
+        if (err.response?.data?.message === "No progress found") {
+          setProgress({
+            completedTopics: [],
+          });
+        }
+      }
+    };
+
+    fetchProgress();
+  }, []);
+
+  const handleMarkCompleted = async () => {
+      if (!course) return;
+
+      try {
+        setLoadingProgress(true);
+
+        const completed = progress?.completedTopics || [];
+
+        // ✅ نجيب أول topic لسه مش متعمل
+        const nextTopic = course.topics.find(
+          (t) => !completed.includes(t)
+        );
+
+        // لو كله متعمل
+        if (!nextTopic) {
+          alert("All topics already completed ✅");
+          return;
+        }
+
+        const res = await api.post("/progress/update", {
+          topic: nextTopic,
+          hours: 1,
+        });
+
+        // ✅ نحدث الstate فورًا (optimistic UI)
+        setProgress(res.data.data);
+
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingProgress(false);
+      }
+    };
+
   const handleOpenFullLearning = () => {
     
     navigate("/my-learning");
   };
+  const percent =
+  progress?.overallProgress?.toFixed(0) || 0;
 
   return (
     <MainLayout>
@@ -116,16 +174,15 @@ function CourseDetails() {
                 What you'll learn
               </h3>
 
-              <div className="space-y-3">
-                {course?.topics.map((t, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">
-                      ✓
-                    </div>
-                    <span className="text-gray-700">{t}</span>
-                  </div>
-                ))}
-              </div>
+              <h3 className="text-lg font-semibold mt-8 mb-4">
+                  Course Topics
+                </h3>
+
+                <TopicsChecklist
+                  topics={course?.topics || []}
+                  progress={progress}
+                  setProgress={setProgress}
+                />
 
             </div>
 
@@ -137,12 +194,20 @@ function CourseDetails() {
               </p>
 
               <div className="mt-2 h-2 bg-gray-200 rounded-full">
-                <div className="h-full bg-blue-600 w-[65%] rounded-full" />
-              </div>
+                    <div
+                      className="h-full bg-blue-600 rounded-full transition-all duration-500"
+                      style={{ width: `${percent}%` }}
+                    />
+                  </div>
+              
 
-              <button className="mt-5 w-full bg-green-500 text-white py-2 rounded-full font-medium hover:bg-green-600 transition">
-                Mark as Completed
-              </button>
+              <button
+                  onClick={handleMarkCompleted}
+                  disabled={loadingProgress}
+                  className="mt-5 w-full bg-green-500 text-white py-2 rounded-full font-medium hover:bg-green-600 transition disabled:opacity-50"
+                >
+                  {loadingProgress ? "Updating..." : "Mark as Completed"}
+                </button>
 
               <button className="mt-3 w-full border py-2 rounded-full text-sm">
                 Save for Reference
