@@ -8,6 +8,9 @@ import Chat from "./pages/Chat";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyLearning from "./pages/MyLearning";
 import CourseDetails from "./pages/CourseDetails";
+import ProgressPage from "./pages/ProgressPage";
+import FinalProject from "./pages/FinalProject";
+import PhaseProject from "./pages/PhaseProject";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
@@ -58,6 +61,30 @@ function App() {
         element={
           <ProtectedRoute>
             <CourseDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/progress"
+        element={
+          <ProtectedRoute>
+            <ProgressPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/final-project"
+        element={
+          <ProtectedRoute>
+            <FinalProject />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/project/:phaseNumber"
+        element={
+          <ProtectedRoute>
+            <PhaseProject />
           </ProtectedRoute>
         }
       />
