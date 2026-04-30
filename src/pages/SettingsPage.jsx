@@ -229,6 +229,13 @@ function SettingsPage() {
                   </div>
                 </div>
 
+                <div>
+                  <p className="text-xs text-gray-400 mb-1">ACADEMIC FOCUS</p>
+                  <div className="bg-gray-100 p-3 rounded-lg">
+                    {context?.field || "Not set"}
+                  </div>
+                </div>
+
               </div>
 
               <button
@@ -243,27 +250,122 @@ function SettingsPage() {
             {/* LEARNING */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
 
-              <h3 className="font-semibold text-lg mb-4">
-                Learning Preferences
-              </h3>
-
-              <ToggleItem title="Study Reminders" desc="Get notified" defaultOn />
-              <ToggleItem title="Streak Notifications" desc="Stay consistent" defaultOn />
-              <ToggleItem title="Course Updates" desc="New content alerts" />
-
-              <div className="mt-8 bg-purple-100 p-5 rounded-2xl flex justify-between items-center">
-
+              {/* HEADER */}
+              <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h4 className="font-semibold text-purple-700">
-                    Reset Learning Curve?
-                  </h4>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    Learning Preferences
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-1">
+                    Adjust how the algorithm structures your path.
+                  </p>
                 </div>
 
+                <span className="text-xs bg-green-100 text-green-600 px-3 py-1 rounded-full font-medium">
+                  OPTIMIZED
+                </span>
+              </div>
+
+              {/* TOGGLES */}
+              <div className="space-y-5">
+
+                {/* ITEM */}
+                <div className="flex items-center justify-between">
+
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
+                      <i className="ri-notification-3-line text-lg"></i>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-medium text-gray-800">
+                        Study Reminders
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Get pinged when it's time for your deep-focus block.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="w-10 h-5 bg-blue-600 rounded-full relative cursor-pointer">
+                    <div className="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5"></div>
+                  </div>
+
+                </div>
+
+                {/* ITEM */}
+                <div className="flex items-center justify-between">
+
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center">
+                      <i className="ri-fire-line text-lg"></i>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-medium text-gray-800">
+                        Streak Notifications
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Don’t lose your 14-day consistency streak.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="w-10 h-5 bg-blue-600 rounded-full relative cursor-pointer">
+                    <div className="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5"></div>
+                  </div>
+
+                </div>
+
+                {/* ITEM */}
+                <div className="flex items-center justify-between">
+
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                      <i className="ri-refresh-line text-lg"></i>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-medium text-gray-800">
+                        Course Updates
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        New material added to your Library modules.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="w-10 h-5 bg-gray-300 rounded-full relative cursor-pointer">
+                    <div className="w-4 h-4 bg-white rounded-full absolute top-0.5 left-0.5"></div>
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* DIVIDER */}
+              <div className="h-[1px] bg-gray-200 my-6"></div>
+
+              {/* RESET CARD */}
+              <div className="bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-6 flex items-center justify-between">
+
+                {/* LEFT */}
+                <div className="max-w-[60%]">
+                  <h4 className="text-purple-700 font-semibold text-sm">
+                    Reset Learning Curve?
+                  </h4>
+
+                  <p className="text-xs text-purple-600 mt-2 leading-relaxed">
+                    If your focus has shifted, we can rebuild your entire academic schedule from scratch.
+                  </p>
+                </div>
+
+                {/* BUTTON */}
                 <button
                   onClick={() => navigate("/onboarding")}
-                  className="bg-purple-600 text-white px-5 py-2 rounded-full"
+                  className="bg-gradient-to-r from-purple-600 to-purple-500 text-white px-5 py-2 rounded-full text-sm font-medium shadow hover:scale-[1.03] transition"
                 >
-                  Regenerate Plan →
+                  ✨ Regenerate My Learning Plan
                 </button>
 
               </div>
