@@ -80,6 +80,7 @@ function Onboarding() {
     const fetchContext = async () => {
       try {
         const res = await api.get("/user-context");
+        console.log(res.data);
 
         const data = res.data.data;
 
