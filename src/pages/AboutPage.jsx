@@ -13,11 +13,11 @@ function AboutPage() {
             <h2 className="text-3xl font-bold mb-6">Our Story</h2>
 
             <p className="text-gray-600 leading-7 mb-4">
-              Trackademic began in a small university library corner where three educators noticed a recurring problem: the "one-size-fits-all" curriculum was leaving brilliant students behind while holding faster learners back.
+              Trackademic began in a small university library corner where 8 educators noticed a recurring problem: the "one-size-fits-all" curriculum was leaving brilliant students behind while holding faster learners back.
             </p>
 
             <p className="text-gray-600 leading-7">
-              We spent two years interviewing cognitive psychologists and data scientists to understand how to replicate the nuance of human mentorship in a digital environment.
+              We spent one year interviewing cognitive psychologists and data scientists to understand how to replicate the nuance of human mentorship in a digital environment.
             </p>
           </div>
 
@@ -25,7 +25,7 @@ function AboutPage() {
           <div className="grid grid-cols-2 gap-6">
 
             <div className="bg-white p-6 rounded-xl shadow-sm">
-              <h3 className="text-blue-600 font-bold text-xl">2021</h3>
+              <h1 className="text-blue-600 font-bold text-xl">2025</h1>
               <p className="font-medium mt-2">The Spark</p>
               <p className="text-sm text-gray-500 mt-1">
                 Foundation of our core AI pedagogical engine.
@@ -33,7 +33,7 @@ function AboutPage() {
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-sm">
-              <h3 className="text-purple-600 font-bold text-xl">2023</h3>
+              <h1 className="text-purple-600 font-bold text-xl">2026</h1>
               <p className="font-medium mt-2">Global Scale</p>
               <p className="text-sm text-gray-500 mt-1">
                 Expansion to 15 countries and multiple languages.
