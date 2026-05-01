@@ -47,6 +47,10 @@ function LoginForm() {
           placeholder="Password"
         />
 
+        <p className="text-sm text-gray-500">
+            Forget your password? <a href="/forgot-password" className="text-blue-600" >Reset it here</a>.
+        </p>
+
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
         <button className="w-full py-3.5 rounded-full text-white font-semibold

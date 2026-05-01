@@ -13,6 +13,9 @@ import FinalProject from "./pages/FinalProject";
 import PhaseProject from "./pages/PhaseProject";
 import SettingsPage from "./pages/SettingsPage";
 import ChangePassword from "./pages/ChangePasswordPage";
+import ForgotPasswordPage from "./pages/ForgotPassword/ForgotPasswordPage";
+import VerifyCodePage from "./pages/ForgotPassword/VerifyCodePage";
+import ResetPasswordPage from "./pages/ForgotPassword/ResetPasswordPage";
 import { ProgressProvider } from "./context/ProgressContext";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -105,6 +108,30 @@ function App() {
         element={
           <ProtectedRoute>
             <ChangePassword />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/forgot-password"
+        element={
+          <ProtectedRoute>
+            <ForgotPasswordPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/verify-code"
+        element={
+          <ProtectedRoute>
+            <VerifyCodePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/reset-password"
+        element={
+          <ProtectedRoute>
+            <ResetPasswordPage />
           </ProtectedRoute>
         }
       />
