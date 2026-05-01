@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState , useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import api from "../services/api";
 
@@ -12,9 +12,12 @@ function Verify() {
   const email = location.state?.email;
 
   // لو دخل الصفحة مباشرة
-  if (!email) {
+
+  useEffect(() => {
+      if (!email) {
     navigate("/signup");
   }
+    }, [email, navigate]);
 
   const handleChange = (value, index) => {
     if (!/^[0-9]?$/.test(value)) return;

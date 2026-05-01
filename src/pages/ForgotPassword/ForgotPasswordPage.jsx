@@ -77,8 +77,12 @@ function ForgotPasswordPage() {
           </h2>
 
           <p className="text-gray-500 mb-6">
-            Enter your email to receive reset link.
+            No worries. Enter the email address associated with your account and we'll send you a link to reset your password.
           </p>
+
+          <h5 className="text-sm font-medium mb-2">
+            Email Address
+          </h5>
 
           <input
             type="email"
@@ -104,6 +108,30 @@ function ForgotPasswordPage() {
             {loading ? "Sending..." : "Send Reset Link →"}
           </button>
 
+            {/* BACK TO LOGIN */}
+            <div className="text-center mt-6">
+              <button
+                onClick={() => navigate("/login")}
+                className="text-blue-600 text-sm font-medium hover:underline flex items-center justify-center gap-2 mx-auto"
+              >
+                ← Back to log in
+              </button>
+            </div>
+
+            {/* DIVIDER */}
+            <div className="h-[1px] bg-gray-200 my-8"></div>
+
+            {/* TERMS */}
+            <p className="text-xs text-gray-400 text-center leading-relaxed">
+              By continuing, you agree to Trackademic's{" "}
+              <span className="underline cursor-pointer hover:text-gray-600">
+                Terms of Service
+              </span>{" "}
+              and{" "}
+              <span className="underline cursor-pointer hover:text-gray-600">
+                Privacy Policy
+              </span>.
+            </p>
         </div>
       </div>
     </div>
