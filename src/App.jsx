@@ -17,6 +17,7 @@ import ForgotPasswordPage from "./pages/ForgotPassword/ForgotPasswordPage";
 import VerifyCodePage from "./pages/ForgotPassword/VerifyCodePage";
 import ResetPasswordPage from "./pages/ForgotPassword/ResetPasswordPage";
 import { ProgressProvider } from "./context/ProgressContext";
+import AboutPage from "./pages/AboutPage";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
@@ -135,6 +136,7 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route path="/about" element={<AboutPage />} />
 
     </Routes>
     </AnimatePresence>
