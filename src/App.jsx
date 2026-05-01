@@ -12,6 +12,7 @@ import ProgressPage from "./pages/ProgressPage";
 import FinalProject from "./pages/FinalProject";
 import PhaseProject from "./pages/PhaseProject";
 import SettingsPage from "./pages/SettingsPage";
+import ChangePassword from "./pages/ChangePasswordPage";
 import { ProgressProvider } from "./context/ProgressContext";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -96,6 +97,14 @@ function App() {
         element={
           <ProtectedRoute>
             <SettingsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/change-password"
+        element={
+          <ProtectedRoute>
+            <ChangePassword />
           </ProtectedRoute>
         }
       />
