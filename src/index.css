@@ -16,3 +16,12 @@ html {
 .animate-bounce {
   animation: bounce 1.4s infinite;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
