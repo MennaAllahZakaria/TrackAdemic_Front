@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import api from "../services/api";
 
 const AuthContext = createContext();
 
@@ -8,11 +9,23 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // ممكن هنا تعملي fetch user لو عندك endpoint
+    const fetchUser = async () => {
+      try {
+        const res = await api.get("/auth/me");
+        setUser(res.data.data.user);
+      } catch (err) {
+        console.error(err);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (token) {
-      setUser({}); // placeholder
+      fetchUser();
+    } else {
+      setLoading(false);
     }
-    setLoading(false);
   }, [token]);
 
   const login = (data) => {
