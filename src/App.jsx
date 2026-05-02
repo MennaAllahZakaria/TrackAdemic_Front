@@ -20,6 +20,7 @@ import ForgotPasswordPage from "./pages/ForgotPassword/ForgotPasswordPage";
 import VerifyCodePage from "./pages/ForgotPassword/VerifyCodePage";
 import ResetPasswordPage from "./pages/ForgotPassword/ResetPasswordPage";
 import TracksPage from "./pages/TracksPage";
+import TrackDetails from "./pages/TrackDetails"
 import AboutPage from "./pages/AboutPage";
 
 import { ProgressProvider } from "./context/ProgressContext";
@@ -142,7 +143,22 @@ function App() {
               }
             />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/tracks" element={<TracksPage />} />
+            <Route
+              path="/tracks"
+              element={
+                <ProtectedRoute>
+                  <TracksPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/track/:id"
+              element={
+                <ProtectedRoute>
+                  <TrackDetails  />
+                </ProtectedRoute>
+              }
+            />
 
           </Routes>
         </AnimatePresence>
