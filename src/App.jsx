@@ -23,6 +23,7 @@ import TracksPage from "./pages/TracksPage";
 import TrackDetails from "./pages/TrackDetails"
 import AboutPage from "./pages/AboutPage";
 import ProfilePage from "./pages/ProfilePage"
+import AssessmentPage from "./pages/Assessment/AssessmentPage"
 
 import { ProgressProvider } from "./context/ProgressContext";
 import { UserProvider } from "./context/UserContext";
@@ -167,6 +168,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <TrackDetails  />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/assessment"
+                element={
+                  <ProtectedRoute>
+                    <AssessmentPage  />
                   </ProtectedRoute>
                 }
               />

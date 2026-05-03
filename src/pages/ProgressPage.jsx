@@ -262,18 +262,18 @@ function ProgressPage() {
             </div>
 
             <h3 className="text-white text-lg font-semibold">
-              Final Thesis: Digital Project
+              Final Assessment
             </h3>
 
             <p className="text-purple-100 text-sm mt-3">
-              {path.success_metrics.final_outcome}
+              This final assessment reflects your current level, not your limits, your growth starts from here.
             </p>
 
             <button
-              onClick={() => navigate("/project/3")}
+              onClick={() => navigate("/assessment")}
               className="mt-6 bg-white text-purple-600 px-6 py-2 rounded-full font-medium"
             >
-              Start Final Project →
+              Start Final Assessment →
             </button>
           </div>
         </div>
