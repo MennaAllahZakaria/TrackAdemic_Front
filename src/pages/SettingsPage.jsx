@@ -122,6 +122,7 @@ function SettingsPage() {
           },
         }
       );
+      const newImage = res.data.data.imageProfile;
 
       setImage(newImage);
       setOriginalImage(newImage);

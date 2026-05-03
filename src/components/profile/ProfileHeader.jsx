@@ -51,7 +51,7 @@ function ProfileHeader({ user }) {
       {/* RIGHT */}
         <button 
         className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full text-sm shadow"
-        onClick={()=>navigate('/my-learning')}
+        onClick={()=>navigate('/settings')}
         >
             <Pencil size={16} />
             Edit Profile
