@@ -2,6 +2,7 @@ import MainLayout from "../layouts/MainLayout";
 import FieldCard from "../components/onboarding/FieldCard";
 import ProgressOverlay from "../components/onboarding/ProgressOverlay";
 import { toast } from "react-hot-toast";
+import { useLocation } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import api from "../services/api";
@@ -10,6 +11,8 @@ import { useAuth } from "../context/AuthContext";
 
 function Onboarding() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { user } = useAuth();
 
   const [loading, setLoading] = useState(true);
@@ -68,23 +71,54 @@ function Onboarding() {
     },
   ];
 
+  const [fieldsList, setFieldsList] = useState(fields);
+
+
   const levels = [
     { name: "beginner", icon: "ri-user-line", desc: "New to the field" },
     { name: "intermediate", icon: "ri-star-line", desc: "Some experience" },
     { name: "advanced", icon: "ri-award-line", desc: "Pro level" },
   ];
 
+  useEffect(() => {
+    const incomingField = location.state?.field;
+
+    if (!incomingField) return;
+
+    setSelectedField(incomingField);
+
+    setFieldsList((prev) => {
+      const exists = prev.some(
+        (f) => f.title.toLowerCase() === incomingField.toLowerCase()
+      );
+
+      if (exists) return prev;
+
+      return [
+        {
+          title: incomingField,
+          desc: "Custom learning path based on your selection.",
+          icon: "ri-star-line",
+          color: "bg-indigo-100 text-indigo-600",
+        },
+        ...prev,
+      ];
+    });
+
+  }, []);
 
   //  GET DATA أول ما يدخل
   useEffect(() => {
     const fetchContext = async () => {
       try {
         const res = await api.get("/user-context");
-        console.log(res.data);
+        //console.log(res.data);
 
         const data = res.data.data;
+        const incomingField = location.state?.field;
 
-        setSelectedField(data.field);
+        if (!incomingField) setSelectedField(data.field);
+
         setLevel(data.level);
         setGoal(data.goal);
         setHours(data.hoursPerDay);
@@ -187,14 +221,15 @@ function Onboarding() {
 
         {/* FIELDS */}
         <div className="grid grid-cols-3 gap-6 mt-10">
-          {fields.map((f) => (
+          {fieldsList.map((f) => (
             <FieldCard
               key={f.title}
               {...f}
               selected={selectedField === f.title}
               onClick={() => setSelectedField(f.title)}
             />
-          ))}
+          ))
+          }
         </div>
 
         {/* LEVEL */}

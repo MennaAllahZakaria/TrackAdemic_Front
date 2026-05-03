@@ -2,9 +2,11 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import MainLayout from "../layouts/MainLayout";
+import { useNavigate } from "react-router-dom";
 
 function TrackDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [track, setTrack] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -113,7 +115,13 @@ function TrackDetails() {
             </p>
           </div>
 
-          <button className="bg-white text-blue-600 px-6 py-3 rounded-full font-medium">
+          <button className="bg-white text-blue-600 px-6 py-3 rounded-full font-medium"
+          onClick={() =>
+              navigate("/onboarding", {
+                state: { field: track.category }
+              })
+            }
+          >
             Enroll Now →
           </button>
 
