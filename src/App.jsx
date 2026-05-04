@@ -43,11 +43,9 @@ function App() {
               <Route path="/verify" element={<Verify />} />
 
               <Route
-                path="/dashboard"
+                path="/"
                 element={
-                  <ProtectedRoute>
                     <Dashboard />
-                  </ProtectedRoute>
                 }
               />
               <Route

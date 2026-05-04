@@ -17,7 +17,7 @@ function LoginForm() {
       const res = await api.post("/auth/login", data);
 
       login(res.data);
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     }

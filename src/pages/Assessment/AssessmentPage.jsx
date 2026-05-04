@@ -155,7 +155,7 @@ function AssessmentPage() {
             </button>
 
             <button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/")}
               className="
                 w-full py-3 rounded-xl
                 border border-gray-300

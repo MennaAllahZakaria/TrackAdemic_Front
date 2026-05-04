@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 
 const menu = [
-  { name: "Home", icon: "ri-home-5-line", path: "/dashboard" },
+  { name: "Home", icon: "ri-home-5-line", path: "/" },
   { name: "Tutor", icon: "ri-user-line", path: "/chat" },
   { name: "My Learning", icon: "ri-book-open-line", path: "/my-learning" },
   { name: "Tracks", icon: "ri-compass-3-line", path: "/tracks" },
@@ -19,6 +19,10 @@ const menu = [
 ];
 
 function Sidebar() {
+  const { token } = useAuth();
+
+  if(!token)return;
+  
   const navigate = useNavigate();
   const location = useLocation();
   const [showLogout, setShowLogout] = useState(false);

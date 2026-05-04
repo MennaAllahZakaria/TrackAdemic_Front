@@ -3,6 +3,10 @@ import { useAuth } from "../context/AuthContext";
 import NotificationBell from "../components/Notification/NotificationBell"
 
 function Topbar() {
+  const { token } = useAuth();
+
+  if(!token)return;
+
   const navigate = useNavigate();
   const { user } = useAuth();
 
