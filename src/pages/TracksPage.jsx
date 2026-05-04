@@ -12,31 +12,30 @@ const formatLevel = (level) => {
   return level.charAt(0).toUpperCase() + level.slice(1);
 };
 
-
 function TracksPage() {
-    const [tracks, setTracks] = useState([]);
-    const [category, setCategory] = useState("All");
-    const [loading, setLoading] = useState(false);
-    const [limit, setLimit] = useState(6);
-    const [recommended, setRecommended] = useState([]);
-    const { userContext } = useUserContext();
+  const [tracks, setTracks] = useState([]);
+  const [category, setCategory] = useState("All");
+  const [loading, setLoading] = useState(false);
+  const [limit, setLimit] = useState(6);
+  const [recommended, setRecommended] = useState([]);
 
-    const fetchRecommended = async () => {
-        try {
-            if (!userContext?.level) return;
+  const { userContext } = useUserContext();
 
-            const level = formatLevel(userContext.level);
+  // ================= FETCH RECOMMENDED =================
+  const fetchRecommended = async () => {
+    try {
+      if (!userContext?.level) return;
 
-            const res = await api.get(`/tracks?level=${level}&limit=2`);
+      const level = formatLevel(userContext.level);
+      const res = await api.get(`/tracks?level=${level}`);
 
-            console.log(res)
-            setRecommended(res.data.data);
+      setRecommended(res.data.data);
+    } catch (err) {
+      console.error("recommended error", err);
+    }
+  };
 
-        } catch (err) {
-            console.error("recommended error", err);
-        }
-    };
-
+  // ================= FETCH TRACKS =================
   const fetchTracks = async () => {
     try {
       setLoading(true);
@@ -48,7 +47,6 @@ function TracksPage() {
       }
 
       const res = await api.get(url);
-
       setTracks(res.data.data);
 
     } catch (err) {
@@ -60,13 +58,13 @@ function TracksPage() {
 
   useEffect(() => {
     fetchTracks();
-  }, [category,limit]);
+  }, [category, limit]);
 
-    useEffect(() => {
+  useEffect(() => {
     if (userContext) {
-        fetchRecommended();
+      fetchRecommended();
     }
-    }, [userContext]);
+  }, [userContext]);
 
   return (
     <MainLayout>
@@ -74,7 +72,6 @@ function TracksPage() {
 
         {/* HEADER */}
         <div className="mb-10">
-
           <p className="text-blue-600 text-xs font-semibold">
             ELEVATE YOUR KNOWLEDGE
           </p>
@@ -87,21 +84,20 @@ function TracksPage() {
           </h1>
 
           <p className="text-gray-500 mt-4 max-w-xl">
-            Navigate through our curated learning paths designed by industry experts.
-            From foundation to mastery, track your progress in real-time.
+            Navigate through curated learning paths designed by experts.
           </p>
-
         </div>
 
+        {/* ✅ RECOMMENDED دايمًا يظهر */}
         <RecommendedSection recommended={recommended} />
 
-        {/* FILTERS */}
-        <h3 className="font-semibold text-lg">
+        {/* ================= EXPLORE ================= */}
+        <h3 className="font-semibold text-lg mt-10">
           Explore Tracks by Category
         </h3>
+
         <TrackFilters active={category} setActive={setCategory} />
 
-        {/* GRID */}
         {loading ? (
           <p className="mt-10">Loading...</p>
         ) : (
@@ -109,15 +105,15 @@ function TracksPage() {
         )}
 
         {tracks.length >= 6 && limit === 6 && (
-            <div className="flex justify-center mt-10">
-                <button
-                onClick={() => setLimit(40)}
-                className="px-6 py-2 bg-gray-300 rounded-full text-sm hover:bg-gray-200"
-                >
-                Show More Tracks ↓
-                </button>
-            </div>
-            )}
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={() => setLimit(40)}
+              className="px-6 py-2 bg-gray-300 rounded-full text-sm hover:bg-gray-200"
+            >
+              Show More Tracks ↓
+            </button>
+          </div>
+        )}
 
       </div>
     </MainLayout>

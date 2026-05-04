@@ -107,7 +107,7 @@ function Dashboard() {
             Popular Learning Tracks
           </h2>
 
-          <span className="text-blue-600 text-sm cursor-pointer">
+          <span className="text-blue-600 text-sm cursor-pointer" onClick={navigate("/tracks")}>
             Explore all tracks →
           </span>
         </div>
