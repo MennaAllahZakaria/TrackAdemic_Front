@@ -6,7 +6,7 @@ function TrackCard({id, image, title, desc, lessons, badge, badgeColor }) {
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-sm flex 
                     hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
-                    onClick={()=>{if(id)navigate(`tracks/${id}`)}}>
+                    onClick={()=>{if(id)navigate(`track/${id}`)}}>
 
       {/* IMAGE */}
       <div className="w-48 h-full">
