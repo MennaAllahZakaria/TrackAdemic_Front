@@ -1,7 +1,12 @@
-function TrackCard({ image, title, desc, lessons, badge, badgeColor }) {
+import { useNavigate } from "react-router-dom";
+
+function TrackCard({id, image, title, desc, lessons, badge, badgeColor }) {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-sm flex 
-                    hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+                    hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
+                    onClick={()=>{if(id)navigate(`tracks/${id}`)}}>
 
       {/* IMAGE */}
       <div className="w-48 h-full">

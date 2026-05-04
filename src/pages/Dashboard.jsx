@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import api from "../services/api";
+
 import MainLayout from "../layouts/MainLayout";
 import FeatureCard from "../components/dashboard/FeatureCard";
 import TrackCard from "../components/dashboard/TrackCard";
@@ -5,6 +8,30 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 function Dashboard() {
     const navigate = useNavigate();
+    const [Tracks, setTracks] = useState([]);
+    
+    let firstTrack , secondTrack;
+
+    const fetchTracks = async () => {
+      try {
+
+        const res = await api.get(`/tracks?level=Beginner&limit=2`);
+
+        setTracks(res.data.data);
+        
+
+
+      } catch (err) {
+        console.error("Tracks error", err);
+      }
+  };
+
+    useState(()=>{
+      fetchTracks()
+    },[Tracks]);
+
+    firstTrack=Tracks[0];
+    secondTrack=Tracks[1];
 
   return (
      <motion.div
@@ -107,7 +134,7 @@ function Dashboard() {
             Popular Learning Tracks
           </h2>
 
-          <span className="text-blue-600 text-sm cursor-pointer" onClick={navigate("/tracks")}>
+          <span className="text-blue-600 text-sm cursor-pointer" onClick={()=> {navigate("/tracks")}}>
             Explore all tracks →
           </span>
         </div>
@@ -115,19 +142,21 @@ function Dashboard() {
         <div className="grid grid-cols-2 gap-6 mt-8">
 
           <TrackCard
-                image="/cyber.png"
-                title="Neural Cybersecurity"
-                desc="Master advanced threat detection using machine learning algorithms and network. defense strategies."
-                lessons={48}
+                id={firstTrack?._id}
+                image={firstTrack?.trackImage || "/cyber.png"}
+                title={firstTrack?.title ||"Neural Cybersecurity"}
+                desc={firstTrack?.description ||"Master advanced threat detection using machine learning algorithms and network. defense strategies."}
+                lessons={firstTrack?.totalModules|| 48}
                 badge="HIGH DEMAND"
                 badgeColor="bg-purple-100 text-purple-600"
           />
 
             <TrackCard
-                image="/fintech.png"
-                title="Sustainable Fintech"
-                desc="Explore the intersection of ESG principles and digital banking infrastructure in the modern economy."
-                lessons={32}
+                id={secondTrack?._id}
+                image={secondTrack?.trackImage ||"/fintech.png"}
+                title={secondTrack?.title ||"Sustainable Fintech"}
+                desc={secondTrack?.description||"Explore the intersection of ESG principles and digital banking infrastructure in the modern economy."}
+                lessons={secondTrack?.totalModules || 32}
                 badge="NEW RELEASE"
                 badgeColor="bg-green-100 text-green-600"
             />
