@@ -1,4 +1,4 @@
-import { useStateوuseEffect } from "react";
+import { useState,useEffect } from "react";
 function QuestionCard({
   question,
   submitAnswer,
