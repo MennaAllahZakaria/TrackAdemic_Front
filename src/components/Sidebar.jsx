@@ -15,7 +15,7 @@ const menu = [
   { name: "About", icon: "ri-information-line", path: "/about" },
   { name: "Progress", icon: "ri-bar-chart-line", path: "/progress" },
   { name: "Logout", icon: "ri-logout-box-r-line", path: "/logout" },
-  { name: "Support", icon: "ri-question-line", path: "/support" },
+  { name: "Support", icon: "ri-question-line", path: "/ContactUs" },
 ];
 
 function Sidebar() {

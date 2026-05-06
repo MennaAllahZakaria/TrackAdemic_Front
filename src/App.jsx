@@ -24,6 +24,7 @@ import TrackDetails from "./pages/TrackDetails"
 import AboutPage from "./pages/AboutPage";
 import ProfilePage from "./pages/ProfilePage"
 import AssessmentPage from "./pages/Assessment/AssessmentPage"
+import ContactUsPage from "./pages/ContactUsPage";
 
 import { ProgressProvider } from "./context/ProgressContext";
 import { UserProvider } from "./context/UserContext";
@@ -41,6 +42,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
               <Route path="/verify" element={<Verify />} />
+              <Route path="/ContactUs" element={<ContactUsPage/>}/>
 
               <Route
                 path="/"

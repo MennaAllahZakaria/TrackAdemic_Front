@@ -189,6 +189,7 @@ function Dashboard() {
             </button>
 
             <button
+                onClick={()=>navigate("/ContactUs")}
                 className="bg-purple-200 text-purple-700 px-6 py-3 rounded-full
                 hover:bg-purple-300 hover:-translate-y-0.5
                 transition-all duration-200"
