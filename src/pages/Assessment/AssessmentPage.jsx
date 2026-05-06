@@ -58,17 +58,19 @@ function AssessmentsPage() {
         "/assessment/active"
       );
 
-      if (res.data.status === "success") {
-        const data = res.data.data;
+      console.log(res);
 
-        setActiveAssessment(data);
+      if (res.data.status === "success") {
+
+        const data = res.data.data;
 
         const current =
           data.answers[
             data.answers.length - 1
           ];
 
-        if (current?.answer === null) {
+        if (current) {
+
           setQuestion({
             question:
               current.questionText,
@@ -76,16 +78,19 @@ function AssessmentsPage() {
             options:
               current.options.reduce(
                 (acc, item) => {
+
                   acc[item.option] =
                     item.text;
 
                   return acc;
+
                 },
                 {}
               ),
 
             topic: "Assessment",
           });
+
         }
 
         setSessionId(data.sessionId);
@@ -97,7 +102,10 @@ function AssessmentsPage() {
         setTotalQuestions(
           data.totalQuestions
         );
+
+        setActiveAssessment(data);
       }
+
     } catch (err) {
       console.log(err);
     } finally {
@@ -131,6 +139,7 @@ function AssessmentsPage() {
       const res = await api.post(
         "/assessment/start"
       );
+      console.log(res)
 
       // لو فيه assessment active
       if (
@@ -408,8 +417,8 @@ function AssessmentsPage() {
                   activeAssessment={
                     activeAssessment
                   }
-                  continueAssessment={() => {
-                    fetchActiveAssessment();
+                  continueAssessment={async () => {
+                    await fetchActiveAssessment();
                   }}
                 />
               ) : (
