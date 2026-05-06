@@ -3,10 +3,17 @@ import api from "../../services/api";
 
 function NotificationsPanel({ notifications, setNotifications }) {
   const [visible, setVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState("all");
 
   useEffect(() => {
     setTimeout(() => setVisible(true), 10);
   }, []);
+
+  // ================= FILTER =================
+  const filteredNotifications =
+    activeTab === "unread"
+      ? notifications.filter((n) => !n.read)
+      : notifications;
 
   // ================= GROUP =================
   const groupNotifications = () => {
@@ -15,7 +22,7 @@ function NotificationsPanel({ notifications, setNotifications }) {
 
     const now = new Date();
 
-    notifications.forEach((n) => {
+    filteredNotifications.forEach((n) => {
       const date = new Date(n.createdAt);
 
       const diff = now - date;
@@ -37,9 +44,8 @@ function NotificationsPanel({ notifications, setNotifications }) {
 
   const markAsRead = async (id) => {
     try {
-      // optimistic
-      setNotifications(prev =>
-        prev.map(n =>
+      setNotifications((prev) =>
+        prev.map((n) =>
           n._id === id ? { ...n, read: true } : n
         )
       );
@@ -54,7 +60,11 @@ function NotificationsPanel({ notifications, setNotifications }) {
   const deleteOne = async (id) => {
     try {
       await api.delete(`/notifications/${id}`);
-      setNotifications(prev => prev.filter(n => n._id !== id));
+
+      setNotifications((prev) =>
+        prev.filter((n) => n._id !== id)
+      );
+
     } catch (err) {
       console.error(err);
     }
@@ -62,15 +72,18 @@ function NotificationsPanel({ notifications, setNotifications }) {
 
   const markAllRead = async () => {
     try {
-      // optimistic
-      setNotifications(prev =>
-        prev.map(n => ({ ...n, read: true }))
+      setNotifications((prev) =>
+        prev.map((n) => ({
+          ...n,
+          read: true,
+        }))
       );
 
-      // ⚠️ لو عندك API جماعي استخدميه
       await Promise.all(
-        notifications.map(n =>
-          !n.read && api.put(`/notifications/read/${n._id}`)
+        notifications.map(
+          (n) =>
+            !n.read &&
+            api.put(`/notifications/read/${n._id}`)
         )
       );
 
@@ -79,53 +92,135 @@ function NotificationsPanel({ notifications, setNotifications }) {
     }
   };
 
-  // ================= UI =================
+  // ================= RENDER =================
 
   const renderGroup = (title, list) => {
     if (!list.length) return null;
 
     return (
-      <div>
-        <p className="text-xs text-gray-400 px-4 py-2">{title}</p>
+      <div className="mb-3">
 
-        {list.map((n) => (
-          <div
-            key={n._id}
-            onClick={() => !n.read && markAsRead(n._id)}
-            className={`
-              p-4 border-b flex justify-between gap-3 transition cursor-pointer
-              ${!n.read ? "bg-blue-50" : "hover:bg-gray-50"}
-            `}
-          >
-            <div className="flex-1">
+        <p className="text-[11px] font-medium text-gray-400 px-4 py-2 uppercase tracking-wide">
+          {title}
+        </p>
 
-              <p className="text-sm font-medium text-gray-800">
-                {n.title}
-              </p>
+        <div className="space-y-2 px-2">
 
-              <p className="text-xs text-gray-500 mt-1 line-clamp-2">
-                {n.message}
-              </p>
+          {list.map((n) => (
+            <div
+              key={n._id}
+              onClick={() =>
+                !n.read && markAsRead(n._id)
+              }
+              className={`
+                relative
+                px-4 py-4
+                rounded-2xl
+                flex gap-4
+                cursor-pointer
+                transition-all duration-300
 
-              <p className="text-[10px] text-gray-400 mt-1">
-                {new Date(n.createdAt).toLocaleTimeString()}
-              </p>
+                ${
+                  !n.read
+                    ? `
+                      bg-gradient-to-r from-blue-50 to-blue-100/40
+                      border border-blue-100
+                      shadow-[0_4px_12px_rgba(59,130,246,0.08)]
+                      hover:bg-blue-100/60
+                    `
+                    : `
+                      bg-white
+                      border border-gray-100
+                      hover:bg-gray-50
+                    `
+                }
+              `}
+            >
+
+              {/* UNREAD DOT */}
+              {!n.read && (
+                <div className="absolute left-2 top-6 w-2 h-2 rounded-full bg-blue-500"></div>
+              )}
+
+              {/* ICON */}
+              <div
+                className={`
+                  min-w-[42px] h-[42px]
+                  rounded-full
+                  flex items-center justify-center
+                  transition
+
+                  ${
+                    !n.read
+                      ? "bg-blue-100 text-blue-600"
+                      : "bg-gray-100 text-gray-500"
+                  }
+                `}
+              >
+                <i className="ri-notification-3-line text-lg"></i>
+              </div>
+
+              {/* CONTENT */}
+              <div className="flex-1">
+
+                <div className="flex justify-between gap-3">
+
+                  <div>
+
+                    <p
+                      className={`
+                        text-sm
+                        ${
+                          !n.read
+                            ? "font-semibold text-gray-900"
+                            : "font-medium text-gray-700"
+                        }
+                      `}
+                    >
+                      {n.title}
+                    </p>
+
+                    <p className="text-xs text-gray-500 mt-1 leading-relaxed line-clamp-2">
+                      {n.message}
+                    </p>
+
+                    <p className="text-[10px] text-gray-400 mt-2">
+                      {new Date(n.createdAt).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+
+                  </div>
+
+                  {/* DELETE */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteOne(n._id);
+                    }}
+                    className="
+                      min-w-[28px] h-[28px]
+                      rounded-full
+                      flex items-center justify-center
+                      text-gray-400
+                      hover:bg-red-50
+                      hover:text-red-500
+                      transition
+                    "
+                  >
+                    <i className="ri-close-line"></i>
+                  </button>
+
+                </div>
+
+              </div>
 
             </div>
+          ))}
 
-            {/* DELETE */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteOne(n._id);
-              }}
-              className="text-gray-400 hover:text-red-500"
-            >
-              <i className="ri-close-line"></i>
-            </button>
+        </div>
 
-          </div>
-        ))}
       </div>
     );
   };
@@ -133,27 +228,104 @@ function NotificationsPanel({ notifications, setNotifications }) {
   return (
     <div
       className={`
-        absolute right-0 mt-4 w-[360px]
-        bg-white rounded-2xl shadow-xl border border-gray-100
-        origin-top-right transform transition-all duration-200
-        ${visible ? "scale-100 opacity-100" : "scale-95 opacity-0"}
+        absolute right-0 mt-4 w-[380px]
+        bg-white/95 backdrop-blur-xl
+        rounded-[28px]
+        border border-gray-100
+        shadow-[0_20px_50px_rgba(0,0,0,0.08)]
+        origin-top-right
+        transform transition-all duration-200
+        overflow-hidden z-50
+
+        ${
+          visible
+            ? "scale-100 opacity-100"
+            : "scale-95 opacity-0"
+        }
       `}
     >
 
       {/* HEADER */}
-      <div className="flex justify-between items-center p-4 border-b">
+      <div className="sticky top-0 z-10 bg-white/80 backdrop-blur border-b border-gray-100">
 
-        <h3 className="font-semibold text-gray-800">
-          Notifications
-        </h3>
+        <div className="flex justify-between items-center px-5 py-4">
 
-        <div className="flex gap-3 text-xs">
+          <div>
+            <h3 className="font-semibold text-gray-900">
+              Notifications
+            </h3>
+
+            <p className="text-xs text-gray-400 mt-1">
+              Stay updated with your activity
+            </p>
+          </div>
 
           <button
             onClick={markAllRead}
-            className="text-blue-600 hover:underline"
+            className="
+              text-xs font-medium text-blue-600
+              hover:text-blue-700 transition
+            "
           >
             Mark all read
+          </button>
+
+        </div>
+
+        {/* TABS */}
+        <div className="flex gap-2 px-4 pb-4">
+
+          <button
+            onClick={() => setActiveTab("all")}
+            className={`
+              px-4 h-9 rounded-full text-sm font-medium transition
+
+              ${
+                activeTab === "all"
+                  ? "bg-blue-600 text-white shadow-sm"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }
+            `}
+          >
+            All
+          </button>
+
+          <button
+            onClick={() => setActiveTab("unread")}
+            className={`
+              px-4 h-9 rounded-full text-sm font-medium transition flex items-center gap-2
+
+              ${
+                activeTab === "unread"
+                  ? "bg-blue-600 text-white shadow-sm"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }
+            `}
+          >
+            Unread
+
+            {notifications.filter((n) => !n.read).length > 0 && (
+              <span
+                className={`
+                  text-[10px]
+                  min-w-[18px] h-[18px]
+                  rounded-full
+                  flex items-center justify-center
+                  px-1
+
+                  ${
+                    activeTab === "unread"
+                      ? "bg-white/20 text-white"
+                      : "bg-blue-100 text-blue-600"
+                  }
+                `}
+              >
+                {
+                  notifications.filter((n) => !n.read).length
+                }
+              </span>
+            )}
+
           </button>
 
         </div>
@@ -161,11 +333,23 @@ function NotificationsPanel({ notifications, setNotifications }) {
       </div>
 
       {/* BODY */}
-      <div className="max-h-[420px] overflow-y-auto">
+      <div className="max-h-[500px] overflow-y-auto py-2">
 
-        {notifications.length === 0 ? (
-          <div className="p-8 text-center text-gray-400 text-sm">
-            You're all caught up 🎉
+        {filteredNotifications.length === 0 ? (
+          <div className="py-14 px-6 text-center">
+
+            <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+              <i className="ri-notification-off-line text-2xl text-gray-400"></i>
+            </div>
+
+            <h4 className="font-medium text-gray-700">
+              No notifications
+            </h4>
+
+            <p className="text-sm text-gray-400 mt-2">
+              You're all caught up ✨
+            </p>
+
           </div>
         ) : (
           <>
