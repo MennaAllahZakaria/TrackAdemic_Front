@@ -24,6 +24,7 @@ import TrackDetails from "./pages/TrackDetails"
 import AboutPage from "./pages/AboutPage";
 import ProfilePage from "./pages/ProfilePage"
 import AssessmentPage from "./pages/Assessment/AssessmentPage"
+import AssessmentDetailsPage from "./pages/Assessment/AssessmentDetailsPage"
 import ContactUsPage from "./pages/ContactUsPage";
 import QuizzesPage from "./pages/quiz/QuizzesPage";
 import QuizDetailsPage from "./pages/quiz/QuizDetailsPage";
@@ -180,10 +181,18 @@ function App() {
                 }
               />
               <Route
-                path="/assessment"
+                path="/assessments"
                 element={
                   <ProtectedRoute>
                     <AssessmentPage  />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/assessment/:id"
+                element={
+                  <ProtectedRoute>
+                    <AssessmentDetailsPage  />
                   </ProtectedRoute>
                 }
               />

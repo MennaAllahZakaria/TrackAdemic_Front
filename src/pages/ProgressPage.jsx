@@ -270,11 +270,30 @@ function ProgressPage() {
             </p>
 
             <button
-              onClick={() => navigate("/assessment")}
-              className="mt-6 bg-white text-purple-600 px-6 py-2 rounded-full font-medium"
-            >
-              Start Final Assessment →
-            </button>
+                onClick={() =>
+                  navigate("/assessments", {
+                    state: {
+                      fromProgress: true,
+                    },
+                  })
+                }
+                className="
+                  mt-6
+
+                  bg-white
+                  text-purple-600
+
+                  px-6 py-3
+                  rounded-full
+
+                  font-semibold
+
+                  hover:scale-105
+                  transition-all duration-300
+                "
+              >
+                Start Final Assessment →
+              </button>
           </div>
         </div>
 
