@@ -77,7 +77,7 @@ function CourseDetails() {
         });
 
         // ✅ نحدث الstate فورًا (optimistic UI)
-        setProgress(res.data.data);
+        setProgress(res.data.data.progress);
 
       } catch (err) {
         console.error(err);

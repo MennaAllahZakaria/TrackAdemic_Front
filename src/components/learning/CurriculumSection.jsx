@@ -133,7 +133,7 @@ function CurriculumSection({ data }) {
                   text-gray-900
                   leading-snug
                 ">
-                  {phase.title}
+                  {phase.phase_title}
                 </h3>
 
                 {/* OBJECTIVE */}

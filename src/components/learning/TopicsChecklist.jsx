@@ -19,7 +19,7 @@ function TopicsChecklist({ topics = [], progress, setProgress }) {
       });
 
       // update progress مباشرة
-      setProgress(res.data.data);
+      setProgress(res.data.data.progress);
 
     } catch (err) {
       console.error(err);
