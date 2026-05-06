@@ -30,6 +30,7 @@ import QuizDetailsPage from "./pages/quiz/QuizDetailsPage";
 import QuizResultPage from "./pages/quiz/QuizResultPage";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPage from "./pages/PrivacyPage";
+import AnalyticsPage from "./pages/AnalyticsPage"
 
 import { ProgressProvider } from "./context/ProgressContext";
 import { UserProvider } from "./context/UserContext";
@@ -207,6 +208,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <QuizResultPage  />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/analytics"
+                element={
+                  <ProtectedRoute>
+                    <AnalyticsPage  />
                   </ProtectedRoute>
                 }
               />
