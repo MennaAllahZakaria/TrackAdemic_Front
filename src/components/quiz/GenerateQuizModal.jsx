@@ -75,12 +75,19 @@ function GenerateQuizModal({ open, setOpen }) {
       {/* MODAL */}
       <div className="
         w-full max-w-[620px]
-        bg-white
-        rounded-[32px]
-        shadow-[0_20px_60px_rgba(0,0,0,0.15)]
-        border border-gray-100
-        overflow-hidden
-        animate-[fadeIn_.25s_ease]
+          max-h-[90vh]
+          overflow-y-auto
+
+          bg-white
+          rounded-[32px]
+          shadow-[0_20px_60px_rgba(0,0,0,0.15)]
+          border border-gray-100
+
+          animate-[fadeIn_.25s_ease]
+
+          scrollbar-thin
+          scrollbar-thumb-gray-300
+          scrollbar-track-transparent
       ">
 
         {/* HEADER */}
