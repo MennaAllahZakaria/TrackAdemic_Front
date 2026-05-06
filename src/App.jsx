@@ -28,6 +28,8 @@ import ContactUsPage from "./pages/ContactUsPage";
 import QuizzesPage from "./pages/quiz/QuizzesPage";
 import QuizDetailsPage from "./pages/quiz/QuizDetailsPage";
 import QuizResultPage from "./pages/quiz/QuizResultPage";
+import TermsPage from "./pages/TermsPage";
+import PrivacyPage from "./pages/PrivacyPage";
 
 import { ProgressProvider } from "./context/ProgressContext";
 import { UserProvider } from "./context/UserContext";
@@ -46,6 +48,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/verify" element={<Verify />} />
               <Route path="/ContactUs" element={<ContactUsPage/>}/>
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
 
               <Route
                 path="/"
