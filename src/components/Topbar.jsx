@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import NotificationBell from "../components/Notification/NotificationBell"
+import StreakCard from "../components/streak/StreakCard";
 
 function Topbar() {
   const { token } = useAuth();
@@ -38,13 +39,7 @@ function Topbar() {
           <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full "></span>
         </div>
         {/* 🔥 Streak */}
-        <div className="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full">
-          <i className="ri-fire-fill text-orange-500 text-sm"></i>
-
-          <span className="text-sm font-medium text-orange-600">
-            {user?.streak?.count || 0}
-          </span>
-        </div>
+        <StreakCard streak={user?.streak} />
 
         {/* 👤 Profile */}
         <div
