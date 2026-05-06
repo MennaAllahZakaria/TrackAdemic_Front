@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 function RightSidebar() {
   const [data, setData] = useState(null);
+    const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchContext = async () => {
@@ -54,7 +57,9 @@ function RightSidebar() {
       </div>
 
       {/* MILESTONE */}
-      <div className="bg-green-100 p-5 rounded-2xl">
+      <div className="bg-green-100 p-5 rounded-2xl cursor-pointer"
+        onClick={()=>{navigate("/quizzes")}}
+      >
 
         <p className="text-xs text-green-700 font-medium">
           MILESTONE

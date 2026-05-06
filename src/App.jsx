@@ -25,6 +25,9 @@ import AboutPage from "./pages/AboutPage";
 import ProfilePage from "./pages/ProfilePage"
 import AssessmentPage from "./pages/Assessment/AssessmentPage"
 import ContactUsPage from "./pages/ContactUsPage";
+import QuizzesPage from "./pages/quiz/QuizzesPage";
+import QuizDetailsPage from "./pages/quiz/QuizDetailsPage";
+import QuizResultPage from "./pages/quiz/QuizResultPage";
 
 import { ProgressProvider } from "./context/ProgressContext";
 import { UserProvider } from "./context/UserContext";
@@ -176,6 +179,30 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <AssessmentPage  />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/quizzes"
+                element={
+                  <ProtectedRoute>
+                    <QuizzesPage  />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/quiz/:id"
+                element={
+                  <ProtectedRoute>
+                    <QuizDetailsPage  />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/quiz/result/:id"
+                element={
+                  <ProtectedRoute>
+                    <QuizResultPage  />
                   </ProtectedRoute>
                 }
               />

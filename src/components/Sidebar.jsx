@@ -14,6 +14,7 @@ const menu = [
   { name: "profile", icon: "ri-user-3-line", path: "/profile" },
   { name: "About", icon: "ri-information-line", path: "/about" },
   { name: "Progress", icon: "ri-bar-chart-line", path: "/progress" },
+  { name: "Quizzes" , icon: "ri-brain-line", path: "/quizzes"  },
   { name: "Logout", icon: "ri-logout-box-r-line", path: "/logout" },
   { name: "Support", icon: "ri-question-line", path: "/ContactUs" },
 ];
@@ -61,11 +62,28 @@ function Sidebar() {
   };
 
   return (
-    <div className="w-64 h-screen bg-[#F9FAFB] p-6 flex flex-col">
+    <div
+      className="
+        w-64 h-screen
+        bg-[#F9FAFB]
+        p-6
+        flex flex-col
+        overflow-y-auto
+        no-scrollbar
+        border-r border-gray-100
+      "
+    >
 
       {/* LOGO */}
-      <div className="flex items-center gap-3 mb-10">
-        <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white text-lg">
+      <div className="flex items-center gap-3 mb-10 flex-shrink-0">
+
+        <div className="
+          w-10 h-10
+          bg-blue-600
+          rounded-full
+          flex items-center justify-center
+          text-white text-lg
+        ">
           🎓
         </div>
 
@@ -73,68 +91,175 @@ function Sidebar() {
           <h2 className="text-[18px] font-bold text-gray-900">
             Trackademic
           </h2>
-          <p className="text-[11px] text-gray-400 tracking-wide">
+
+          <p className="
+            text-[11px]
+            text-gray-400
+            tracking-wide
+          ">
             ACADEMIC EXCELLENCE
           </p>
         </div>
+
       </div>
 
       {/* MENU */}
-      <nav className="flex flex-col gap-2">
+      <nav className="
+        flex flex-col gap-2 pb-10
+      ">
 
         {menu.map((item) => {
-          const isActive = location.pathname === item.path;
+          const isActive =
+            location.pathname === item.path;
 
           return (
             <div
               key={item.name}
               onClick={() => handleClick(item)}
               className={`
-                flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer
-                transition-all duration-200
+                group
+                flex items-center gap-3
+                px-4 py-3
+                rounded-2xl
+                cursor-pointer
+                transition-all duration-300
+                border
 
                 ${
                   isActive
-                    ? "bg-blue-50 text-blue-600 shadow-sm"
-                    : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                    ? `
+                      bg-blue-50
+                      text-blue-600
+                      border-blue-100
+                      shadow-sm
+                    `
+                    : `
+                      text-gray-500
+                      border-transparent
+                      hover:bg-white
+                      hover:border-gray-200
+                      hover:text-gray-900
+                    `
                 }
               `}
             >
-              <i className={`${getIcon(item, isActive)} text-[18px]`}></i>
 
-              <span className="text-sm font-medium">
+              {/* ICON */}
+              <div
+                className={`
+                  w-10 h-10 rounded-xl
+                  flex items-center justify-center
+                  transition-all duration-300
+
+                  ${
+                    isActive
+                      ? `
+                        bg-blue-100
+                        text-blue-600
+                      `
+                      : `
+                        bg-gray-100
+                        text-gray-500
+                        group-hover:bg-[#9FF79F]
+                      `
+                  }
+                `}
+              >
+                <i
+                  className={`
+                    ${getIcon(item, isActive)}
+                    text-[18px]
+                  `}
+                ></i>
+              </div>
+
+              {/* TEXT */}
+              <span className="
+                text-sm font-medium
+              ">
                 {item.name}
               </span>
+
             </div>
           );
         })}
 
       </nav>
+
+      {/* LOGOUT MODAL */}
       {showLogout && (
-        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+        <div className="
+          fixed inset-0
+          bg-black/30
+          flex items-center justify-center
+          z-50
+        ">
 
-          <div className="bg-white w-[380px] rounded-2xl p-6 shadow-xl">
+          <div className="
+            bg-white
+            w-[380px]
+            rounded-3xl
+            p-7
+            shadow-2xl
+          ">
 
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <div className="
+              w-16 h-16 rounded-2xl
+              bg-red-100
+              text-red-500
+              flex items-center justify-center
+              mx-auto
+            ">
+              <i className="
+                ri-logout-box-r-line text-3xl
+              "></i>
+            </div>
+
+            <h3 className="
+              text-2xl font-bold text-gray-900
+              text-center mt-5
+            ">
               Confirm Logout
             </h3>
 
-            <p className="text-sm text-gray-500 mb-6">
-              Are you sure you want to log out?
+            <p className="
+              text-sm text-gray-500
+              text-center mt-3 leading-relaxed
+            ">
+              Are you sure you want to
+              log out from your account?
             </p>
 
-            <div className="flex gap-3">
+            <div className="
+              flex gap-3 mt-8
+            ">
 
               <button
-                onClick={() => setShowLogout(false)}
-                className="flex-1 py-2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
+                onClick={() =>
+                  setShowLogout(false)
+                }
+                className="
+                  flex-1 h-12 rounded-2xl
+                  bg-gray-100
+                  text-gray-700
+                  hover:bg-gray-200
+                  transition-all duration-300
+                  font-medium
+                "
               >
                 Cancel
               </button>
 
               <button
                 onClick={handleLogout}
-                className="flex-1 py-2 rounded-xl bg-red-500 text-white hover:bg-red-600 transition"
+                className="
+                  flex-1 h-12 rounded-2xl
+                  bg-red-500
+                  text-white
+                  hover:bg-red-600
+                  transition-all duration-300
+                  font-medium
+                "
               >
                 Logout
               </button>
@@ -145,6 +270,7 @@ function Sidebar() {
 
         </div>
       )}
+
     </div>
   );
   
