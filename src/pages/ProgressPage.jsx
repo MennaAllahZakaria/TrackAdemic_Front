@@ -46,6 +46,7 @@ function ProgressPage() {
 
       } catch (err) {
         console.error("path error", err);
+        navigate("/onboarding")
       } finally {
         setLoading(false);
       }

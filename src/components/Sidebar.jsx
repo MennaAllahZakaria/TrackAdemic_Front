@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 
 const menu = [
   { name: "Home", icon: "ri-home-5-line", path: "/" },
-  { name: "Tutor", icon: "ri-user-line", path: "/chat" },
+  { name: "Tracky", icon: "ri-robot-2-line", path: "/chat" },
   { name: "My Learning", icon: "ri-book-open-line", path: "/my-learning" },
   { name: "Tracks", icon: "ri-compass-3-line", path: "/tracks" },
   { name: "Analytics", icon: "ri-line-chart-line", path: "/analytics" },
