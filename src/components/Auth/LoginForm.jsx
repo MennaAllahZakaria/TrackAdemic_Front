@@ -48,7 +48,7 @@ function LoginForm() {
         />
 
         <p className="text-sm text-gray-500">
-            Forget your password? <a onClick={() => navigate("/signup")} className="text-blue-600 cursor-pointer" >Reset it here</a>.
+            Forget your password? <a onClick={() => navigate("/forgot-password")} className="text-blue-600 cursor-pointer" >Reset it here</a>.
         </p>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
