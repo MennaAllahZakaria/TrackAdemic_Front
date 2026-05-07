@@ -48,7 +48,7 @@ function LoginForm() {
         />
 
         <p className="text-sm text-gray-500">
-            Forget your password? <a href="/forgot-password" className="text-blue-600 cursor-pointer" >Reset it here</a>.
+            Forget your password? <a onClick={() => navigate("/signup")} className="text-blue-600 cursor-pointer" >Reset it here</a>.
         </p>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -57,8 +57,10 @@ function LoginForm() {
         bg-gradient-to-r from-blue-600 to-blue-400">
           Login
         </button>
-        <p className="text-center text-sm mt-4">
-            Didn't Have Account? <a href="/signup" className="text-blue-600 cursor-pointer" >Sign Up </a>.
+        <p className="text-center text-sm mt-4"
+          
+        >
+            Didn't Have Account? <a onClick={() => navigate("/signup")} className="text-blue-600 cursor-pointer" >Sign Up </a>.
         </p>
       </form>
 
