@@ -16,6 +16,10 @@ function Footer() {
       name: "Contact Support",
       path: "/contactUs",
     },
+    {
+      name: "About US",
+      path: "/about",
+    },
 
   ];
 

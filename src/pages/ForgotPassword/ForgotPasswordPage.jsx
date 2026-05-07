@@ -124,11 +124,15 @@ function ForgotPasswordPage() {
             {/* TERMS */}
             <p className="text-xs text-gray-400 text-center leading-relaxed">
               By continuing, you agree to Trackademic's{" "}
-              <span className="underline cursor-pointer hover:text-gray-600">
+              <span className="underline cursor-pointer hover:text-gray-600"
+                onClick={() => navigate("terms")}
+              >
                 Terms of Service
               </span>{" "}
               and{" "}
-              <span className="underline cursor-pointer hover:text-gray-600">
+              <span className="underline cursor-pointer hover:text-gray-600"
+                onClick={() => navigate("/privacy")}
+              >
                 Privacy Policy
               </span>.
             </p>

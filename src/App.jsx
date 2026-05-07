@@ -142,25 +142,19 @@ function App() {
               <Route
                 path="/forgot-password"
                 element={
-                  <ProtectedRoute>
                     <ForgotPasswordPage />
-                  </ProtectedRoute>
                 }
               />
               <Route
                 path="/verify-code"
                 element={
-                  <ProtectedRoute>
                     <VerifyCodePage />
-                  </ProtectedRoute>
                 }
               />
               <Route
                 path="/reset-password"
                 element={
-                  <ProtectedRoute>
                     <ResetPasswordPage />
-                  </ProtectedRoute>
                 }
               />
               <Route path="/about" element={<AboutPage />} />

@@ -103,22 +103,6 @@ function AboutPage() {
           </div>
         </div>
 
-        {/* ================= FOOTER ================= */}
-        <div className="border-t pt-6 text-sm text-gray-400 flex justify-between">
-
-          <div>
-            <p className="font-semibold text-gray-600">Trackademic</p>
-            <p>Building the infrastructure for the next generation of global knowledge.</p>
-          </div>
-
-          <div className="flex gap-6">
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Contact Support</span>
-            <span>Careers</span>
-          </div>
-
-        </div>
 
       </div>
     </MainLayout>
