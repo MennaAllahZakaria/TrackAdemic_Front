@@ -3,10 +3,10 @@ import Topbar from "../components/Topbar";
 import Footer from "../components/Footer";
 
 function MainLayout({ children }) {
+
   return (
     <div
       className="
-        flex
         min-h-screen
         bg-gray-100
       "
@@ -18,9 +18,10 @@ function MainLayout({ children }) {
       {/* MAIN CONTENT */}
       <div
         className="
-          flex-1
           flex flex-col
-          min-w-0
+          min-h-screen
+
+          sm:ml-64
         "
       >
 
@@ -31,13 +32,12 @@ function MainLayout({ children }) {
         <main
           className="
             flex-1
-            overflow-y-auto
 
-            pt-20 sm:pt-0
+            pt-20 sm:pt-6
 
-            p-4
-            sm:p-6
-            lg:p-8
+            px-4 py-5
+            md:px-6 md:py-6
+            lg:px-8 lg:py-8
           "
         >
           {children}

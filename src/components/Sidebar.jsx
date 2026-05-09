@@ -155,7 +155,6 @@ function Sidebar() {
           }
 
           sm:translate-x-0
-          sm:static
           sm:w-64
           sm:flex
         `}
