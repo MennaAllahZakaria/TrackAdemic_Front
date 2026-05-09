@@ -1,34 +1,78 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
 import api from "../../services/api";
 import { toast } from "react-hot-toast";
+
 import InputField from "../../components/forgotPassword/InputField";
 
 function ResetPasswordPage() {
-  const [form, setForm] = useState({
-    newPassword: "",
-    passwordConfirm: "",
-  });
 
-  const [show, setShow] = useState({
-    new: false,
-    confirm: false,
-  });
+  const [form, setForm] =
+    useState({
+      newPassword: "",
+      passwordConfirm: "",
+    });
 
-    // ================= PASSWORD STRENGTH =================
-  const getStrength = (password) => {
+  const [show, setShow] =
+    useState({
+      new: false,
+      confirm: false,
+    });
+
+  const location =
+    useLocation();
+
+  const navigate =
+    useNavigate();
+
+  const email =
+    location.state?.email;
+
+  const getStrength = (
+    password
+  ) => {
+
     let score = 0;
 
-    if (password.length >= 8) score++;
-    if (password.length >= 12) score++;
-    if (/[A-Z]/.test(password)) score++;
-    if (/[0-9]/.test(password)) score++;
-    if (/[^A-Za-z0-9]/.test(password)) score++;
+    if (
+      password.length >= 8
+    )
+      score++;
+
+    if (
+      password.length >= 12
+    )
+      score++;
+
+    if (
+      /[A-Z]/.test(password)
+    )
+      score++;
+
+    if (
+      /[0-9]/.test(password)
+    )
+      score++;
+
+    if (
+      /[^A-Za-z0-9]/.test(
+        password
+      )
+    )
+      score++;
 
     return score;
+
   };
 
-  const strength = getStrength(form.newPassword);
+  const strength =
+    getStrength(
+      form.newPassword
+    );
 
   const strengthColor = [
     "bg-red-500",
@@ -36,7 +80,8 @@ function ResetPasswordPage() {
     "bg-yellow-500",
     "bg-green-400",
     "bg-green-600",
-  ][strength - 1] || "bg-gray-200";
+  ][strength - 1] ||
+    "bg-gray-200";
 
   const strengthText = [
     "Weak",
@@ -48,154 +93,386 @@ function ResetPasswordPage() {
 
   const passwordsMatch =
     form.passwordConfirm &&
-    form.newPassword === form.passwordConfirm;
+    form.newPassword ===
+      form.passwordConfirm;
 
-  const location = useLocation();
-  const navigate = useNavigate();
-  const email = location.state?.email;
+  const handleChange = (
+    e
+  ) => {
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]:
+        e.target.value,
+    });
+
   };
 
-  const handleSubmit = async () => {
-    if (!passwordsMatch) {
-      toast.error("Passwords do not match");
-      return;
-    }
+  const handleSubmit =
+    async () => {
 
-    try {
-      await api.post("/auth/resetPassword", {
-        email,
-        ...form,
-      });
+      if (
+        !passwordsMatch
+      ) {
 
-      toast.success("Password reset successfully ✔️");
+        toast.error(
+          "Passwords do not match"
+        );
 
-      navigate("/login");
+        return;
 
-    } catch (err) {
-      toast.error("Error resetting password");
-    }
-  };
+      }
 
-return (
-  <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center p-6">
+      try {
 
-    <div className="w-full max-w-[1100px] bg-white rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] overflow-hidden flex">
+        await api.post(
+          "/auth/resetPassword",
+          {
+            email,
+            ...form,
+          }
+        );
 
-      {/* ================= LEFT ================= */}
-      <div className="w-1/2 bg-gray-50 flex flex-col items-center justify-center p-10">
+        toast.success(
+          "Password reset successfully ✔️"
+        );
 
-        <img
-          src="/reset.png" // حطي الصورة هنا
-          alt="reset"
-          className="w-[280px] mb-6"
-        />
+        navigate("/login");
 
-        <h2 className="text-lg font-semibold text-gray-700">
-          Trackademic
-        </h2>
+      } catch (err) {
 
-        <p className="text-sm text-gray-400 mt-2 text-center max-w-[250px]">
-          Secure your account and continue your learning journey safely.
-        </p>
+        toast.error(
+          "Error resetting password"
+        );
 
-      </div>
+      }
 
-      {/* ================= RIGHT ================= */}
-      <div className="w-1/2 flex items-center justify-center p-10">
+    };
 
-        {/* 👇 الفورم بتاعك زي ما هو */}
-        <div className="w-full max-w-[380px]">
+  return (
+    <div
+      className="
+        min-h-screen
 
-          <h2 className="text-2xl font-bold mb-2">
-            Reset Password
+        bg-[#f8fafc]
+
+        flex items-center justify-center
+
+        px-4
+        py-8
+      "
+    >
+
+      <div
+        className="
+          w-full
+          max-w-[1100px]
+
+          bg-white
+
+          rounded-3xl
+
+          shadow-[0_10px_40px_rgba(0,0,0,0.08)]
+
+          overflow-hidden
+
+          flex flex-col
+          lg:flex-row
+        "
+      >
+
+        {/* LEFT */}
+        <div
+          className="
+            lg:w-1/2
+
+            bg-gray-50
+
+            flex flex-col
+            items-center
+            justify-center
+
+            p-8
+            sm:p-10
+          "
+        >
+
+          <img
+            src="/reset.png"
+            alt="reset"
+            className="
+              w-[180px]
+              sm:w-[240px]
+              lg:w-[280px]
+
+              mb-6
+            "
+          />
+
+          <h2
+            className="
+              text-lg
+              font-semibold
+              text-gray-700
+            "
+          >
+            Trackademic
           </h2>
 
-          <p className="text-gray-500 text-sm mb-6">
-            Create a new secure password for your account.
+          <p
+            className="
+              text-sm
+              text-gray-400
+
+              mt-2
+
+              text-center
+
+              max-w-[250px]
+
+              leading-relaxed
+            "
+          >
+            Secure your account and
+            continue your learning
+            journey safely.
           </p>
 
-          {/* ===== الفورم (من غير تغيير) ===== */}
+        </div>
 
-          <InputField
-            label="New Password"
-            name="newPassword"
-            value={form.newPassword}
-            onChange={handleChange}
-            show={show.new}
-            toggle={() => setShow({ ...show, new: !show.new })}
-            placeholder="Enter your new password"
-          />
+        {/* RIGHT */}
+        <div
+          className="
+            lg:w-1/2
 
-          <div className="h-[1px] bg-gray-200 my-6"></div>
+            flex items-center
+            justify-center
 
-          {/* STRENGTH */}
-          <div className="mt-4">
-            <div className="flex justify-between text-xs mb-2">
-              <span className="text-gray-400">SECURITY LEVEL</span>
-              <span className="text-green-600 font-medium">
-                {strengthText}
-              </span>
-            </div>
+            p-6
+            sm:p-10
+          "
+        >
 
-            <div className="flex gap-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className={`h-2 flex-1 rounded-full transition-all duration-300 ${
-                    strength >= i ? strengthColor : "bg-gray-200"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="h-[1px] bg-gray-200 my-6"></div>
-
-          <InputField
-            label="Confirm Password"
-            name="passwordConfirm"
-            value={form.passwordConfirm}
-            onChange={handleChange}
-            show={show.confirm}
-            toggle={() =>
-              setShow({ ...show, confirm: !show.confirm })
-            }
-            placeholder="Confirm your new password"
-          />
-
-          {form.passwordConfirm && (
-            <p
-              className={`text-xs mt-2 ${
-                passwordsMatch
-                  ? "text-green-600"
-                  : "text-red-500"
-              }`}
-            >
-              {passwordsMatch
-                ? "Passwords match ✔️"
-                : "Passwords do not match"}
-            </p>
-          )}
-
-          <div className="h-[1px] bg-gray-200 my-6"></div>
-
-          <button
-            onClick={handleSubmit}
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 rounded-xl shadow-md hover:shadow-lg transition-all hover:scale-[1.02]"
+          <div
+            className="
+              w-full
+              max-w-[380px]
+            "
           >
-            Reset Password →
-          </button>
+
+            <h2
+              className="
+                text-2xl
+                sm:text-3xl
+
+                font-bold
+
+                mb-2
+              "
+            >
+              Reset Password
+            </h2>
+
+            <p
+              className="
+                text-gray-500
+                text-sm
+
+                mb-6
+
+                leading-relaxed
+              "
+            >
+              Create a new secure
+              password for your
+              account.
+            </p>
+
+            <InputField
+              label="New Password"
+              name="newPassword"
+              value={
+                form.newPassword
+              }
+              onChange={
+                handleChange
+              }
+              show={show.new}
+              toggle={() =>
+                setShow({
+                  ...show,
+                  new:
+                    !show.new,
+                })
+              }
+              placeholder="Enter your new password"
+            />
+
+            <div
+              className="
+                h-[1px]
+                bg-gray-200
+                my-6
+              "
+            ></div>
+
+            {/* STRENGTH */}
+            <div className="mt-4">
+
+              <div
+                className="
+                  flex justify-between
+
+                  text-xs
+
+                  mb-2
+
+                  gap-3
+                "
+              >
+
+                <span className="text-gray-400">
+                  SECURITY LEVEL
+                </span>
+
+                <span
+                  className="
+                    text-green-600
+                    font-medium
+                  "
+                >
+                  {strengthText}
+                </span>
+
+              </div>
+
+              <div className="flex gap-2">
+
+                {[1,2,3,4].map(
+                  (i) => (
+
+                    <div
+                      key={i}
+                      className={`
+                        h-2
+
+                        flex-1
+
+                        rounded-full
+
+                        transition-all duration-300
+
+                        ${
+                          strength >= i
+                            ? strengthColor
+                            : "bg-gray-200"
+                        }
+                      `}
+                    ></div>
+
+                  )
+                )}
+
+              </div>
+
+            </div>
+
+            <div
+              className="
+                h-[1px]
+                bg-gray-200
+                my-6
+              "
+            ></div>
+
+            <InputField
+              label="Confirm Password"
+              name="passwordConfirm"
+              value={
+                form.passwordConfirm
+              }
+              onChange={
+                handleChange
+              }
+              show={show.confirm}
+              toggle={() =>
+                setShow({
+                  ...show,
+                  confirm:
+                    !show.confirm,
+                })
+              }
+              placeholder="Confirm your new password"
+            />
+
+            {form.passwordConfirm && (
+
+              <p
+                className={`
+                  text-xs
+
+                  mt-2
+
+                  ${
+                    passwordsMatch
+                      ? "text-green-600"
+                      : "text-red-500"
+                  }
+                `}
+              >
+
+                {passwordsMatch
+                  ? "Passwords match ✔️"
+                  : "Passwords do not match"}
+
+              </p>
+
+            )}
+
+            <div
+              className="
+                h-[1px]
+                bg-gray-200
+                my-6
+              "
+            ></div>
+
+            <button
+              onClick={
+                handleSubmit
+              }
+              className="
+                w-full
+
+                bg-gradient-to-r
+                from-blue-600
+                to-blue-400
+
+                text-white
+
+                py-3
+
+                rounded-xl
+
+                shadow-md
+
+                hover:shadow-lg
+                hover:scale-[1.02]
+
+                transition-all
+              "
+            >
+              Reset Password →
+            </button>
+
+          </div>
 
         </div>
 
       </div>
 
     </div>
-  </div>
-);
+  );
 }
 
 export default ResetPasswordPage;

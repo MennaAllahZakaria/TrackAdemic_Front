@@ -1,27 +1,90 @@
-import { Eye, EyeOff, Shield } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 
-function InputField({ label, name, value, onChange, show, toggle , placeholder}) {
+function InputField({
+  label,
+  name,
+  value,
+  onChange,
+  show,
+  toggle,
+  placeholder,
+}) {
+
   return (
     <div className="mb-6">
-      <p className="text-sm font-medium mb-2">{label}</p>
+
+      <p
+        className="
+          text-sm
+          font-medium
+
+          mb-2
+        "
+      >
+        {label}
+      </p>
 
       <div className="relative">
+
         <input
-          type={show ? "text" : "password"}
+          type={
+            show
+              ? "text"
+              : "password"
+          }
           name={name}
           value={value}
           onChange={onChange}
-          className="w-full bg-gray-100 p-3 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="
+            w-full
+
+            bg-gray-100
+
+            p-3
+            sm:p-4
+
+            rounded-xl
+
+            outline-none
+
+            focus:ring-2
+            focus:ring-blue-500
+
+            transition
+
+            text-sm
+            sm:text-base
+
+            pr-12
+          "
           placeholder={placeholder}
         />
 
         <div
           onClick={toggle}
-          className="absolute right-3 top-3 cursor-pointer text-gray-500"
+          className="
+            absolute
+
+            right-3
+            top-1/2
+            -translate-y-1/2
+
+            cursor-pointer
+
+            text-gray-500
+          "
         >
-          {show ? <EyeOff size={18} /> : <Eye size={18} />}
+
+          {show ? (
+            <EyeOff size={18} />
+          ) : (
+            <Eye size={18} />
+          )}
+
         </div>
+
       </div>
+
     </div>
   );
 }
