@@ -3,33 +3,57 @@ function ScoreCircle({
   score = 0,
   total = 0,
 }) {
+
   const radius = 90;
+
   const stroke = 12;
 
   const normalizedRadius =
     radius - stroke * 0.5;
 
   const circumference =
-    normalizedRadius * 2 * Math.PI;
+    normalizedRadius *
+    2 *
+    Math.PI;
 
   const strokeDashoffset =
     circumference -
-    (percentage / 100) * circumference;
+    (percentage / 100) *
+      circumference;
 
-  const passed = percentage >= 80;
+  const passed =
+    percentage >= 80;
 
   return (
-    <div className="
-      relative
-      w-[260px] h-[260px]
-      flex items-center justify-center
-      mx-auto
-    ">
+    <div
+      className="
+        relative
+
+        w-[210px]
+        h-[210px]
+
+        sm:w-[240px]
+        sm:h-[240px]
+
+        xl:w-[260px]
+        xl:h-[260px]
+
+        flex items-center justify-center
+
+        mx-auto
+      "
+    >
 
       {/* BACK GLOW */}
       <div
         className={`
-          absolute inset-0 rounded-full blur-3xl opacity-30
+          absolute inset-0
+
+          rounded-full
+
+          blur-3xl
+
+          opacity-30
 
           ${
             passed
@@ -58,7 +82,11 @@ function ScoreCircle({
 
         {/* PROGRESS */}
         <circle
-          stroke={passed ? "#22C55E" : "#EF4444"}
+          stroke={
+            passed
+              ? "#22C55E"
+              : "#EF4444"
+          }
           fill="transparent"
           strokeWidth={stroke}
           strokeLinecap="round"
@@ -76,17 +104,34 @@ function ScoreCircle({
       </svg>
 
       {/* CONTENT */}
-      <div className="
-        absolute
-        flex flex-col items-center justify-center
-      ">
+      <div
+        className="
+          absolute
+
+          flex flex-col
+          items-center justify-center
+
+          text-center
+        "
+      >
 
         {/* ICON */}
         <div
           className={`
-            w-16 h-16 rounded-2xl
+            w-12 h-12
+            sm:w-14 sm:h-14
+            xl:w-16 xl:h-16
+
+            rounded-2xl
+
             flex items-center justify-center
-            text-white text-3xl
+
+            text-white
+
+            text-2xl
+            sm:text-[28px]
+            xl:text-3xl
+
             shadow-lg
 
             ${
@@ -96,6 +141,7 @@ function ScoreCircle({
             }
           `}
         >
+
           <i
             className={
               passed
@@ -103,35 +149,65 @@ function ScoreCircle({
                 : "ri-error-warning-line"
             }
           ></i>
+
         </div>
 
         {/* PERCENT */}
-        <h2 className="
-          text-[48px]
-          font-bold
-          text-gray-900
-          mt-5
-          leading-none
-        ">
+        <h2
+          className="
+            text-4xl
+            sm:text-[42px]
+            xl:text-[48px]
+
+            font-bold
+
+            text-gray-900
+
+            mt-4
+            sm:mt-5
+
+            leading-none
+          "
+        >
           {percentage}%
         </h2>
 
         {/* SCORE */}
-        <p className="
-          text-gray-500
-          mt-3
-          text-sm
-          font-medium
-        ">
+        <p
+          className="
+            text-gray-500
+
+            mt-2
+            sm:mt-3
+
+            text-xs
+            sm:text-sm
+
+            font-medium
+          "
+        >
           Score {score} / {total}
         </p>
 
         {/* STATUS */}
         <div
           className={`
-            mt-5
-            px-5 py-2 rounded-full
-            text-sm font-semibold
+            mt-4
+            sm:mt-5
+
+            px-4
+            sm:px-5
+
+            py-2
+
+            rounded-full
+
+            text-xs
+            sm:text-sm
+
+            font-semibold
+
+            whitespace-nowrap
 
             ${
               passed
@@ -140,7 +216,9 @@ function ScoreCircle({
             }
           `}
         >
-          {passed ? "Passed 🎉" : "Needs Improvement"}
+          {passed
+            ? "Passed 🎉"
+            : "Needs Improvement"}
         </div>
 
       </div>

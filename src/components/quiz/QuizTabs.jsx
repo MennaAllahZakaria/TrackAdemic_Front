@@ -3,13 +3,17 @@ function QuizTabs({
   setActiveTab,
   quizzes = [],
 }) {
-  const total = quizzes.length;
 
-  const completed = quizzes.filter(
-    (q) => q.isSubmitted
-  ).length;
+  const total =
+    quizzes.length;
 
-  const pending = total - completed;
+  const completed =
+    quizzes.filter(
+      (q) => q.isSubmitted
+    ).length;
+
+  const pending =
+    total - completed;
 
   const tabs = [
     {
@@ -22,37 +26,68 @@ function QuizTabs({
       key: "completed",
       label: "Completed",
       count: completed,
-      icon: "ri-checkbox-circle-line",
+      icon:
+        "ri-checkbox-circle-line",
     },
     {
       key: "pending",
       label: "Pending",
       count: pending,
-      icon: "ri-loader-4-line",
+      icon:
+        "ri-loader-4-line",
     },
   ];
 
   return (
-    <div className="
-      flex items-center gap-3
-      mb-8 overflow-x-auto no-scrollbar
-    ">
+    <div
+      className="
+        flex items-center
+
+        gap-3
+
+        mb-8
+
+        overflow-x-auto
+
+        no-scrollbar
+
+        pb-2
+      "
+    >
 
       {tabs.map((tab) => {
-        const isActive = activeTab === tab.key;
+
+        const isActive =
+          activeTab === tab.key;
 
         return (
           <button
             key={tab.key}
-            onClick={() => setActiveTab(tab.key)}
+            onClick={() =>
+              setActiveTab(tab.key)
+            }
             className={`
               group
-              h-14 px-6
+
+              h-12
+              sm:h-14
+
+              px-4
+              sm:px-6
+
               rounded-2xl
-              flex items-center gap-3
+
+              flex items-center
+
+              gap-3
+
               whitespace-nowrap
+
               transition-all duration-300
+
               border
+
+              flex-shrink-0
 
               ${
                 isActive
@@ -76,8 +111,13 @@ function QuizTabs({
             {/* ICON */}
             <div
               className={`
-                w-9 h-9 rounded-xl
+                w-8 h-8
+                sm:w-9 sm:h-9
+
+                rounded-xl
+
                 flex items-center justify-center
+
                 transition-all duration-300
 
                 ${
@@ -87,26 +127,56 @@ function QuizTabs({
                 }
               `}
             >
-              <i className={`${tab.icon} text-lg`}></i>
+
+              <i
+                className={`
+                  ${tab.icon}
+
+                  text-base
+                  sm:text-lg
+                `}
+              ></i>
+
             </div>
 
             {/* LABEL */}
-            <div className="flex items-center gap-2">
+            <div
+              className="
+                flex items-center
 
-              <span className="
-                text-sm font-semibold
-              ">
+                gap-2
+              "
+            >
+
+              <span
+                className="
+                  text-xs
+                  sm:text-sm
+
+                  font-semibold
+                "
+              >
                 {tab.label}
               </span>
 
               {/* COUNT */}
               <span
                 className={`
-                  min-w-[24px] h-[24px]
+                  min-w-[22px]
+                  h-[22px]
+
+                  sm:min-w-[24px]
+                  sm:h-[24px]
+
                   px-2
+
                   rounded-full
+
                   flex items-center justify-center
-                  text-[11px]
+
+                  text-[10px]
+                  sm:text-[11px]
+
                   font-bold
 
                   ${

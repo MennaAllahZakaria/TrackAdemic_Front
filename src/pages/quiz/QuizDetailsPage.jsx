@@ -102,19 +102,23 @@ function QuizDetailsPage() {
   if (loading) {
     return (
       <MainLayout>
-        <div className="
-          min-h-[70vh]
-          flex items-center justify-center
-        ">
+        <div
+          className="
+            min-h-[70vh]
+            flex items-center justify-center
+          "
+        >
           <div className="text-center">
 
-            <div className="
-              w-16 h-16 rounded-full
-              border-4 border-blue-200
-              border-t-blue-600
-              animate-spin
-              mx-auto
-            "></div>
+            <div
+              className="
+                w-16 h-16 rounded-full
+                border-4 border-blue-200
+                border-t-blue-600
+                animate-spin
+                mx-auto
+              "
+            ></div>
 
             <p className="mt-5 text-gray-500">
               Loading quiz...
@@ -130,40 +134,78 @@ function QuizDetailsPage() {
   if (!quiz) {
     return (
       <MainLayout>
-        <div className="
-          min-h-[70vh]
-          flex items-center justify-center
-        ">
-          <div className="
-            bg-white
-            rounded-[32px]
-            border border-gray-100
-            shadow-sm
-            p-10
-            text-center
-            max-w-md
-          ">
+        <div
+          className="
+            min-h-[70vh]
+            flex items-center justify-center
+            px-4
+          "
+        >
+          <div
+            className="
+              bg-white
 
-            <div className="
-              w-20 h-20 rounded-full
-              bg-red-100
-              text-red-500
-              flex items-center justify-center
-              mx-auto
-            ">
-              <i className="ri-error-warning-line text-4xl"></i>
+              rounded-[28px]
+              sm:rounded-[32px]
+
+              border border-gray-100
+
+              shadow-sm
+
+              p-6
+              sm:p-10
+
+              text-center
+
+              max-w-md
+              w-full
+            "
+          >
+
+            <div
+              className="
+                w-16 h-16
+                sm:w-20 sm:h-20
+
+                rounded-full
+
+                bg-red-100
+                text-red-500
+
+                flex items-center justify-center
+
+                mx-auto
+              "
+            >
+              <i className="ri-error-warning-line text-3xl sm:text-4xl"></i>
             </div>
 
-            <h2 className="
-              text-2xl font-bold text-gray-900
-              mt-6
-            ">
+            <h2
+              className="
+                text-xl
+                sm:text-2xl
+
+                font-bold
+                text-gray-900
+
+                mt-6
+              "
+            >
               Quiz Not Found
             </h2>
 
-            <p className="
-              text-gray-500 mt-3 leading-relaxed
-            ">
+            <p
+              className="
+                text-gray-500
+
+                mt-3
+
+                leading-relaxed
+
+                text-sm
+                sm:text-base
+              "
+            >
               This quiz may have been deleted
               or is no longer available.
             </p>
@@ -174,9 +216,21 @@ function QuizDetailsPage() {
               }
               className="
                 mt-8
-                h-12 px-6 rounded-2xl
-                bg-blue-600 text-white
+
+                h-12
+
+                px-6
+
+                w-full
+                sm:w-auto
+
+                rounded-2xl
+
+                bg-blue-600
+                text-white
+
                 hover:bg-blue-700
+
                 transition-all duration-300
               "
             >
@@ -196,83 +250,164 @@ function QuizDetailsPage() {
 
   return (
     <MainLayout>
-      <div className="
-        max-w-[1100px]
-        mx-auto
-        pb-20
-      ">
+      <div
+        className="
+          max-w-[1100px]
+          mx-auto
+
+          px-4
+          sm:px-6
+
+          pb-20
+        "
+      >
 
         {/* HERO */}
         <div className="mb-12">
 
-          <div className="
-            inline-flex items-center gap-2
-            px-4 py-2 rounded-full
-            bg-blue-50 text-blue-600
-            text-sm font-semibold
-            mb-5
-          ">
+          <div
+            className="
+              inline-flex items-center gap-2
+
+              px-4 py-2
+
+              rounded-full
+
+              bg-blue-50
+              text-blue-600
+
+              text-xs
+              sm:text-sm
+
+              font-semibold
+
+              mb-5
+            "
+          >
             <i className="ri-flashlight-line"></i>
 
             AI Generated Quiz
           </div>
 
-          <div className="
-            flex items-start justify-between
-            gap-10 flex-wrap
-          ">
+          <div
+            className="
+              flex flex-col
+              lg:flex-row
+
+              lg:items-start
+              justify-between
+
+              gap-8 xl:gap-10
+            "
+          >
 
             {/* LEFT */}
-            <div>
+            <div className="min-w-0">
 
-              <h1 className="
-                text-[48px]
-                leading-tight
-                font-bold
-                text-gray-900
-              ">
+              <h1
+                className="
+                  text-3xl
+                  sm:text-4xl
+                  xl:text-[48px]
+
+                  leading-tight
+
+                  font-bold
+
+                  text-gray-900
+
+                  break-words
+                "
+              >
                 {quiz.quiz_title ||
                   quiz.topic}
               </h1>
 
-              <p className="
-                text-gray-500
-                mt-5
-                max-w-2xl
-                leading-[1.9]
-              ">
+              <p
+                className="
+                  text-gray-500
+
+                  mt-5
+
+                  max-w-2xl
+
+                  leading-[1.9]
+
+                  text-sm
+                  sm:text-base
+                "
+              >
                 Improve your understanding and
                 validate your knowledge through
                 interactive AI-generated questions.
               </p>
 
               {/* BADGES */}
-              <div className="
-                flex items-center gap-3
-                mt-7 flex-wrap
-              ">
+              <div
+                className="
+                  flex items-center
 
-                <div className="
-                  px-4 py-2 rounded-full
-                  bg-purple-100 text-purple-600
-                  text-sm font-semibold capitalize
-                ">
+                  gap-3
+
+                  mt-7
+
+                  flex-wrap
+                "
+              >
+
+                <div
+                  className="
+                    px-4 py-2
+
+                    rounded-full
+
+                    bg-purple-100
+                    text-purple-600
+
+                    text-xs
+                    sm:text-sm
+
+                    font-semibold
+
+                    capitalize
+                  "
+                >
                   {quiz.level}
                 </div>
 
-                <div className="
-                  px-4 py-2 rounded-full
-                  bg-green-100 text-green-600
-                  text-sm font-semibold
-                ">
+                <div
+                  className="
+                    px-4 py-2
+
+                    rounded-full
+
+                    bg-green-100
+                    text-green-600
+
+                    text-xs
+                    sm:text-sm
+
+                    font-semibold
+                  "
+                >
                   {quiz.passing_score}% Passing Score
                 </div>
 
-                <div className="
-                  px-4 py-2 rounded-full
-                  bg-orange-100 text-orange-600
-                  text-sm font-semibold
-                ">
+                <div
+                  className="
+                    px-4 py-2
+
+                    rounded-full
+
+                    bg-orange-100
+                    text-orange-600
+
+                    text-xs
+                    sm:text-sm
+
+                    font-semibold
+                  "
+                >
                   {quiz.questions.length} Questions
                 </div>
 
@@ -281,25 +416,45 @@ function QuizDetailsPage() {
             </div>
 
             {/* RIGHT */}
-            <div className="
-              bg-white
-              rounded-[30px]
-              border border-gray-100
-              p-7
-              shadow-sm
-              min-w-[300px]
-            ">
+            <div
+              className="
+                bg-white
 
-              <p className="
-                text-sm text-gray-400
-              ">
+                rounded-[24px]
+                sm:rounded-[30px]
+
+                border border-gray-100
+
+                p-5
+                sm:p-7
+
+                shadow-sm
+
+                w-full
+                lg:w-auto
+
+                lg:min-w-[300px]
+              "
+            >
+
+              <p
+                className="
+                  text-sm
+                  text-gray-400
+                "
+              >
                 Quiz Status
               </p>
 
-              <div className="
-                flex items-center gap-3
-                mt-4
-              ">
+              <div
+                className="
+                  flex items-center
+
+                  gap-3
+
+                  mt-4
+                "
+              >
 
                 <div
                   className={`
@@ -313,9 +468,16 @@ function QuizDetailsPage() {
                   `}
                 ></div>
 
-                <h3 className="
-                  text-xl font-bold text-gray-900
-                ">
+                <h3
+                  className="
+                    text-lg
+                    sm:text-xl
+
+                    font-bold
+
+                    text-gray-900
+                  "
+                >
                   {quiz.isSubmitted || result
                     ? "Completed"
                     : "Pending"}
@@ -323,10 +485,17 @@ function QuizDetailsPage() {
 
               </div>
 
-              <p className="
-                text-sm text-gray-500
-                mt-4 leading-relaxed
-              ">
+              <p
+                className="
+                  text-sm
+
+                  text-gray-500
+
+                  mt-4
+
+                  leading-relaxed
+                "
+              >
                 Complete the assessment to
                 evaluate your understanding.
               </p>
@@ -342,48 +511,90 @@ function QuizDetailsPage() {
           <div className="mb-14">
 
             {/* RESULT HEADER */}
-            <div className="
-              bg-white
-              rounded-[36px]
-              border border-gray-100
-              shadow-[0_10px_40px_rgba(0,0,0,0.05)]
-              p-10
-            ">
+            <div
+              className="
+                bg-white
 
-              <div className="
-                flex items-center justify-between
-                gap-10 flex-wrap
-              ">
+                rounded-[28px]
+                sm:rounded-[36px]
+
+                border border-gray-100
+
+                shadow-[0_10px_40px_rgba(0,0,0,0.05)]
+
+                p-5
+                md:p-8
+                xl:p-10
+              "
+            >
+
+              <div
+                className="
+                  flex flex-col
+                  xl:flex-row
+
+                  xl:items-center
+                  justify-between
+
+                  gap-10
+                "
+              >
 
                 {/* LEFT */}
                 <div>
 
-                  <div className="
-                    inline-flex items-center gap-2
-                    px-4 py-2 rounded-full
-                    bg-green-100 text-green-600
-                    text-sm font-semibold
-                  ">
+                  <div
+                    className="
+                      inline-flex items-center gap-2
+
+                      px-4 py-2
+
+                      rounded-full
+
+                      bg-green-100
+                      text-green-600
+
+                      text-xs
+                      sm:text-sm
+
+                      font-semibold
+                    "
+                  >
                     <i className="ri-trophy-line"></i>
 
                     Quiz Completed
                   </div>
 
-                  <h2 className="
-                    text-[42px]
-                    font-bold
-                    text-gray-900
-                    mt-6
-                  ">
+                  <h2
+                    className="
+                      text-3xl
+                      md:text-4xl
+                      xl:text-[42px]
+
+                      font-bold
+
+                      text-gray-900
+
+                      mt-6
+                    "
+                  >
                     Assessment Results
                   </h2>
 
-                  <p className="
-                    text-gray-500
-                    mt-4
-                    leading-[1.9]
-                    max-w-xl
-                  ">
+                  <p
+                    className="
+                      text-gray-500
+
+                      mt-4
+
+                      leading-[1.9]
+
+                      max-w-xl
+
+                      text-sm
+                      sm:text-base
+                    "
+                  >
                     Review your answers,
                     explanations, and overall
                     performance insights.
@@ -408,9 +619,7 @@ function QuizDetailsPage() {
 
             {/* RESULTS LIST */}
             {result?.results && (
-              <div className="
-                mt-10 space-y-8
-              ">
+              <div className="mt-10 space-y-8">
 
                 {result.results.map(
                   (item, index) => (
@@ -471,36 +680,68 @@ function QuizDetailsPage() {
 
           {/* SUBMIT */}
           {!quiz.isSubmitted && !result && (
-            <div className="
-              flex justify-center pt-4
-            ">
+            <div
+              className="
+                flex justify-center
+
+                pt-4
+              "
+            >
 
               <button
                 onClick={handleSubmit}
                 disabled={submitting}
                 className="
-                  h-16 px-10 rounded-2xl
-                  bg-blue-600 text-white
-                  text-lg font-semibold
+                  h-14
+                  sm:h-16
+
+                  px-6
+                  sm:px-10
+
+                  w-full
+                  sm:w-auto
+
+                  rounded-2xl
+
+                  bg-blue-600
+                  text-white
+
+                  text-base
+                  sm:text-lg
+
+                  font-semibold
+
                   hover:bg-blue-700
+
                   transition-all duration-300
+
                   shadow-[0_10px_30px_rgba(59,130,246,0.2)]
+
                   disabled:opacity-60
                 "
               >
                 {submitting ? (
-                  <div className="
-                    flex items-center gap-3
-                  ">
+                  <div
+                    className="
+                      flex items-center justify-center
 
-                    <div className="
-                      w-5 h-5 rounded-full
-                      border-2 border-white/40
-                      border-t-white
-                      animate-spin
-                    "></div>
+                      gap-3
+                    "
+                  >
+
+                    <div
+                      className="
+                        w-5 h-5 rounded-full
+
+                        border-2 border-white/40
+                        border-t-white
+
+                        animate-spin
+                      "
+                    ></div>
 
                     Submitting...
+
                   </div>
                 ) : (
                   "Submit Quiz →"

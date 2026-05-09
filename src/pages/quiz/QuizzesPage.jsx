@@ -79,55 +79,99 @@ function QuizzesPage() {
 
   return (
     <MainLayout>
-      <div className="
-        max-w-[1200px]
-        mx-auto
-        pb-20
-      ">
+      <div
+        className="
+          max-w-[1200px]
+          mx-auto
+
+          px-4
+          sm:px-6
+
+          pb-20
+        "
+      >
 
         {/* HERO */}
         <div className="mb-12">
 
-          <div className="
-            inline-flex items-center gap-2
-            px-4 py-2 rounded-full
-            bg-blue-50 text-blue-600
-            text-sm font-semibold
-            mb-5
-          ">
+          <div
+            className="
+              inline-flex items-center gap-2
+
+              px-4 py-2
+
+              rounded-full
+
+              bg-blue-50
+              text-blue-600
+
+              text-xs
+              sm:text-sm
+
+              font-semibold
+
+              mb-5
+            "
+          >
             <i className="ri-flashlight-line"></i>
 
             AI Powered Assessments
           </div>
 
-          <div className="
-            flex items-start justify-between
-            gap-10 flex-wrap
-          ">
+          <div
+            className="
+              flex flex-col
+              lg:flex-row
+
+              lg:items-start
+              justify-between
+
+              gap-8 xl:gap-10
+            "
+          >
 
             {/* LEFT */}
-            <div>
+            <div className="min-w-0">
 
-              <h1 className="
-                text-[54px]
-                font-bold
-                leading-tight
-                text-gray-900
-              ">
+              <h1
+                className="
+                  text-3xl
+                  sm:text-4xl
+                  xl:text-[54px]
+
+                  font-bold
+
+                  leading-tight
+
+                  text-gray-900
+                "
+              >
                 Master concepts with
-                <span className="
-                  text-blue-600
-                ">
+
+                <span
+                  className="
+                    text-blue-600
+                  "
+                >
                   {" "}Smart Quizzes.
                 </span>
+
               </h1>
 
-              <p className="
-                text-gray-500
-                mt-5
-                max-w-2xl
-                leading-[1.9]
-              ">
+              <p
+                className="
+                  text-gray-500
+
+                  mt-5
+
+                  max-w-2xl
+
+                  leading-[1.9]
+
+                  text-sm
+                  sm:text-base
+                "
+              >
                 Generate personalized AI quizzes,
                 challenge your understanding,
                 track your performance, and
@@ -143,18 +187,41 @@ function QuizzesPage() {
                 setOpenGenerate(true)
               }
               className="
-                h-14 px-7 rounded-2xl
-                bg-blue-600 text-white
+                h-12
+                sm:h-14
+
+                px-5
+                sm:px-7
+
+                w-full
+                sm:w-auto
+
+                rounded-2xl
+
+                bg-blue-600
+                text-white
+
                 font-semibold
+
                 hover:bg-blue-700
+
                 transition-all duration-300
+
                 shadow-[0_10px_30px_rgba(59,130,246,0.2)]
-                flex items-center gap-3
+
+                flex items-center justify-center
+
+                gap-3
               "
             >
-              <i className="
-                ri-add-line text-xl
-              "></i>
+              <i
+                className="
+                  ri-add-line
+
+                  text-lg
+                  sm:text-xl
+                "
+              ></i>
 
               Generate Quiz
             </button>
@@ -167,11 +234,19 @@ function QuizzesPage() {
         <QuizStats quizzes={quizzes} />
 
         {/* FILTER BAR */}
-        <div className="
-          flex items-center justify-between
-          gap-5 flex-wrap
-          mb-8
-        ">
+        <div
+          className="
+            flex flex-col
+            lg:flex-row
+
+            lg:items-center
+            justify-between
+
+            gap-5
+
+            mb-8
+          "
+        >
 
           {/* TABS */}
           <QuizTabs
@@ -181,14 +256,25 @@ function QuizzesPage() {
           />
 
           {/* SEARCH */}
-          <div className="relative">
+          <div
+            className="
+              relative
 
-            <i className="
-              ri-search-line
-              absolute left-4 top-1/2
-              -translate-y-1/2
-              text-gray-400
-            "></i>
+              w-full
+              sm:w-[300px]
+            "
+          >
+
+            <i
+              className="
+                ri-search-line
+
+                absolute left-4 top-1/2
+                -translate-y-1/2
+
+                text-gray-400
+              "
+            ></i>
 
             <input
               type="text"
@@ -198,14 +284,23 @@ function QuizzesPage() {
                 setSearch(e.target.value)
               }
               className="
-                w-[300px] h-14
+                w-full
+
+                h-12
+                sm:h-14
+
                 pl-12 pr-4
+
                 rounded-2xl
+
                 border border-gray-200
+
                 bg-white
+
                 focus:outline-none
                 focus:ring-2
                 focus:ring-blue-500
+
                 transition-all duration-300
               "
             />
@@ -216,24 +311,34 @@ function QuizzesPage() {
 
         {/* LOADING */}
         {loading ? (
-          <div className="
-            min-h-[300px]
-            flex items-center justify-center
-          ">
+          <div
+            className="
+              min-h-[300px]
+
+              flex items-center justify-center
+            "
+          >
 
             <div className="text-center">
 
-              <div className="
-                w-16 h-16 rounded-full
-                border-4 border-blue-200
-                border-t-blue-600
-                animate-spin
-                mx-auto
-              "></div>
+              <div
+                className="
+                  w-16 h-16 rounded-full
 
-              <p className="
-                text-gray-500 mt-5
-              ">
+                  border-4 border-blue-200
+                  border-t-blue-600
+
+                  animate-spin
+
+                  mx-auto
+                "
+              ></div>
+
+              <p
+                className="
+                  text-gray-500 mt-5
+                "
+              >
                 Loading quizzes...
               </p>
 
@@ -242,43 +347,81 @@ function QuizzesPage() {
           </div>
         ) : filteredQuizzes.length === 0 ? (
           // EMPTY
-          <div className="
-            bg-white
-            rounded-[36px]
-            border border-gray-100
-            p-14
-            text-center
-            shadow-sm
-          ">
+          <div
+            className="
+              bg-white
 
-            <div className="
-              w-24 h-24 rounded-full
-              bg-blue-50
-              text-blue-600
-              flex items-center justify-center
-              mx-auto
-            ">
-              <i className="
-                ri-questionnaire-line text-5xl
-              "></i>
+              rounded-[28px]
+              sm:rounded-[36px]
+
+              border border-gray-100
+
+              p-6
+              sm:p-10
+              xl:p-14
+
+              text-center
+
+              shadow-sm
+            "
+          >
+
+            <div
+              className="
+                w-20 h-20
+                sm:w-24 sm:h-24
+
+                rounded-full
+
+                bg-blue-50
+                text-blue-600
+
+                flex items-center justify-center
+
+                mx-auto
+              "
+            >
+              <i
+                className="
+                  ri-questionnaire-line
+
+                  text-4xl
+                  sm:text-5xl
+                "
+              ></i>
             </div>
 
-            <h2 className="
-              text-[34px]
-              font-bold
-              text-gray-900
-              mt-8
-            ">
+            <h2
+              className="
+                text-2xl
+                sm:text-[34px]
+
+                font-bold
+
+                text-gray-900
+
+                mt-8
+              "
+            >
               No Quizzes Found
             </h2>
 
-            <p className="
-              text-gray-500
-              mt-4
-              max-w-xl
-              mx-auto
-              leading-[1.9]
-            ">
+            <p
+              className="
+                text-gray-500
+
+                mt-4
+
+                max-w-xl
+
+                mx-auto
+
+                leading-[1.9]
+
+                text-sm
+                sm:text-base
+              "
+            >
               Start your learning journey by
               generating your first personalized
               AI quiz tailored to your goals.
@@ -290,10 +433,25 @@ function QuizzesPage() {
               }
               className="
                 mt-8
-                h-14 px-8 rounded-2xl
-                bg-blue-600 text-white
+
+                h-12
+                sm:h-14
+
+                px-6
+                sm:px-8
+
+                w-full
+                sm:w-auto
+
+                rounded-2xl
+
+                bg-blue-600
+                text-white
+
                 font-semibold
+
                 hover:bg-blue-700
+
                 transition-all duration-300
               "
             >
@@ -303,9 +461,18 @@ function QuizzesPage() {
           </div>
         ) : (
           // GRID
-          <div className="
-            grid grid-cols-3 gap-7
-          ">
+          <div
+            className="
+              grid
+
+              grid-cols-1
+              md:grid-cols-2
+              xl:grid-cols-3
+
+              gap-5
+              xl:gap-7
+            "
+          >
 
             {filteredQuizzes.map((quiz) => (
               <QuizCard

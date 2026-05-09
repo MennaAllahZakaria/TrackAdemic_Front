@@ -78,24 +78,30 @@ function QuizResultPage() {
   if (loading) {
     return (
       <MainLayout>
-        <div className="
-          min-h-[70vh]
-          flex items-center justify-center
-        ">
+        <div
+          className="
+            min-h-[70vh]
+            flex items-center justify-center
+          "
+        >
 
           <div className="text-center">
 
-            <div className="
-              w-16 h-16 rounded-full
-              border-4 border-blue-200
-              border-t-blue-600
-              animate-spin
-              mx-auto
-            "></div>
+            <div
+              className="
+                w-16 h-16 rounded-full
+                border-4 border-blue-200
+                border-t-blue-600
+                animate-spin
+                mx-auto
+              "
+            ></div>
 
-            <p className="
-              text-gray-500 mt-5
-            ">
+            <p
+              className="
+                text-gray-500 mt-5
+              "
+            >
               Loading results...
             </p>
 
@@ -110,40 +116,81 @@ function QuizResultPage() {
   if (!quiz) {
     return (
       <MainLayout>
-        <div className="
-          min-h-[70vh]
-          flex items-center justify-center
-        ">
+        <div
+          className="
+            min-h-[70vh]
+            flex items-center justify-center
 
-          <div className="
-            bg-white
-            rounded-[32px]
-            border border-gray-100
-            p-10
-            text-center
-            shadow-sm
-            max-w-md
-          ">
+            px-4
+          "
+        >
 
-            <div className="
-              w-20 h-20 rounded-full
-              bg-red-100 text-red-500
-              flex items-center justify-center
-              mx-auto
-            ">
-              <i className="ri-error-warning-line text-4xl"></i>
+          <div
+            className="
+              bg-white
+
+              rounded-[28px]
+              sm:rounded-[32px]
+
+              border border-gray-100
+
+              p-6
+              sm:p-10
+
+              text-center
+
+              shadow-sm
+
+              max-w-md
+              w-full
+            "
+          >
+
+            <div
+              className="
+                w-16 h-16
+                sm:w-20 sm:h-20
+
+                rounded-full
+
+                bg-red-100
+                text-red-500
+
+                flex items-center justify-center
+
+                mx-auto
+              "
+            >
+              <i className="ri-error-warning-line text-3xl sm:text-4xl"></i>
             </div>
 
-            <h2 className="
-              text-2xl font-bold text-gray-900
-              mt-6
-            ">
+            <h2
+              className="
+                text-xl
+                sm:text-2xl
+
+                font-bold
+
+                text-gray-900
+
+                mt-6
+              "
+            >
               Result Not Found
             </h2>
 
-            <p className="
-              text-gray-500 mt-3 leading-relaxed
-            ">
+            <p
+              className="
+                text-gray-500
+
+                mt-3
+
+                leading-relaxed
+
+                text-sm
+                sm:text-base
+              "
+            >
               The requested quiz result
               could not be found.
             </p>
@@ -154,9 +201,21 @@ function QuizResultPage() {
               }
               className="
                 mt-8
-                h-12 px-6 rounded-2xl
-                bg-blue-600 text-white
+
+                h-12
+
+                px-6
+
+                w-full
+                sm:w-auto
+
+                rounded-2xl
+
+                bg-blue-600
+                text-white
+
                 hover:bg-blue-700
+
                 transition-all duration-300
               "
             >
@@ -184,87 +243,172 @@ function QuizResultPage() {
 
   return (
     <MainLayout>
-      <div className="
-        max-w-[1150px]
-        mx-auto
-        pb-20
-      ">
+      <div
+        className="
+          max-w-[1150px]
+          mx-auto
+
+          px-4
+          sm:px-6
+
+          pb-20
+        "
+      >
 
         {/* HERO */}
         <div className="mb-14">
 
-          <div className="
-            inline-flex items-center gap-2
-            px-4 py-2 rounded-full
-            bg-green-100 text-green-600
-            text-sm font-semibold
-            mb-5
-          ">
+          <div
+            className="
+              inline-flex items-center gap-2
+
+              px-4 py-2
+
+              rounded-full
+
+              bg-green-100
+              text-green-600
+
+              text-xs
+              sm:text-sm
+
+              font-semibold
+
+              mb-5
+            "
+          >
             <i className="ri-award-line"></i>
 
             Assessment Completed
           </div>
 
-          <div className="
-            flex items-start justify-between
-            gap-10 flex-wrap
-          ">
+          <div
+            className="
+              flex flex-col
+              xl:flex-row
+
+              xl:items-start
+              justify-between
+
+              gap-10
+            "
+          >
 
             {/* LEFT */}
-            <div>
+            <div className="min-w-0">
 
-              <h1 className="
-                text-[52px]
-                leading-tight
-                font-bold
-                text-gray-900
-              ">
+              <h1
+                className="
+                  text-3xl
+                  sm:text-4xl
+                  xl:text-[52px]
+
+                  leading-tight
+
+                  font-bold
+
+                  text-gray-900
+                "
+              >
                 Quiz Performance
-                <span className="
-                  text-blue-600
-                ">
+
+                <span
+                  className="
+                    text-blue-600
+                  "
+                >
                   {" "}Analytics.
                 </span>
+
               </h1>
 
-              <p className="
-                text-gray-500
-                mt-5
-                leading-[1.9]
-                max-w-2xl
-              ">
+              <p
+                className="
+                  text-gray-500
+
+                  mt-5
+
+                  leading-[1.9]
+
+                  max-w-2xl
+
+                  text-sm
+                  sm:text-base
+                "
+              >
                 Analyze your quiz performance,
                 review explanations, and identify
                 areas that need improvement.
               </p>
 
               {/* BADGES */}
-              <div className="
-                flex items-center gap-3
-                mt-7 flex-wrap
-              ">
+              <div
+                className="
+                  flex items-center
 
-                <div className="
-                  px-4 py-2 rounded-full
-                  bg-blue-100 text-blue-600
-                  text-sm font-semibold
-                ">
+                  gap-3
+
+                  mt-7
+
+                  flex-wrap
+                "
+              >
+
+                <div
+                  className="
+                    px-4 py-2
+
+                    rounded-full
+
+                    bg-blue-100
+                    text-blue-600
+
+                    text-xs
+                    sm:text-sm
+
+                    font-semibold
+
+                    break-words
+                  "
+                >
                   {quiz.topic}
                 </div>
 
-                <div className="
-                  px-4 py-2 rounded-full
-                  bg-purple-100 text-purple-600
-                  text-sm font-semibold capitalize
-                ">
+                <div
+                  className="
+                    px-4 py-2
+
+                    rounded-full
+
+                    bg-purple-100
+                    text-purple-600
+
+                    text-xs
+                    sm:text-sm
+
+                    font-semibold
+
+                    capitalize
+                  "
+                >
                   {quiz.level}
                 </div>
 
-                <div className="
-                  px-4 py-2 rounded-full
-                  bg-orange-100 text-orange-600
-                  text-sm font-semibold
-                ">
+                <div
+                  className="
+                    px-4 py-2
+
+                    rounded-full
+
+                    bg-orange-100
+                    text-orange-600
+
+                    text-xs
+                    sm:text-sm
+
+                    font-semibold
+                  "
+                >
                   {stats.total} Questions
                 </div>
 
@@ -284,111 +428,220 @@ function QuizResultPage() {
         </div>
 
         {/* STATS */}
-        <div className="
-          grid grid-cols-3 gap-6
-          mb-14
-        ">
+        <div
+          className="
+            grid
+
+            grid-cols-1
+            sm:grid-cols-2
+            xl:grid-cols-3
+
+            gap-5
+            xl:gap-6
+
+            mb-14
+          "
+        >
 
           {/* CORRECT */}
-          <div className="
-            bg-white
-            rounded-[30px]
-            border border-gray-100
-            p-7
-            shadow-sm
-          ">
+          <div
+            className="
+              bg-white
 
-            <div className="
-              w-14 h-14 rounded-2xl
-              bg-green-100 text-green-600
-              flex items-center justify-center
-            ">
-              <i className="
-                ri-checkbox-circle-line text-2xl
-              "></i>
+              rounded-[24px]
+              sm:rounded-[30px]
+
+              border border-gray-100
+
+              p-5
+              md:p-7
+
+              shadow-sm
+            "
+          >
+
+            <div
+              className="
+                w-12 h-12
+                sm:w-14 sm:h-14
+
+                rounded-2xl
+
+                bg-green-100
+                text-green-600
+
+                flex items-center justify-center
+              "
+            >
+              <i
+                className="
+                  ri-checkbox-circle-line
+
+                  text-xl
+                  sm:text-2xl
+                "
+              ></i>
             </div>
 
-            <p className="
-              text-sm text-gray-400 mt-6
-            ">
+            <p
+              className="
+                text-sm
+                text-gray-400
+
+                mt-6
+              "
+            >
               Correct Answers
             </p>
 
-            <h2 className="
-              text-[40px]
-              font-bold
-              text-gray-900 mt-2
-            ">
+            <h2
+              className="
+                text-3xl
+                md:text-[40px]
+
+                font-bold
+
+                text-gray-900
+
+                mt-2
+              "
+            >
               {stats.correct}
             </h2>
 
           </div>
 
           {/* WRONG */}
-          <div className="
-            bg-white
-            rounded-[30px]
-            border border-gray-100
-            p-7
-            shadow-sm
-          ">
+          <div
+            className="
+              bg-white
 
-            <div className="
-              w-14 h-14 rounded-2xl
-              bg-red-100 text-red-600
-              flex items-center justify-center
-            ">
-              <i className="
-                ri-close-circle-line text-2xl
-              "></i>
+              rounded-[24px]
+              sm:rounded-[30px]
+
+              border border-gray-100
+
+              p-5
+              md:p-7
+
+              shadow-sm
+            "
+          >
+
+            <div
+              className="
+                w-12 h-12
+                sm:w-14 sm:h-14
+
+                rounded-2xl
+
+                bg-red-100
+                text-red-600
+
+                flex items-center justify-center
+              "
+            >
+              <i
+                className="
+                  ri-close-circle-line
+
+                  text-xl
+                  sm:text-2xl
+                "
+              ></i>
             </div>
 
-            <p className="
-              text-sm text-gray-400 mt-6
-            ">
+            <p
+              className="
+                text-sm
+                text-gray-400
+
+                mt-6
+              "
+            >
               Wrong Answers
             </p>
 
-            <h2 className="
-              text-[40px]
-              font-bold
-              text-gray-900 mt-2
-            ">
+            <h2
+              className="
+                text-3xl
+                md:text-[40px]
+
+                font-bold
+
+                text-gray-900
+
+                mt-2
+              "
+            >
               {stats.wrong}
             </h2>
 
           </div>
 
           {/* PASSING */}
-          <div className="
-            bg-white
-            rounded-[30px]
-            border border-gray-100
-            p-7
-            shadow-sm
-          ">
+          <div
+            className="
+              bg-white
 
-            <div className="
-              w-14 h-14 rounded-2xl
-              bg-blue-100 text-blue-600
-              flex items-center justify-center
-            ">
-              <i className="
-                ri-bar-chart-box-line text-2xl
-              "></i>
+              rounded-[24px]
+              sm:rounded-[30px]
+
+              border border-gray-100
+
+              p-5
+              md:p-7
+
+              shadow-sm
+            "
+          >
+
+            <div
+              className="
+                w-12 h-12
+                sm:w-14 sm:h-14
+
+                rounded-2xl
+
+                bg-blue-100
+                text-blue-600
+
+                flex items-center justify-center
+              "
+            >
+              <i
+                className="
+                  ri-bar-chart-box-line
+
+                  text-xl
+                  sm:text-2xl
+                "
+              ></i>
             </div>
 
-            <p className="
-              text-sm text-gray-400 mt-6
-            ">
+            <p
+              className="
+                text-sm
+                text-gray-400
+
+                mt-6
+              "
+            >
               Passing Score
             </p>
 
-            <h2 className="
-              text-[40px]
-              font-bold
-              text-gray-900 mt-2
-            ">
+            <h2
+              className="
+                text-3xl
+                md:text-[40px]
+
+                font-bold
+
+                text-gray-900
+
+                mt-2
+              "
+            >
               {quiz.passing_score}%
             </h2>
 
@@ -399,46 +652,87 @@ function QuizResultPage() {
         {/* RESULTS */}
         <div>
 
-          <div className="
-            flex items-center justify-between
-            gap-5 flex-wrap
-            mb-8
-          ">
+          <div
+            className="
+              flex flex-col
+              lg:flex-row
+
+              lg:items-center
+              justify-between
+
+              gap-5
+
+              mb-8
+            "
+          >
 
             <div>
 
-              <h2 className="
-                text-[34px]
-                font-bold
-                text-gray-900
-              ">
+              <h2
+                className="
+                  text-2xl
+                  sm:text-[34px]
+
+                  font-bold
+
+                  text-gray-900
+                "
+              >
                 Detailed Breakdown
               </h2>
 
-              <p className="
-                text-gray-500 mt-2
-              ">
+              <p
+                className="
+                  text-gray-500
+
+                  mt-2
+
+                  text-sm
+                  sm:text-base
+                "
+              >
                 Review all answers and explanations.
               </p>
 
             </div>
 
             {/* ACTIONS */}
-            <div className="
-              flex items-center gap-4
-            ">
+            <div
+              className="
+                flex flex-col
+                sm:flex-row
+
+                gap-4
+
+                w-full
+                sm:w-auto
+              "
+            >
 
               <button
                 onClick={() =>
                   navigate("/quizzes")
                 }
                 className="
-                  h-12 px-6 rounded-2xl
+                  h-12
+
+                  px-6
+
+                  w-full
+                  sm:w-auto
+
+                  rounded-2xl
+
                   border border-gray-200
+
                   bg-white
+
                   hover:bg-gray-100
+
                   transition-all duration-300
-                  font-medium text-gray-700
+
+                  font-medium
+                  text-gray-700
                 "
               >
                 Back to Quizzes
@@ -449,11 +743,24 @@ function QuizResultPage() {
                   navigate(`/quiz/${quiz._id}`)
                 }
                 className="
-                  h-12 px-6 rounded-2xl
-                  bg-blue-600 text-white
+                  h-12
+
+                  px-6
+
+                  w-full
+                  sm:w-auto
+
+                  rounded-2xl
+
+                  bg-blue-600
+                  text-white
+
                   hover:bg-blue-700
+
                   transition-all duration-300
+
                   font-medium
+
                   shadow-sm
                 "
               >
@@ -465,9 +772,7 @@ function QuizResultPage() {
           </div>
 
           {/* LIST */}
-          <div className="
-            space-y-8
-          ">
+          <div className="space-y-8">
 
             {resultList.map(
               (item, index) => (
