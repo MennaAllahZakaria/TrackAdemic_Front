@@ -6,61 +6,97 @@ import { useNavigate } from "react-router-dom";
 import ProfileHeader from "../components/profile/ProfileHeader";
 import ActivePathCard from "../components/profile/ActivePathCard";
 import StudyHoursCard from "../components/profile/StudyHoursCard";
-import AchievementsSection from "../components/profile/AchievementsSection"
-
+import AchievementsSection from "../components/profile/AchievementsSection";
 
 function ProfilePage() {
+
   const navigate = useNavigate();
 
-  const { user, loading: authLoading } = useAuth();
-  const { userContext, loading: contextLoading } = useUserContext();
+  const {
+    user,
+    loading: authLoading,
+  } = useAuth();
+
+  const {
+    userContext,
+    loading: contextLoading,
+  } = useUserContext();
 
   if (authLoading || contextLoading) {
+
     return (
       <MainLayout>
-        <p className="text-center mt-20">Loading...</p>
+
+        <p className="text-center mt-20">
+          Loading...
+        </p>
+
       </MainLayout>
     );
   }
 
-  if (!user || !userContext) return null;
+  if (!user || !userContext)
+    return null;
 
   return (
     <MainLayout>
-      <div className="max-w-[1100px] mx-auto">
 
-        {/* ================= HEADER ================= */}
+      <div
+        className="
+          max-w-[1100px]
+          mx-auto
+        "
+      >
 
-            <ProfileHeader user={user} />
-        {/* ================= BODY ================= */}
-        <div className="grid grid-cols-3 gap-6 mt-8">
+        {/* HEADER */}
+        <ProfileHeader user={user} />
 
-          {/* ================= LEFT ================= */}
-          <div className="col-span-2 space-y-6">
+        {/* BODY */}
+        <div
+          className="
+            grid
+            grid-cols-1
+            md:grid-cols-3
+
+            gap-6
+            mt-8
+          "
+        >
+
+          {/* LEFT */}
+          <div
+            className="
+              md:col-span-2
+              space-y-6
+            "
+          >
 
             {/* ACTIVE PATH */}
-            <div className="col-span-2">
-                <ActivePathCard context={userContext} />
-            </div>
+            <ActivePathCard
+              context={userContext}
+            />
 
             {/* ACHIEVEMENTS */}
-                  <AchievementsSection
-                        user={user}
-                        context={userContext}
-                    />
+            <AchievementsSection
+              user={user}
+              context={userContext}
+            />
 
           </div>
 
-          {/* ================= RIGHT ================= */}
+          {/* RIGHT */}
           <div className="space-y-6">
-                <StudyHoursCard context={userContext} />
 
+            <StudyHoursCard
+              context={userContext}
+            />
 
           </div>
 
         </div>
 
       </div>
+
     </MainLayout>
   );
 }
