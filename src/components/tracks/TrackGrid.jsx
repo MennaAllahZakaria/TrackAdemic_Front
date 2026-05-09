@@ -1,11 +1,30 @@
 import TrackCard from "./TrackCard";
 
 function TrackGrid({ tracks }) {
+
   return (
-    <div className="grid grid-cols-3 gap-6 mt-8">
+    <div
+      className="
+        grid
+
+        grid-cols-1
+        sm:grid-cols-2
+        xl:grid-cols-3
+
+        gap-6
+        mt-8
+      "
+    >
+
       {tracks.map((track) => (
-        <TrackCard key={track._id} track={track} />
+
+        <TrackCard
+          key={track._id}
+          track={track}
+        />
+
       ))}
+
     </div>
   );
 }
