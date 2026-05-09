@@ -1,103 +1,111 @@
-import MainLayout from "../layouts/MainLayout";
-import { useEffect, useState } from "react";
-import api from "../services/api";
-import { useNavigate } from "react-router-dom";
+import PhaseCard from "./PhaseCard";
 
-import CurrentFocusSection from "../components/learning/CurrentFocusSection";
-import RecommendationCard from "../components/learning/RecommendationCard";
-import CurriculumSection from "../components/learning/CurriculumSection";
-
-function MyLearning() {
-  const [data, setData] = useState(null);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await api.get(
-          "/learning-path/me"
-        );
-
-        setData(res.data.data);
-
-      } catch (err) {
-        if (
-          err.response?.data
-            ?.message ===
-          "No active learning path found"
-        ) {
-          navigate("/onboarding");
-        }
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (!data) return null;
-
+function CurrentFocusSection({
+  data,
+}) {
   return (
-    <MainLayout>
+    <div className="mb-12">
 
       <div
         className="
-          max-w-7xl
-          mx-auto
+          flex flex-col
+          sm:flex-row
 
-          px-4
-          sm:px-6
+          sm:items-end
+          justify-between
 
-          pb-20
+          gap-4
+
+          mb-6
         "
       >
 
-        {/* HEADER */}
-        <div className="mb-10">
+        <div>
 
-          <h1
+          <p
             className="
-              text-3xl
-              sm:text-4xl
+              text-blue-600
+
+              text-xs
+              sm:text-sm
+
+              font-medium
+
+              tracking-wide
+            "
+          >
+            CURRENT FOCUS
+          </p>
+
+          <h2
+            className="
+              text-2xl
+              sm:text-3xl
 
               font-bold
 
               text-gray-900
-            "
-          >
-            My Learning
-          </h1>
-
-          <p
-            className="
-              text-gray-500
 
               mt-2
-
-              text-sm
-              sm:text-base
             "
           >
-            Manage your academic
-            journey
-          </p>
+            In Progress
+          </h2>
 
         </div>
 
-        <CurrentFocusSection
-          data={data}
-        />
+        <div
+          className="
+            px-4 py-2
 
-        <RecommendationCard />
+            rounded-full
 
-        <CurriculumSection
-          data={data}
-        />
+            bg-blue-50
+            text-blue-600
+
+            text-xs
+            sm:text-sm
+
+            font-semibold
+
+            w-fit
+          "
+        >
+          {data.phases.length} Active Phases
+        </div>
 
       </div>
 
-    </MainLayout>
+      {/* LIST */}
+      <div
+        className="
+          flex gap-5
+
+          overflow-x-auto
+
+          pb-3
+
+          snap-x snap-mandatory
+
+          scrollbar-thin
+        "
+      >
+
+        {data.phases.map(
+          (phase) => (
+            <PhaseCard
+              key={
+                phase.phase_number
+              }
+              phase={phase}
+            />
+          )
+        )}
+
+      </div>
+
+    </div>
   );
 }
 
-export default MyLearning;
+export default CurrentFocusSection;
