@@ -12,3 +12,10 @@ export const signupSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+// ✅ schema مخصص للـ Google — مفيش password أو confirmPassword
+export const googleSignupSchema = z.object({
+  firstName: z.string().min(2, "First name is required"),
+  lastName: z.string().min(2, "Last name is required"),
+  email: z.string().email("Invalid email"),
+});
