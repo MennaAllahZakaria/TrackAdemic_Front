@@ -1,5 +1,13 @@
-import { use, useState , useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useState,
+  useEffect,
+} from "react";
+
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
 import api from "../services/api";
 
 function Verify() {
@@ -11,103 +19,378 @@ function Verify() {
 
   const email = location.state?.email;
 
-  // لو دخل الصفحة مباشرة
 
+  // REDIRECT IF NO EMAIL
   useEffect(() => {
-      if (!email) {
-    navigate("/signup");
-  }
-    }, [email, navigate]);
+    if (!email) {
+      navigate("/signup");
+    }
+  }, [email, navigate]);
 
-  const handleChange = (value, index) => {
-    if (!/^[0-9]?$/.test(value)) return;
+  // HANDLE INPUT
+  const handleChange = (
+    value,
+    index
+  ) => {
+    if (
+      !/^[0-9]?$/.test(value)
+    )
+      return;
 
     const newCode = [...code];
+
     newCode[index] = value;
+
     setCode(newCode);
 
-    // auto focus next
-    if (value && index < 5) {
-      document.getElementById(`code-${index + 1}`).focus();
+    // NEXT INPUT
+    if (
+      value &&
+      index < 5
+    ) {
+
+      document
+        .getElementById(
+          `code-${index + 1}`
+        )
+        ?.focus();
     }
   };
 
-  const handleSubmit = async () => {
-    const fullCode = code.join("");
+  // BACKSPACE
+  const handleKeyDown = (
+    e,
+    index
+  ) => {
+    if (
+      e.key ===
+        "Backspace" &&
+      !code[index] &&
+      index > 0
+    ) {
 
-    if (fullCode.length < 6) {
-      setError("Enter full code");
-      return;
-    }
-
-    try {
-      await api.post("/auth/verifyEmailUser", {
-        email,
-        code: fullCode,
-      });
-
-      navigate("/login");
-
-    } catch (err) {
-      setError(err.response?.data?.message || "Invalid code");
+      document
+        .getElementById(
+          `code-${index - 1}`
+        )
+        ?.focus();
     }
   };
+
+  // SUBMIT
+  const handleSubmit =
+    async () => {
+      const fullCode =
+        code.join("");
+
+      if (
+        fullCode.length < 6
+      ) {
+
+        setError(
+          "Enter full code"
+        );
+
+        return;
+      }
+
+      try {
+        setLoading(true);
+
+        setError("");
+
+        await api.post(
+          "/auth/verifyEmailUser",
+          {
+            email,
+            code: fullCode,
+          }
+        );
+
+        navigate("/login");
+
+      } catch (err) {
+        setError(
+          err.response?.data
+            ?.message ||
+            "Invalid code"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-100">
+    <div
+      className="
+        min-h-screen
 
-      <div className="bg-white p-10 rounded-2xl shadow-md text-center w-[400px]">
+        flex items-center
+        justify-center
 
+        bg-gray-100
+
+        px-4
+        py-8
+      "
+    >
+
+      <div
+        className="
+          bg-white
+
+          p-6
+          sm:p-8
+          md:p-10
+
+          rounded-2xl
+
+          shadow-md
+
+          text-center
+
+          w-full
+          max-w-[400px]
+        "
+      >
+
+        {/* HEADER */}
         <div className="mb-6">
-          <div className="bg-blue-100 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <i className="ri-shield-check-line text-blue-600 text-xl"></i>
+
+          {/* ICON */}
+          <div
+            className="
+              bg-blue-100
+
+              w-12 h-12
+
+              rounded-xl
+
+              flex items-center
+              justify-center
+
+              mx-auto
+
+              mb-4
+            "
+          >
+
+            <i
+              className="
+                ri-shield-check-line
+
+                text-blue-600
+
+                text-xl
+              "
+            ></i>
+
           </div>
 
-          <h2 className="text-xl font-semibold">
+          {/* TITLE */}
+          <h2
+            className="
+              text-xl
+              sm:text-2xl
+
+              font-semibold
+            "
+          >
             Verification Required
           </h2>
 
-          <p className="text-gray-500 text-sm mt-2">
-            We've sent a 6-digit code to your email
+          {/* DESC */}
+          <p
+            className="
+              text-gray-500
+
+              text-sm
+
+              mt-2
+
+              leading-relaxed
+            "
+          >
+            We&apos;ve sent a
+            6-digit code to your
+            email
           </p>
+
+          {/* EMAIL */}
+          {email && (
+            <p
+              className="
+                text-blue-600
+
+                text-sm
+
+                mt-2
+
+                break-all
+              "
+            >
+              {email}
+            </p>
+          )}
+
         </div>
 
         {/* CODE INPUTS */}
-        <div className="flex justify-between mb-6">
-          {code.map((digit, index) => (
-            <input
-              key={index}
-              id={`code-${index}`}
-              value={digit}
-              onChange={(e) =>
-                handleChange(e.target.value, index)
-              }
-              maxLength={1}
-              className="w-12 h-12 text-center text-lg bg-gray-100 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          ))}
+        <div
+          className="
+            flex items-center
+            justify-center
+
+            gap-2
+            sm:gap-3
+
+            mb-6
+
+            flex-wrap
+          "
+        >
+
+          {code.map(
+            (
+              digit,
+              index
+            ) => (
+              <input
+                key={index}
+                id={`code-${index}`}
+                value={digit}
+                onChange={(e) =>
+                  handleChange(
+                    e.target
+                      .value,
+                    index
+                  )
+                }
+                onKeyDown={(e) =>
+                  handleKeyDown(
+                    e,
+                    index
+                  )
+                }
+                maxLength={1}
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                className="
+                  w-11 h-11
+                  sm:w-12 sm:h-12
+                  md:w-14 md:h-14
+
+                  text-center
+
+                  text-base
+                  sm:text-lg
+
+                  font-semibold
+
+                  bg-gray-100
+
+                  rounded-xl
+
+                  outline-none
+
+                  focus:ring-2
+                  focus:ring-blue-500
+
+                  focus:bg-white
+
+                  transition-all duration-300
+                "
+              />
+            )
+          )}
+
         </div>
 
+        {/* ERROR */}
         {error && (
-          <p className="text-red-500 text-sm mb-2">{error}</p>
+          <p
+            className="
+              text-red-500
+
+              text-sm
+
+              mb-3
+
+              break-words
+            "
+          >
+            {error}
+          </p>
         )}
 
+        {/* BUTTON */}
         <button
           onClick={handleSubmit}
-          className="w-full py-3 rounded-lg text-white font-semibold
-          bg-gradient-to-r from-blue-600 to-blue-400"
+          disabled={loading}
+          className="
+            w-full
+
+            py-3.5
+
+            rounded-xl
+
+            text-white
+
+            text-sm
+            sm:text-base
+
+            font-semibold
+
+            bg-gradient-to-r
+            from-blue-600
+            to-blue-400
+
+            hover:scale-[1.01]
+
+            transition-all duration-300
+
+            disabled:opacity-50
+          "
         >
-          Verify Account
+          {loading
+            ? "Verifying..."
+            : "Verify Account"}
         </button>
 
-        <p className="text-sm text-gray-500 mt-4">
-          Didn't receive the code?{" "}
-          <span className="text-blue-600 cursor-pointer">
+        {/* RESEND */}
+        <p
+          className="
+            text-sm
+
+            text-gray-500
+
+            mt-5
+
+            leading-relaxed
+          "
+        >
+          Didn&apos;t receive
+          the code?{" "}
+
+          <button
+            type="button"
+            className="
+              text-blue-600
+
+              hover:text-blue-700
+
+              font-medium
+
+              transition-colors
+            "
+          >
             Resend Code
-          </span>
+          </button>
+
         </p>
 
       </div>
+
     </div>
   );
 }

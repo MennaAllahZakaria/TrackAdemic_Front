@@ -1,67 +1,244 @@
 import { useForm } from "react-hook-form";
+
 import Input from "./Input";
 import PasswordInput from "./PasswordInput";
+
 import api from "../../services/api";
+
 import { useAuth } from "../../context/AuthContext";
+
 import { useNavigate } from "react-router-dom";
+
 import { useState } from "react";
 
 function LoginForm() {
-  const { register, handleSubmit } = useForm();
-  const { login } = useAuth();
-  const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const {
+    register,
+    handleSubmit,
+  } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      const res = await api.post("/auth/login", data);
+  const { login } =
+    useAuth();
 
-      login(res.data);
-      navigate("/");
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
-    }
-  };
+  const navigate =
+    useNavigate();
+
+  const [error, setError] =
+    useState("");
+
+  const onSubmit =
+    async (data) => {
+      try {
+        setError("");
+
+        const res =
+          await api.post(
+            "/auth/login",
+            data
+          );
+
+        login(res.data);
+
+        navigate("/");
+
+      } catch (err) {
+        setError(
+          err.response?.data
+            ?.message ||
+            "Login failed"
+        );
+      }
+    };
 
   return (
-    <div className="w-[420px]">
+    <div
+      className="
+        w-full
+        max-w-[420px]
 
-      <h2 className="text-2xl font-semibold mb-2">
+        mx-auto
+      "
+    >
+
+      {/* TITLE */}
+      <h2
+        className="
+          text-2xl
+          sm:text-3xl
+
+          font-semibold
+
+          mb-2
+
+          text-center
+          sm:text-left
+        "
+      >
         Login to your account
       </h2>
 
-      <p className="text-gray-500 mb-6">
+      {/* DESC */}
+      <p
+        className="
+          text-gray-500
+
+          mb-6
+
+          text-sm
+          sm:text-base
+
+          text-center
+          sm:text-left
+        "
+      >
         Welcome back 👋
       </p>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {/* FORM */}
+      <form
+        onSubmit={handleSubmit(
+          onSubmit
+        )}
+        className="
+          space-y-4
+        "
+      >
 
+        {/* EMAIL */}
         <Input
           icon="ri-mail-line"
           placeholder="Email"
           {...register("email")}
         />
 
+        {/* PASSWORD */}
         <PasswordInput
-          register={register("password")}
+          register={register(
+            "password"
+          )}
           placeholder="Password"
         />
 
-        <p className="text-sm text-gray-500">
-            Forget your password? <a onClick={() => navigate("/forgot-password")} className="text-blue-600 cursor-pointer" >Reset it here</a>.
+        {/* RESET */}
+        <p
+          className="
+            text-sm
+
+            text-gray-500
+
+            leading-relaxed
+          "
+        >
+          Forgot your password?{" "}
+
+          <button
+            type="button"
+            onClick={() =>
+              navigate(
+                "/forgot-password"
+              )
+            }
+            className="
+              text-blue-600
+
+              hover:text-blue-700
+
+              font-medium
+
+              transition-colors
+            "
+          >
+            Reset it here
+          </button>
+
+          .
+
         </p>
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {/* ERROR */}
+        {error && (
+          <p
+            className="
+              text-red-500
 
-        <button className="w-full py-3.5 rounded-full text-white font-semibold
-        bg-gradient-to-r from-blue-600 to-blue-400">
+              text-sm
+
+              break-words
+            "
+          >
+            {error}
+          </p>
+        )}
+
+        {/* BUTTON */}
+        <button
+          type="submit"
+          className="
+            w-full
+
+            py-3.5
+
+            rounded-full
+
+            text-white
+
+            text-sm
+            sm:text-base
+
+            font-semibold
+
+            bg-gradient-to-r
+            from-blue-600
+            to-blue-400
+
+            hover:scale-[1.01]
+
+            transition-all duration-300
+
+            shadow-[0_8px_20px_rgba(37,99,235,0.25)]
+          "
+        >
           Login
         </button>
-        <p className="text-center text-sm mt-4"
-          
+
+        {/* SIGNUP */}
+        <p
+          className="
+            text-center
+
+            text-sm
+
+            mt-4
+
+            leading-relaxed
+          "
         >
-            Didn't Have Account? <a onClick={() => navigate("/signup")} className="text-blue-600 cursor-pointer" >Sign Up </a>.
+          Don&apos;t have an account?{" "}
+
+          <button
+            type="button"
+            onClick={() =>
+              navigate(
+                "/signup"
+              )
+            }
+            className="
+              text-blue-600
+
+              hover:text-blue-700
+
+              font-medium
+
+              transition-colors
+            "
+          >
+            Sign Up
+          </button>
+
+          .
+
         </p>
+
       </form>
 
     </div>
