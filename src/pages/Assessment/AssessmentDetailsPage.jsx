@@ -1,13 +1,18 @@
-// src/pages/AssessmentDetailsPage.jsx
+import {
+  useEffect,
+  useState,
+} from "react";
 
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import MainLayout from "../../layouts/MainLayout";
+
 import api from "../../services/api";
 
 import AssessmentLoadingScreen from "../../components/assessment/AssessmentLoadingScreen";
+
 import AssessmentResultCard from "../../components/assessment/AssessmentResultCard";
+
 import TopicStrengthCard from "../../components/assessment/TopicStrengthCard";
 
 function AssessmentDetailsPage() {
@@ -23,11 +28,15 @@ function AssessmentDetailsPage() {
   const fetchAssessment =
     async () => {
       try {
-        const res = await api.get(
-          `/assessment/${id}`
+        const res =
+          await api.get(
+            `/assessment/${id}`
+          );
+
+        setAssessment(
+          res.data.data
         );
 
-        setAssessment(res.data.data);
       } catch (err) {
         console.log(err);
       } finally {
@@ -43,7 +52,9 @@ function AssessmentDetailsPage() {
   if (loading) {
     return (
       <MainLayout>
+
         <AssessmentLoadingScreen />
+
       </MainLayout>
     );
   }
@@ -51,24 +62,38 @@ function AssessmentDetailsPage() {
   return (
     <MainLayout>
 
-      <div className="
-        max-w-[1300px]
-        mx-auto
-      ">
+      <div
+        className="
+          max-w-[1300px]
+          mx-auto
+
+          px-4
+          sm:px-6
+
+          pb-16
+        "
+      >
 
         {/* RESULT */}
         <AssessmentResultCard
-          result={assessment?.result}
+          result={
+            assessment?.result
+          }
         />
 
         {/* TOPICS */}
-        <div className="
-          grid grid-cols-1
-          lg:grid-cols-2
-          gap-6
+        <div
+          className="
+            grid
 
-          mt-8
-        ">
+            grid-cols-1
+            lg:grid-cols-2
+
+            gap-6
+
+            mt-8
+          "
+        >
 
           <TopicStrengthCard
             title="Strong Topics"
@@ -91,32 +116,53 @@ function AssessmentDetailsPage() {
         </div>
 
         {/* QUESTIONS */}
-        <div className="mt-14">
+        <div className="mt-12 sm:mt-14">
 
+          {/* HEADER */}
           <div className="mb-8">
 
-            <p className="
-              text-cyan-600
-              font-semibold
-              text-sm
-            ">
+            <p
+              className="
+                text-cyan-600
+
+                font-semibold
+
+                text-xs
+                sm:text-sm
+              "
+            >
               FULL BREAKDOWN
             </p>
 
-            <h2 className="
-              text-[42px]
-              font-bold
-              text-gray-900
-              mt-2
-            ">
+            <h2
+              className="
+                text-3xl
+                sm:text-4xl
+                xl:text-[42px]
+
+                font-bold
+
+                text-gray-900
+
+                mt-2
+
+                leading-tight
+              "
+            >
               Questions & Answers
             </h2>
 
           </div>
 
-          <div className="
-            flex flex-col gap-8
-          ">
+          {/* QUESTIONS LIST */}
+          <div
+            className="
+              flex flex-col
+
+              gap-6
+              sm:gap-8
+            "
+          >
 
             {assessment?.answers?.map(
               (item, index) => (
@@ -124,41 +170,68 @@ function AssessmentDetailsPage() {
                   key={item._id}
                   className="
                     bg-white
-                    rounded-[32px]
+
+                    rounded-[24px]
+                    sm:rounded-[32px]
 
                     border border-gray-100
+
                     shadow-sm
 
-                    p-8
+                    p-5
+                    sm:p-8
                   "
                 >
 
                   {/* TOP */}
-                  <div className="
-                    flex items-center
-                    justify-between
-                    gap-6
-                    mb-8
-                  ">
+                  <div
+                    className="
+                      flex flex-col
+                      lg:flex-row
 
-                    <div>
+                      lg:items-center
+                      justify-between
 
-                      <p className="
-                        text-sm
-                        text-gray-400
-                      ">
-                        Question
-                        {" "}
+                      gap-5
+                      sm:gap-6
+
+                      mb-7
+                      sm:mb-8
+                    "
+                  >
+
+                    {/* LEFT */}
+                    <div className="min-w-0">
+
+                      <p
+                        className="
+                          text-xs
+                          sm:text-sm
+
+                          text-gray-400
+                        "
+                      >
+                        Question{" "}
                         {index + 1}
                       </p>
 
-                      <h2 className="
-                        text-2xl
-                        font-bold
-                        text-gray-900
-                        mt-2
-                        leading-[1.7]
-                      ">
+                      <h2
+                        className="
+                          text-xl
+                          sm:text-2xl
+
+                          font-bold
+
+                          text-gray-900
+
+                          mt-2
+
+                          leading-[1.6]
+                          sm:leading-[1.7]
+
+                          break-words
+                        "
+                      >
                         {
                           item.questionText
                         }
@@ -166,11 +239,21 @@ function AssessmentDetailsPage() {
 
                     </div>
 
+                    {/* STATUS */}
                     <div
                       className={`
-                        px-5 py-3 rounded-2xl
+                        px-4 py-3
 
-                        text-sm font-semibold
+                        rounded-2xl
+
+                        text-xs
+                        sm:text-sm
+
+                        font-semibold
+
+                        w-fit
+
+                        shrink-0
 
                         ${
                           item.answer
@@ -193,10 +276,13 @@ function AssessmentDetailsPage() {
                   </div>
 
                   {/* OPTIONS */}
-                  <div className="
-                    grid grid-cols-1
-                    gap-4
-                  ">
+                  <div
+                    className="
+                      grid grid-cols-1
+
+                      gap-4
+                    "
+                  >
 
                     {item.options.map(
                       (option) => (
@@ -207,10 +293,13 @@ function AssessmentDetailsPage() {
 
                             border
 
-                            p-5
+                            p-4
+                            sm:p-5
 
                             flex items-start
-                            gap-5
+
+                            gap-4
+                            sm:gap-5
 
                             ${
                               item.answer ===
@@ -227,14 +316,26 @@ function AssessmentDetailsPage() {
                           `}
                         >
 
+                          {/* OPTION LETTER */}
                           <div
                             className={`
-                              w-12 h-12 rounded-xl
+                              min-w-[42px]
+                              h-[42px]
+
+                              sm:min-w-[48px]
+                              sm:h-[48px]
+
+                              rounded-xl
 
                               flex items-center
                               justify-center
 
                               font-bold
+
+                              text-sm
+                              sm:text-base
+
+                              shrink-0
 
                               ${
                                 item.answer ===
@@ -250,15 +351,27 @@ function AssessmentDetailsPage() {
                               }
                             `}
                           >
-                            {option.option}
+                            {
+                              option.option
+                            }
                           </div>
 
-                          <div className="flex-1">
+                          {/* TEXT */}
+                          <div className="flex-1 min-w-0">
 
-                            <p className="
-                              text-gray-700
-                              leading-[1.9]
-                            ">
+                            <p
+                              className="
+                                text-gray-700
+
+                                leading-[1.8]
+                                sm:leading-[1.9]
+
+                                text-sm
+                                sm:text-base
+
+                                break-words
+                              "
+                            >
                               {option.text}
                             </p>
 
@@ -274,52 +387,84 @@ function AssessmentDetailsPage() {
                   {item.explanation && (
                     <div
                       className="
-                        mt-8
+                        mt-7
+                        sm:mt-8
 
-                        rounded-[24px]
+                        rounded-[20px]
+                        sm:rounded-[24px]
 
                         bg-gradient-to-r
                         from-cyan-50
                         to-blue-50
 
-                        p-6
+                        p-5
+                        sm:p-6
                       "
                     >
 
-                      <div className="
-                        flex items-center gap-3
-                        mb-4
-                      ">
+                      {/* HEADER */}
+                      <div
+                        className="
+                          flex items-start
+                          sm:items-center
 
-                        <div className="
-                          w-12 h-12 rounded-xl
+                          gap-3
 
-                          bg-cyan-100
-                          text-cyan-600
+                          mb-4
+                        "
+                      >
 
-                          flex items-center
-                          justify-center
+                        {/* ICON */}
+                        <div
+                          className="
+                            w-11 h-11
+                            sm:w-12 sm:h-12
 
-                          text-xl
-                        ">
-                          <i className="
-                            ri-lightbulb-line
-                          "></i>
+                            rounded-xl
+
+                            bg-cyan-100
+                            text-cyan-600
+
+                            flex items-center
+                            justify-center
+
+                            text-lg
+                            sm:text-xl
+
+                            shrink-0
+                          "
+                        >
+
+                          <i className="ri-lightbulb-line"></i>
+
                         </div>
 
-                        <div>
+                        {/* TEXT */}
+                        <div className="min-w-0">
 
-                          <p className="
-                            text-sm text-gray-400
-                          ">
+                          <p
+                            className="
+                              text-xs
+                              sm:text-sm
+
+                              text-gray-400
+                            "
+                          >
                             AI Explanation
                           </p>
 
-                          <h3 className="
-                            font-bold
-                            text-gray-900
-                            mt-1
-                          ">
+                          <h3
+                            className="
+                              font-bold
+
+                              text-gray-900
+
+                              text-sm
+                              sm:text-base
+
+                              mt-1
+                            "
+                          >
                             Why This Matters
                           </h3>
 
@@ -327,10 +472,20 @@ function AssessmentDetailsPage() {
 
                       </div>
 
-                      <p className="
-                        text-gray-700
-                        leading-[2]
-                      ">
+                      {/* CONTENT */}
+                      <p
+                        className="
+                          text-gray-700
+
+                          leading-[1.9]
+                          sm:leading-[2]
+
+                          text-sm
+                          sm:text-base
+
+                          break-words
+                        "
+                      >
                         {item.explanation}
                       </p>
 

@@ -1,10 +1,14 @@
-import { useState,useEffect } from "react";
+import {
+  useState,
+  useEffect,
+} from "react";
+
 function QuestionCard({
   question,
   submitAnswer,
   loading,
 }) {
-const [selected, setSelected] =
+  const [selected, setSelected] =
     useState("");
 
   useEffect(() => {
@@ -21,52 +25,81 @@ const [selected, setSelected] =
     <div
       className="
         bg-white/5
+
         backdrop-blur-xl
 
         border border-white/10
 
-        rounded-[36px]
-        p-10
+        rounded-[24px]
+        sm:rounded-[32px]
+        xl:rounded-[36px]
+
+        p-5
+        sm:p-8
+        xl:p-10
       "
     >
 
       {/* TOPIC */}
-      <div className="
-        inline-flex items-center gap-2
+      <div
+        className="
+          inline-flex items-center gap-2
 
-        px-4 py-2 rounded-full
+          px-4 py-2
 
-        bg-cyan-400/10
-        text-cyan-300
+          rounded-full
 
-        text-sm
-        mb-8
-      ">
+          bg-cyan-400/10
+          text-cyan-300
 
-        <i className="
-          ri-flashlight-line
-        "></i>
+          text-xs
+          sm:text-sm
+
+          mb-6
+          sm:mb-8
+
+          flex-wrap
+        "
+      >
+
+        <i className="ri-flashlight-line"></i>
 
         {question?.topic}
 
       </div>
 
       {/* QUESTION */}
-      <h2 className="
-        text-[32px]
-        font-bold
-        text-white
-        leading-[1.6]
-      ">
+      <h2
+        className="
+          text-2xl
+          sm:text-3xl
+          xl:text-[32px]
+
+          font-bold
+
+          text-white
+
+          leading-[1.5]
+          sm:leading-[1.6]
+
+          break-words
+        "
+      >
         {question?.question}
       </h2>
 
       {/* OPTIONS */}
-      <div className="
-        grid grid-cols-1
-        gap-5
-        mt-10
-      ">
+      <div
+        className="
+          grid grid-cols-1
+
+          gap-4
+          sm:gap-5
+
+          mt-8
+          sm:mt-10
+        "
+      >
 
         {Object.entries(
           question?.options || {}
@@ -79,8 +112,11 @@ const [selected, setSelected] =
             className={`
               text-left
 
-              rounded-[24px]
-              p-6
+              rounded-[20px]
+              sm:rounded-[24px]
+
+              p-4
+              sm:p-6
 
               border
 
@@ -105,27 +141,56 @@ const [selected, setSelected] =
             `}
           >
 
-            <div className="
-              flex items-start gap-5
-            ">
+            <div
+              className="
+                flex items-start
 
-              <div className="
-                w-12 h-12 rounded-2xl
+                gap-3
+                sm:gap-5
+              "
+            >
 
-                bg-white/10
+              {/* LETTER */}
+              <div
+                className="
+                  min-w-[42px]
+                  h-[42px]
 
-                flex items-center justify-center
+                  sm:min-w-[48px]
+                  sm:h-[48px]
 
-                text-cyan-300
-                font-bold
-              ">
+                  rounded-2xl
+
+                  bg-white/10
+
+                  flex items-center justify-center
+
+                  text-cyan-300
+
+                  font-bold
+
+                  text-sm
+                  sm:text-base
+
+                  shrink-0
+                "
+              >
                 {key}
               </div>
 
-              <p className="
-                text-white/90
-                leading-[1.8]
-              ">
+              {/* TEXT */}
+              <p
+                className="
+                  text-white/90
+
+                  leading-[1.8]
+
+                  text-sm
+                  sm:text-base
+
+                  break-words
+                "
+              >
                 {value}
               </p>
 
@@ -139,11 +204,20 @@ const [selected, setSelected] =
       {/* ACTION */}
       <button
         onClick={handleSubmit}
-        disabled={!selected || loading}
+        disabled={
+          !selected || loading
+        }
         className="
-          mt-10
+          mt-8
+          sm:mt-10
 
-          px-8 py-4 rounded-2xl
+          px-6
+          sm:px-8
+
+          py-3.5
+          sm:py-4
+
+          rounded-2xl
 
           bg-cyan-400
           hover:bg-cyan-300
@@ -151,9 +225,16 @@ const [selected, setSelected] =
           disabled:opacity-50
 
           text-black
+
+          text-sm
+          sm:text-base
+
           font-bold
 
           transition-all duration-300
+
+          w-full
+          sm:w-auto
         "
       >
         {loading

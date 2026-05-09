@@ -8,53 +8,99 @@ function StartAssessmentCard({
         mt-8
 
         bg-white
-        rounded-[36px]
+
+        rounded-[28px]
+        sm:rounded-[32px]
+        xl:rounded-[36px]
 
         border border-gray-100
+
         shadow-sm
 
-        p-10
+        p-5
+        sm:p-8
+        xl:p-10
       "
     >
 
-      <div className="
-        flex items-start justify-between
-        gap-10
-      ">
+      <div
+        className="
+          flex flex-col
+          xl:flex-row
 
-        <div className="flex-1">
+          xl:items-start
+          justify-between
 
-          <div className="
-            w-20 h-20 rounded-[28px]
+          gap-8
+          xl:gap-10
+        "
+      >
 
-            bg-gradient-to-br
-            from-cyan-500
-            to-blue-600
+        {/* ================= LEFT ================= */}
+        <div className="flex-1 min-w-0">
 
-            flex items-center justify-center
+          {/* ICON */}
+          <div
+            className="
+              w-16 h-16
+              sm:w-20 sm:h-20
 
-            text-white text-4xl
-          ">
-            <i className="
-              ri-ai-generate
-            "></i>
+              rounded-[22px]
+              sm:rounded-[28px]
+
+              bg-gradient-to-br
+              from-cyan-500
+              to-blue-600
+
+              flex items-center justify-center
+
+              text-white
+
+              text-3xl
+              sm:text-4xl
+            "
+          >
+
+            <i className="ri-ai-generate"></i>
+
           </div>
 
-          <h2 className="
-            text-[38px]
-            font-bold
-            text-gray-900
-            mt-8
-          ">
+          {/* TITLE */}
+          <h2
+            className="
+              text-3xl
+              sm:text-4xl
+              xl:text-[38px]
+
+              font-bold
+
+              leading-tight
+
+              text-gray-900
+
+              mt-6
+              sm:mt-8
+            "
+          >
             Start Smart Assessment
           </h2>
 
-          <p className="
-            text-gray-500
-            leading-[2]
-            mt-5
-            max-w-[650px]
-          ">
+          {/* DESC */}
+          <p
+            className="
+              text-gray-500
+
+              leading-[1.9]
+              sm:leading-[2]
+
+              mt-5
+
+              max-w-[650px]
+
+              text-sm
+              sm:text-base
+            "
+          >
             This AI-powered assessment adapts
             to your responses and evaluates
             your current technical level,
@@ -62,54 +108,84 @@ function StartAssessmentCard({
           </p>
 
           {/* FEATURES */}
-          <div className="
-            grid grid-cols-1
-            md:grid-cols-3
-            gap-5
-            mt-10
-          ">
+          <div
+            className="
+              grid
+
+              grid-cols-1
+              sm:grid-cols-2
+              xl:grid-cols-3
+
+              gap-5
+
+              mt-8
+              sm:mt-10
+            "
+          >
 
             {[
               {
                 title: "Personalized",
-                icon: "ri-user-star-line",
+                icon:
+                  "ri-user-star-line",
               },
               {
-                title: "Adaptive Logic",
-                icon: "ri-brain-line",
+                title:
+                  "Adaptive Logic",
+                icon:
+                  "ri-brain-line",
               },
               {
-                title: "Instant Insights",
-                icon: "ri-flashlight-line",
+                title:
+                  "Instant Insights",
+                icon:
+                  "ri-flashlight-line",
               },
             ].map((item, i) => (
               <div
                 key={i}
                 className="
                   bg-gray-50
+
                   rounded-2xl
+
                   p-5
                 "
               >
 
-                <div className="
-                  w-12 h-12 rounded-xl
+                <div
+                  className="
+                    w-11 h-11
+                    sm:w-12 sm:h-12
 
-                  bg-cyan-100
-                  text-cyan-600
+                    rounded-xl
 
-                  flex items-center justify-center
+                    bg-cyan-100
+                    text-cyan-600
 
-                  text-xl
-                ">
+                    flex items-center justify-center
+
+                    text-lg
+                    sm:text-xl
+                  "
+                >
+
                   <i className={item.icon}></i>
+
                 </div>
 
-                <h3 className="
-                  font-semibold
-                  text-gray-900
-                  mt-4
-                ">
+                <h3
+                  className="
+                    font-semibold
+
+                    text-gray-900
+
+                    text-sm
+                    sm:text-base
+
+                    mt-4
+                  "
+                >
                   {item.title}
                 </h3>
 
@@ -120,74 +196,117 @@ function StartAssessmentCard({
 
         </div>
 
-        {/* RIGHT */}
+        {/* ================= RIGHT ================= */}
         <div
           className="
-            w-[320px]
-            rounded-[32px]
+            w-full
+            xl:w-[320px]
+
+            rounded-[24px]
+            sm:rounded-[32px]
 
             bg-gradient-to-br
             from-[#0F172A]
             to-[#111827]
 
-            p-8
+            p-6
+            sm:p-8
+
             text-white
+
+            shrink-0
           "
         >
 
-          <div className="
-            flex items-center justify-between
-          ">
+          {/* TOP */}
+          <div
+            className="
+              flex items-center
+              justify-between
 
-            <div>
+              gap-4
+            "
+          >
 
-              <p className="
-                text-white/60
-                text-sm
-              ">
+            <div className="min-w-0">
+
+              <p
+                className="
+                  text-white/60
+
+                  text-xs
+                  sm:text-sm
+                "
+              >
                 Estimated Time
               </p>
 
-              <h3 className="
-                text-[42px]
-                font-bold
-                mt-2
-              ">
+              <h3
+                className="
+                  text-3xl
+                  sm:text-[42px]
+
+                  font-bold
+
+                  mt-2
+                "
+              >
                 5 min
               </h3>
 
             </div>
 
-            <div className="
-              w-16 h-16 rounded-2xl
+            {/* ICON */}
+            <div
+              className="
+                w-14 h-14
+                sm:w-16 sm:h-16
 
-              bg-white/10
+                rounded-2xl
 
-              flex items-center justify-center
+                bg-white/10
 
-              text-3xl
-            ">
+                flex items-center justify-center
+
+                text-2xl
+                sm:text-3xl
+
+                shrink-0
+              "
+            >
               ⏱️
             </div>
 
           </div>
 
+          {/* BUTTON */}
           <button
             onClick={startAssessment}
             disabled={loading}
             className="
               w-full
-              mt-10
 
-              py-4 rounded-2xl
+              mt-8
+              sm:mt-10
+
+              py-3.5
+              sm:py-4
+
+              rounded-2xl
 
               bg-cyan-400
               hover:bg-cyan-300
 
               text-black
+
+              text-sm
+              sm:text-base
+
               font-bold
 
               transition-all duration-300
+
+              disabled:opacity-50
             "
           >
             {loading

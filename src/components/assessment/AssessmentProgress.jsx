@@ -6,39 +6,70 @@ function AssessmentProgress({
     (current / total) * 100;
 
   return (
-    <div className="mb-8">
+    <div className="mb-6 sm:mb-8">
 
-      <div className="
-        flex items-center
-        justify-between
-        mb-4
-      ">
+      {/* TOP */}
+      <div
+        className="
+          flex items-center
+          justify-between
 
-        <h3 className="
-          text-white
-          font-semibold
-        ">
+          gap-4
+
+          mb-4
+        "
+      >
+
+        <h3
+          className="
+            text-white
+
+            font-semibold
+
+            text-sm
+            sm:text-base
+
+            leading-relaxed
+          "
+        >
           Question {current} of {total}
         </h3>
 
-        <p className="
-          text-cyan-300
-          text-sm
-        ">
+        <p
+          className="
+            text-cyan-300
+
+            text-xs
+            sm:text-sm
+
+            font-medium
+
+            whitespace-nowrap
+          "
+        >
           {Math.round(progress)}%
         </p>
 
       </div>
 
-      <div className="
-        h-3 rounded-full
-        bg-white/10
-        overflow-hidden
-      ">
+      {/* BAR */}
+      <div
+        className="
+          h-2.5
+          sm:h-3
+
+          rounded-full
+
+          bg-white/10
+
+          overflow-hidden
+        "
+      >
 
         <div
           className="
             h-full
+
             rounded-full
 
             bg-gradient-to-r

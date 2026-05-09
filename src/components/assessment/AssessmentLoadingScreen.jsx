@@ -2,9 +2,12 @@ function AssessmentLoadingScreen() {
   return (
     <div
       className="
-        min-h-[500px]
+        min-h-[420px]
+        sm:min-h-[500px]
 
-        rounded-[42px]
+        rounded-[28px]
+        sm:rounded-[36px]
+        xl:rounded-[42px]
 
         bg-gradient-to-br
         from-[#0F172A]
@@ -17,52 +20,87 @@ function AssessmentLoadingScreen() {
         items-center justify-center
 
         relative overflow-hidden
+
+        px-4
+        text-center
       "
     >
 
       {/* GLOW */}
-      <div className="
-        absolute
-        w-[320px] h-[320px]
+      <div
+        className="
+          absolute
 
-        bg-cyan-400/20
-        blur-3xl
-        rounded-full
-      "></div>
+          w-[200px] h-[200px]
+          sm:w-[320px] sm:h-[320px]
+
+          bg-cyan-400/20
+
+          blur-3xl
+
+          rounded-full
+        "
+      ></div>
 
       {/* ICON */}
-      <div className="
-        relative z-10
+      <div
+        className="
+          relative z-10
 
-        w-28 h-28 rounded-full
+          w-20 h-20
+          sm:w-28 sm:h-28
 
-        border-[6px]
-        border-cyan-400/20
-        border-t-cyan-400
+          rounded-full
 
-        animate-spin
-      "></div>
+          border-[5px]
+          sm:border-[6px]
 
-      <h2 className="
-        relative z-10
+          border-cyan-400/20
+          border-t-cyan-400
 
-        text-[42px]
-        font-bold
-        text-white
+          animate-spin
+        "
+      ></div>
 
-        mt-10
-      ">
+      {/* TITLE */}
+      <h2
+        className="
+          relative z-10
+
+          text-3xl
+          sm:text-4xl
+          xl:text-[42px]
+
+          font-bold
+
+          text-white
+
+          mt-8
+          sm:mt-10
+
+          leading-tight
+        "
+      >
         AI Processing...
       </h2>
 
-      <p className="
-        relative z-10
+      {/* DESC */}
+      <p
+        className="
+          relative z-10
 
-        text-white/60
-        text-lg
+          text-white/60
 
-        mt-4
-      ">
+          text-sm
+          sm:text-lg
+
+          mt-4
+
+          leading-relaxed
+
+          max-w-md
+        "
+      >
         Preparing your adaptive assessment
       </p>
 

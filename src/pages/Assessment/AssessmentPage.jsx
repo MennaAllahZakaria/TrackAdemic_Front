@@ -1,25 +1,44 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 import MainLayout from "../../layouts/MainLayout";
+
 import api from "../../services/api";
 
 import AssessmentHero from "../../components/assessment/AssessmentHero";
+
 import StartAssessmentCard from "../../components/assessment/StartAssessmentCard";
+
 import ActiveAssessmentCard from "../../components/assessment/ActiveAssessmentCard";
+
 import AssessmentLoadingScreen from "../../components/assessment/AssessmentLoadingScreen";
+
 import AssessmentProgress from "../../components/assessment/AssessmentProgress";
+
 import QuestionCard from "../../components/assessment/QuestionCard";
+
 import AssessmentResultCard from "../../components/assessment/AssessmentResultCard";
+
 import TopicStrengthCard from "../../components/assessment/TopicStrengthCard";
+
 import AssessmentHistoryCard from "../../components/assessment/AssessmentHistoryCard";
 
 function AssessmentsPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate =
+    useNavigate();
 
-  const fromProgress = location.state?.fromProgress;
+  const location =
+    useLocation();
+
+  const fromProgress =
+    location.state?.fromProgress;
 
   const [loading, setLoading] =
     useState(true);
@@ -30,8 +49,10 @@ function AssessmentsPage() {
   const [submitting, setSubmitting] =
     useState(false);
 
-  const [activeAssessment, setActiveAssessment] =
-    useState(null);
+  const [
+    activeAssessment,
+    setActiveAssessment,
+  ] = useState(null);
 
   const [question, setQuestion] =
     useState(null);
@@ -39,220 +60,270 @@ function AssessmentsPage() {
   const [sessionId, setSessionId] =
     useState("");
 
-  const [questionNumber, setQuestionNumber] =
-    useState(1);
+  const [
+    questionNumber,
+    setQuestionNumber,
+  ] = useState(1);
 
-  const [totalQuestions, setTotalQuestions] =
-    useState(5);
+  const [
+    totalQuestions,
+    setTotalQuestions,
+  ] = useState(5);
 
-  const [completedResult, setCompletedResult] =
-    useState(null);
+  const [
+    completedResult,
+    setCompletedResult,
+  ] = useState(null);
 
   const [history, setHistory] =
     useState([]);
 
   // ================= FETCH ACTIVE =================
-  const fetchActiveAssessment = async () => {
-    try {
-      const res = await api.get(
-        "/assessment/active"
-      );
+  const fetchActiveAssessment =
+    async () => {
+      try {
+        const res =
+          await api.get(
+            "/assessment/active"
+          );
 
-      console.log(res);
+        if (
+          res.data.status ===
+          "success"
+        ) {
 
-      if (res.data.status === "success") {
+          const data =
+            res.data.data;
 
-        const data = res.data.data;
+          const current =
+            data.answers[
+              data.answers.length - 1
+            ];
 
-        const current =
-          data.answers[
-            data.answers.length - 1
-          ];
+          if (current) {
 
-        if (current) {
+            setQuestion({
+              question:
+                current.questionText,
 
-          setQuestion({
-            question:
-              current.questionText,
+              options:
+                current.options.reduce(
+                  (
+                    acc,
+                    item
+                  ) => {
 
-            options:
-              current.options.reduce(
-                (acc, item) => {
+                    acc[
+                      item.option
+                    ] = item.text;
 
-                  acc[item.option] =
-                    item.text;
+                    return acc;
 
-                  return acc;
+                  },
+                  {}
+                ),
 
-                },
-                {}
-              ),
+              topic:
+                "Assessment",
+            });
 
-            topic: "Assessment",
-          });
+          }
 
+          setSessionId(
+            data.sessionId
+          );
+
+          setQuestionNumber(
+            data.currentQuestion
+          );
+
+          setTotalQuestions(
+            data.totalQuestions
+          );
+
+          setActiveAssessment(
+            data
+          );
         }
 
-        setSessionId(data.sessionId);
-
-        setQuestionNumber(
-          data.currentQuestion
-        );
-
-        setTotalQuestions(
-          data.totalQuestions
-        );
-
-        setActiveAssessment(data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
       }
-
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
   // ================= FETCH HISTORY =================
-  const fetchHistory = async () => {
-    try {
-      const res = await api.get(
-        "/assessment/result"
-      );
+  const fetchHistory =
+    async () => {
+      try {
+        const res =
+          await api.get(
+            "/assessment/result"
+          );
 
-      setHistory(res.data.data || []);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+        setHistory(
+          res.data.data || []
+        );
+
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
   useEffect(() => {
     fetchActiveAssessment();
     fetchHistory();
   }, []);
 
-  // ================= START ASSESSMENT =================
-  const startAssessment = async () => {
-    try {
-      setStarting(true);
+  // ================= START =================
+  const startAssessment =
+    async () => {
+      try {
+        setStarting(true);
 
-      const res = await api.post(
-        "/assessment/start"
-      );
-      console.log(res)
+        const res =
+          await api.post(
+            "/assessment/start"
+          );
 
-      // لو فيه assessment active
-      if (
-        res.data.message ===
-        "Finish current assessment first"
-      ) {
-        fetchActiveAssessment();
-        return;
-      }
+        // ACTIVE SESSION
+        if (
+          res.data.message ===
+          "Finish current assessment first"
+        ) {
 
-      // السؤال الاول
-      setQuestion({
-        question: res.data.question.question,
+          fetchActiveAssessment();
 
-        options: res.data.question.options,
-
-        topic: res.data.question.topic,
-      });
-
-      setSessionId(res.data.sessionId);
-
-      setQuestionNumber(
-        res.data.questionNumber
-      );
-
-      setTotalQuestions(
-        res.data.totalQuestions
-      );
-
-      // مهم
-      setActiveAssessment(true);
-
-      setCompletedResult(null);
-
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setStarting(false);
-    }
-  };
-
-  // ================= SUBMIT ANSWER =================
-  const submitAnswer = async (answer) => {
-    try {
-      setSubmitting(true);
-
-      const res = await api.post(
-        "/assessment/answer",
-        {
-          sessionId,
-          answer,
+          return;
         }
-      );
 
-      // ================= FINISHED =================
-      if (
-        res.data.status === "completed"
-      ) {
+        // FIRST QUESTION
+        setQuestion({
+          question:
+            res.data.question.question,
 
-        setCompletedResult(
-          res.data.result
+          options:
+            res.data.question
+              .options,
+
+          topic:
+            res.data.question.topic,
+        });
+
+        setSessionId(
+          res.data.sessionId
         );
 
-        setQuestion(null);
+        setQuestionNumber(
+          res.data.questionNumber
+        );
 
-        setActiveAssessment(null);
+        setTotalQuestions(
+          res.data.totalQuestions
+        );
 
-        fetchHistory();
+        setActiveAssessment(
+          true
+        );
 
-        return;
+        setCompletedResult(
+          null
+        );
+
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setStarting(false);
       }
+    };
 
-      // ================= NEXT QUESTION =================
-      setQuestion({
-        question: res.data.question.question,
+  // ================= SUBMIT =================
+  const submitAnswer =
+    async (answer) => {
+      try {
+        setSubmitting(true);
 
-        options: res.data.question.options,
+        const res =
+          await api.post(
+            "/assessment/answer",
+            {
+              sessionId,
+              answer,
+            }
+          );
 
-        topic: res.data.question.topic,
-      });
+        // COMPLETED
+        if (
+          res.data.status ===
+          "completed"
+        ) {
 
-      setQuestionNumber(
-        res.data.questionNumber
-      );
+          setCompletedResult(
+            res.data.result
+          );
 
-      setTotalQuestions(
-        res.data.totalQuestions
-      );
+          setQuestion(null);
 
-    } catch (err) {
-      console.log(err);
+          setActiveAssessment(
+            null
+          );
 
-      // session invalid
-      if (
-        err?.response?.data?.message ===
-        "Invalid or completed session"
-      ) {
+          fetchHistory();
 
-        setQuestion(null);
+          return;
+        }
 
-        setActiveAssessment(null);
+        // NEXT QUESTION
+        setQuestion({
+          question:
+            res.data.question.question,
+
+          options:
+            res.data.question
+              .options,
+
+          topic:
+            res.data.question.topic,
+        });
+
+        setQuestionNumber(
+          res.data.questionNumber
+        );
+
+        setTotalQuestions(
+          res.data.totalQuestions
+        );
+
+      } catch (err) {
+        console.log(err);
+
+        // INVALID SESSION
+        if (
+          err?.response?.data
+            ?.message ===
+          "Invalid or completed session"
+        ) {
+
+          setQuestion(null);
+
+          setActiveAssessment(
+            null
+          );
+        }
+
+      } finally {
+        setSubmitting(false);
       }
-
-    } finally {
-      setSubmitting(false);
-    }
-  };
+    };
 
   // ================= LOADING =================
   if (loading) {
     return (
       <MainLayout>
+
         <AssessmentLoadingScreen />
+
       </MainLayout>
     );
   }
@@ -260,42 +331,64 @@ function AssessmentsPage() {
   return (
     <MainLayout>
 
-      <div className="
-        max-w-[1300px]
-        mx-auto
-      ">
+      <div
+        className="
+          max-w-[1300px]
+          mx-auto
+
+          px-4
+          sm:px-6
+
+          pb-16
+        "
+      >
 
         {/* HERO */}
-        <AssessmentHero 
-          fromProgress={fromProgress} 
+        <AssessmentHero
+          fromProgress={
+            fromProgress
+          }
         />
 
-        
+        {/* ================= ACTIVE QUESTION ================= */}
         {question && (
           <div
             className="
-              mt-10
+              mt-8
+              sm:mt-10
 
-              rounded-[42px]
+              rounded-[28px]
+              sm:rounded-[36px]
+              xl:rounded-[42px]
 
               bg-gradient-to-br
               from-[#0F172A]
               via-[#111827]
               to-[#1E293B]
 
-              p-10
+              p-5
+              sm:p-8
+              xl:p-10
             "
           >
 
             <AssessmentProgress
-              current={questionNumber}
-              total={totalQuestions}
+              current={
+                questionNumber
+              }
+              total={
+                totalQuestions
+              }
             />
 
             <QuestionCard
               question={question}
-              submitAnswer={submitAnswer}
-              loading={submitting}
+              submitAnswer={
+                submitAnswer
+              }
+              loading={
+                submitting
+              }
             />
 
           </div>
@@ -303,18 +396,32 @@ function AssessmentsPage() {
 
         {/* ================= RESULT ================= */}
         {completedResult && (
-          <div className="mt-10">
+          <div
+            className="
+              mt-8
+              sm:mt-10
+            "
+          >
 
             <AssessmentResultCard
-              result={completedResult}
+              result={
+                completedResult
+              }
             />
 
-            <div className="
-              grid grid-cols-1
-              lg:grid-cols-2
-              gap-6
-              mt-8
-            ">
+            {/* TOPICS */}
+            <div
+              className="
+                grid
+
+                grid-cols-1
+                lg:grid-cols-2
+
+                gap-6
+
+                mt-8
+              "
+            >
 
               <TopicStrengthCard
                 title="Strong Topics"
@@ -339,63 +446,107 @@ function AssessmentsPage() {
               className="
                 mt-8
 
-                rounded-[32px]
+                rounded-[24px]
+                sm:rounded-[32px]
 
                 bg-gradient-to-r
                 from-cyan-500
                 to-blue-600
 
-                p-10
+                p-6
+                sm:p-8
+                xl:p-10
 
                 text-white
               "
             >
 
-              <div className="
-                flex items-center
-                justify-between
-                gap-10
-              ">
+              <div
+                className="
+                  flex flex-col
+                  xl:flex-row
 
-                <div>
+                  xl:items-center
+                  justify-between
 
-                  <h2 className="
-                    text-[38px]
-                    font-bold
-                  ">
+                  gap-8
+                  xl:gap-10
+                "
+              >
+
+                {/* LEFT */}
+                <div className="min-w-0">
+
+                  <h2
+                    className="
+                      text-3xl
+                      sm:text-4xl
+                      xl:text-[38px]
+
+                      font-bold
+
+                      leading-tight
+                    "
+                  >
                     Ready To Improve?
                   </h2>
 
-                  <p className="
-                    text-white/80
-                    mt-4
-                    text-lg
-                    leading-[1.9]
-                    max-w-[700px]
-                  ">
-                    Explore personalized tracks
-                    tailored specifically for
-                    your current level and
+                  <p
+                    className="
+                      text-white/80
+
+                      mt-4
+
+                      text-sm
+                      sm:text-lg
+
+                      leading-[1.9]
+
+                      max-w-[700px]
+                    "
+                  >
+                    Explore personalized
+                    tracks tailored
+                    specifically for your
+                    current level and
                     learning gaps.
                   </p>
 
                 </div>
 
+                {/* BUTTON */}
                 <button
                   onClick={() =>
-                    navigate("/tracks")
+                    navigate(
+                      "/tracks"
+                    )
                   }
                   className="
-                    px-8 py-4 rounded-2xl
+                    w-full
+                    sm:w-fit
+
+                    px-6
+                    sm:px-8
+
+                    py-3.5
+                    sm:py-4
+
+                    rounded-2xl
 
                     bg-white
+
                     text-black
+
+                    text-sm
+                    sm:text-base
 
                     font-bold
 
                     hover:scale-105
 
                     transition-all duration-300
+
+                    shrink-0
                   "
                 >
                   Explore Tracks →
@@ -433,30 +584,58 @@ function AssessmentsPage() {
           )}
 
         {/* ================= HISTORY ================= */}
-        <div className="mt-14">
+        <div
+          className="
+            mt-12
+            sm:mt-14
+          "
+        >
 
-          <div className="
-            flex items-center
-            justify-between
-            mb-8
-          ">
+          {/* HEADER */}
+          <div
+            className="
+              flex flex-col
+              sm:flex-row
+
+              sm:items-center
+              justify-between
+
+              gap-4
+
+              mb-8
+            "
+          >
 
             <div>
 
-              <p className="
-                text-cyan-600
-                font-semibold
-                text-sm
-              ">
+              <p
+                className="
+                  text-cyan-600
+
+                  font-semibold
+
+                  text-xs
+                  sm:text-sm
+                "
+              >
                 PREVIOUS RESULTS
               </p>
 
-              <h2 className="
-                text-[42px]
-                font-bold
-                text-gray-900
-                mt-2
-              ">
+              <h2
+                className="
+                  text-3xl
+                  sm:text-4xl
+                  xl:text-[42px]
+
+                  font-bold
+
+                  text-gray-900
+
+                  mt-2
+
+                  leading-tight
+                "
+              >
                 Assessment History
               </h2>
 
@@ -464,35 +643,54 @@ function AssessmentsPage() {
 
           </div>
 
-          {history.length === 0 ? (
+          {/* EMPTY */}
+          {history.length ===
+          0 ? (
             <div
               className="
                 bg-white
-                rounded-[32px]
+
+                rounded-[24px]
+                sm:rounded-[32px]
 
                 border border-gray-100
 
-                p-12
+                p-8
+                sm:p-12
 
                 text-center
+
                 text-gray-500
+
+                text-sm
+                sm:text-base
               "
             >
-              No previous assessments yet.
+              No previous
+              assessments yet.
             </div>
           ) : (
-            <div className="
-              grid grid-cols-1
-              lg:grid-cols-2
-              gap-6
-            ">
+            <div
+              className="
+                grid
 
-              {history.map((item) => (
-                <AssessmentHistoryCard
-                  key={item._id}
-                  assessment={item}
-                />
-              ))}
+                grid-cols-1
+                lg:grid-cols-2
+
+                gap-6
+              "
+            >
+
+              {history.map(
+                (item) => (
+                  <AssessmentHistoryCard
+                    key={item._id}
+                    assessment={
+                      item
+                    }
+                  />
+                )
+              )}
 
             </div>
           )}

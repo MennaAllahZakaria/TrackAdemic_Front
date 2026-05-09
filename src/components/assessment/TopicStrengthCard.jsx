@@ -9,8 +9,11 @@ function TopicStrengthCard({
   return (
     <div
       className={`
-        rounded-[32px]
-        p-8
+        rounded-[24px]
+        sm:rounded-[32px]
+
+        p-5
+        sm:p-8
 
         ${
           isStrong
@@ -20,18 +23,33 @@ function TopicStrengthCard({
       `}
     >
 
-      <div className="
-        flex items-center gap-4
-        mb-7
-      ">
+      {/* HEADER */}
+      <div
+        className="
+          flex items-start
+          sm:items-center
 
+          gap-4
+
+          mb-6
+          sm:mb-7
+        "
+      >
+
+        {/* ICON */}
         <div
           className={`
-            w-16 h-16 rounded-2xl
+            w-14 h-14
+            sm:w-16 sm:h-16
+
+            rounded-2xl
 
             flex items-center justify-center
 
-            text-3xl
+            text-2xl
+            sm:text-3xl
+
+            shrink-0
 
             ${
               isStrong
@@ -46,6 +64,7 @@ function TopicStrengthCard({
             }
           `}
         >
+
           <i
             className={
               isStrong
@@ -53,21 +72,37 @@ function TopicStrengthCard({
                 : "ri-alert-line"
             }
           ></i>
+
         </div>
 
-        <div>
+        {/* TEXT */}
+        <div className="min-w-0">
 
-          <p className="
-            text-sm text-gray-400
-          ">
+          <p
+            className="
+              text-xs
+              sm:text-sm
+
+              text-gray-400
+            "
+          >
             Topic Analysis
           </p>
 
-          <h2 className="
-            text-2xl font-bold
-            text-gray-900
-            mt-1
-          ">
+          <h2
+            className="
+              text-xl
+              sm:text-2xl
+
+              font-bold
+
+              text-gray-900
+
+              mt-1
+
+              break-words
+            "
+          >
             {title}
           </h2>
 
@@ -75,17 +110,31 @@ function TopicStrengthCard({
 
       </div>
 
-      <div className="
-        flex flex-wrap gap-3
-      ">
+      {/* TOPICS */}
+      <div
+        className="
+          flex flex-wrap
+
+          gap-3
+        "
+      >
 
         {topics?.map((topic, i) => (
           <div
             key={i}
             className={`
-              px-4 py-3 rounded-2xl
+              px-4 py-3
 
-              text-sm font-semibold
+              rounded-2xl
+
+              text-xs
+              sm:text-sm
+
+              font-semibold
+
+              break-words
+
+              max-w-full
 
               ${
                 isStrong

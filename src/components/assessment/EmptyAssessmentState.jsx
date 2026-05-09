@@ -5,53 +5,88 @@ function EmptyAssessmentState() {
         mt-8
 
         bg-white
-        rounded-[40px]
+
+        rounded-[28px]
+        sm:rounded-[36px]
+        xl:rounded-[40px]
 
         border border-gray-100
+
         shadow-sm
 
-        p-14
+        p-6
+        sm:p-10
+        xl:p-14
 
         text-center
       "
     >
 
-      <div className="
-        w-28 h-28 rounded-full
+      {/* ICON */}
+      <div
+        className="
+          w-20 h-20
+          sm:w-24 sm:h-24
+          xl:w-28 xl:h-28
 
-        bg-cyan-50
-        text-cyan-600
+          rounded-full
 
-        flex items-center justify-center
+          bg-cyan-50
+          text-cyan-600
 
-        text-[58px]
+          flex items-center justify-center
 
-        mx-auto
-      ">
-        <i className="
-          ri-brain-line
-        "></i>
+          text-[42px]
+          sm:text-[50px]
+          xl:text-[58px]
+
+          mx-auto
+        "
+      >
+
+        <i className="ri-brain-line"></i>
+
       </div>
 
-      <h2 className="
-        text-[42px]
-        font-bold
-        text-gray-900
-        mt-10
-      ">
+      {/* TITLE */}
+      <h2
+        className="
+          text-3xl
+          sm:text-4xl
+          xl:text-[42px]
+
+          font-bold
+
+          leading-tight
+
+          text-gray-900
+
+          mt-8
+          sm:mt-10
+        "
+      >
         No Active Assessment
       </h2>
 
-      <p className="
-        text-gray-500
-        leading-[2]
-        text-lg
+      {/* DESCRIPTION */}
+      <p
+        className="
+          text-gray-500
 
-        mt-6
-        max-w-[700px]
+          leading-[1.9]
+          sm:leading-[2]
 
-        mx-auto
-      ">
+          text-sm
+          sm:text-lg
+
+          mt-5
+          sm:mt-6
+
+          max-w-[700px]
+
+          mx-auto
+        "
+      >
         Start a new AI-powered assessment
         to evaluate your technical level,
         discover learning gaps, and receive
