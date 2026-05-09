@@ -1,26 +1,89 @@
-function YoutubeModal({ videoId, onClose }) {
+function YoutubeModal({
+  videoId,
+  onClose,
+}) {
   if (!videoId) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div
+      className="
+        fixed inset-0 z-50
 
-      <div className="relative w-[90%] max-w-4xl">
+        bg-black/70
 
-        {/* close */}
+        backdrop-blur-sm
+
+        flex items-center justify-center
+
+        p-4
+      "
+    >
+
+      <div
+        className="
+          relative
+
+          w-full
+          max-w-5xl
+        "
+      >
+
+        {/* CLOSE */}
         <button
           onClick={onClose}
-          className="absolute -top-10 right-0 text-white text-xl"
+          className="
+            absolute
+
+            -top-12
+            right-0
+
+            w-10 h-10
+
+            rounded-full
+
+            bg-white/10
+
+            text-white
+
+            flex items-center justify-center
+
+            hover:bg-white/20
+
+            transition-all duration-300
+          "
         >
           ✕
         </button>
 
-        {/* video */}
-        <iframe
-          className="w-full h-[500px] rounded-xl"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        />
+        {/* VIDEO */}
+        <div
+          className="
+            relative
+
+            w-full
+
+            overflow-hidden
+
+            rounded-2xl
+
+            bg-black
+
+            aspect-video
+          "
+        >
+
+          <iframe
+            className="
+              absolute inset-0
+
+              w-full h-full
+            "
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          />
+
+        </div>
 
       </div>
 

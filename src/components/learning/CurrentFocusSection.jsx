@@ -1,26 +1,103 @@
-import PhaseCard from "./PhaseCard";
-function CurrentFocusSection({ data }) {
+import MainLayout from "../layouts/MainLayout";
+import { useEffect, useState } from "react";
+import api from "../services/api";
+import { useNavigate } from "react-router-dom";
+
+import CurrentFocusSection from "../components/learning/CurrentFocusSection";
+import RecommendationCard from "../components/learning/RecommendationCard";
+import CurriculumSection from "../components/learning/CurriculumSection";
+
+function MyLearning() {
+  const [data, setData] = useState(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await api.get(
+          "/learning-path/me"
+        );
+
+        setData(res.data.data);
+
+      } catch (err) {
+        if (
+          err.response?.data
+            ?.message ===
+          "No active learning path found"
+        ) {
+          navigate("/onboarding");
+        }
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (!data) return null;
+
   return (
-    <div className="mb-10">
+    <MainLayout>
 
-      <p className="text-blue-600 text-sm font-medium">
-        CURRENT FOCUS
-      </p>
+      <div
+        className="
+          max-w-7xl
+          mx-auto
 
-      <h2 className="text-xl font-semibold mb-4">
-        In Progress
-      </h2>
+          px-4
+          sm:px-6
 
-      <div className="flex gap-6 overflow-x-auto">
+          pb-20
+        "
+      >
 
-        {data.phases.map((phase) => (
-          <PhaseCard key={phase.phase_number} phase={phase} />
-        ))}
+        {/* HEADER */}
+        <div className="mb-10">
+
+          <h1
+            className="
+              text-3xl
+              sm:text-4xl
+
+              font-bold
+
+              text-gray-900
+            "
+          >
+            My Learning
+          </h1>
+
+          <p
+            className="
+              text-gray-500
+
+              mt-2
+
+              text-sm
+              sm:text-base
+            "
+          >
+            Manage your academic
+            journey
+          </p>
+
+        </div>
+
+        <CurrentFocusSection
+          data={data}
+        />
+
+        <RecommendationCard />
+
+        <CurriculumSection
+          data={data}
+        />
 
       </div>
 
-    </div>
+    </MainLayout>
   );
 }
 
-export default CurrentFocusSection;
+export default MyLearning;

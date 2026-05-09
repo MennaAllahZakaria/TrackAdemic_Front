@@ -9,17 +9,22 @@ import CurriculumSection from "../components/learning/CurriculumSection";
 
 function MyLearning() {
   const [data, setData] = useState(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await api.get("/learning-path/me");
+        const res = await api.get(
+          "/learning-path/me"
+        );
+
         setData(res.data.data);
 
       } catch (err) {
         if (
-          err.response?.data?.message ===
+          err.response?.data
+            ?.message ===
           "No active learning path found"
         ) {
           navigate("/onboarding");
@@ -34,21 +39,63 @@ function MyLearning() {
 
   return (
     <MainLayout>
-      <div className="max-w-7xl mx-auto">
+
+      <div
+        className="
+          max-w-7xl
+          mx-auto
+
+          px-4
+          sm:px-6
+
+          pb-20
+        "
+      >
 
         {/* HEADER */}
-        <h1 className="text-3xl font-bold">My Learning</h1>
-        <p className="text-gray-500 mb-8">
-          Manage your academic journey
-        </p>
+        <div className="mb-10">
 
-        <CurrentFocusSection data={data} />
+          <h1
+            className="
+              text-3xl
+              sm:text-4xl
+
+              font-bold
+
+              text-gray-900
+            "
+          >
+            My Learning
+          </h1>
+
+          <p
+            className="
+              text-gray-500
+
+              mt-2
+
+              text-sm
+              sm:text-base
+            "
+          >
+            Manage your academic
+            journey
+          </p>
+
+        </div>
+
+        <CurrentFocusSection
+          data={data}
+        />
 
         <RecommendationCard />
 
-        <CurriculumSection data={data} />
+        <CurriculumSection
+          data={data}
+        />
 
       </div>
+
     </MainLayout>
   );
 }

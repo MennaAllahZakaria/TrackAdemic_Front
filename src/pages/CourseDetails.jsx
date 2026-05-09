@@ -11,73 +11,118 @@ import api from "../services/api";
 function CourseDetails() {
   const { state } = useLocation();
 
-  const { progress, setProgress, loading } = useProgress();
-  const [loadingProgress, setLoadingProgress] = useState(false);
+  const {
+    progress,
+    setProgress,
+  } = useProgress();
 
-  const [videoId, setVideoId] = useState(null);
-  const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+  const [loadingProgress, setLoadingProgress] =
+    useState(false);
+
+  const [videoId, setVideoId] =
+    useState(null);
+
+  const [open, setOpen] =
+    useState(false);
+
+  const navigate =
+    useNavigate();
 
   const phase = state?.phase;
+
   if (!phase) return null;
 
-  const course = phase.courses?.[0];
+  const course =
+    phase.courses?.[0];
 
-  // ✅ جلب الفيديو من search_query
+  // ================= VIDEO =================
   useEffect(() => {
-    const loadVideo = async () => {
-      if (!course?.search_query) return;
+    const loadVideo =
+      async () => {
+        if (
+          !course?.search_query
+        )
+          return;
 
-      const id = await getYoutubeVideoId(course.search_query);
-      setVideoId(id);
-    };
+        const id =
+          await getYoutubeVideoId(
+            course.search_query
+          );
+
+        setVideoId(id);
+      };
 
     loadVideo();
   }, [course]);
 
+  // ================= PROGRESS =================
   useEffect(() => {
-    const fetchProgress = async () => {
-      try {
-        const res = await api.get("/progress/me");
-        setProgress(res.data.data);
-      } catch (err) {
-        if (err.response?.data?.message === "No progress found") {
-          setProgress({
-            completedTopics: [],
-          });
+    const fetchProgress =
+      async () => {
+        try {
+          const res =
+            await api.get(
+              "/progress/me"
+            );
+
+          setProgress(
+            res.data.data
+          );
+
+        } catch (err) {
+          if (
+            err.response?.data
+              ?.message ===
+            "No progress found"
+          ) {
+            setProgress({
+              completedTopics: [],
+            });
+          }
         }
-      }
-    };
+      };
 
     fetchProgress();
   }, []);
 
-  const handleMarkCompleted = async () => {
+  // ================= MARK COMPLETE =================
+  const handleMarkCompleted =
+    async () => {
       if (!course) return;
 
       try {
         setLoadingProgress(true);
 
-        const completed = progress?.completedTopics || [];
+        const completed =
+          progress?.completedTopics ||
+          [];
 
-        // ✅ نجيب أول topic لسه مش متعمل
-        const nextTopic = course.topics.find(
-          (t) => !completed.includes(t)
-        );
+        const nextTopic =
+          course.topics.find(
+            (t) =>
+              !completed.includes(t)
+          );
 
-        // لو كله متعمل
         if (!nextTopic) {
-          alert("All topics already completed ✅");
+          alert(
+            "All topics already completed ✅"
+          );
+
           return;
         }
 
-        const res = await api.post("/progress/update", {
-          topic: nextTopic,
-          hours: 1,
-        });
+        const res =
+          await api.post(
+            "/progress/update",
+            {
+              topic: nextTopic,
+              hours: 1,
+            }
+          );
 
-        // ✅ نحدث الstate فورًا (optimistic UI)
-        setProgress(res.data.data.progress);
+        setProgress(
+          res.data.data.progress
+        );
 
       } catch (err) {
         console.error(err);
@@ -86,213 +131,730 @@ function CourseDetails() {
       }
     };
 
-  const handleOpenFullLearning = () => {
-    
-    navigate("/my-learning");
-  };
+  const handleOpenFullLearning =
+    () => {
+      navigate("/my-learning");
+    };
+
   const percent =
-  progress?.overallProgress?.toFixed(0) || 0;
+    progress?.overallProgress?.toFixed(
+      0
+    ) || 0;
 
   return (
     <MainLayout>
-      <div className="max-w-[1200px] mx-auto flex gap-10">
 
-        {/* LEFT */}
-        <div className="flex-1">
+      <div
+        className="
+          max-w-[1400px]
+          mx-auto
 
-          {/* BADGE */}
-          <div className="flex items-center gap-3">
-            <span className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-xs font-medium">
-              ADVANCED SERIES
-            </span>
+          px-4
+          sm:px-6
 
-            <span className="text-gray-400 text-xs">
-              VIDEO_YOUTUBE Course via YouTube Premium
-            </span>
-          </div>
+          pb-20
+        "
+      >
 
-          {/* TITLE */}
-          <h1 className="text-[42px] font-bold leading-[1.2] mt-4 text-gray-900">
-            {phase.phase_title}
-          </h1>
+        {/* MAIN GRID */}
+        <div
+          className="
+            flex flex-col
+            xl:flex-row
 
-          {/* STATS */}
-          <div className="flex items-center gap-6 mt-4 text-sm text-gray-500">
-            <span>⏱ {course?.estimated_hours}h total</span>
-            <span>⭐ 4.9 (2.4k reviews)</span>
-            <span>👥 18k Students</span>
-          </div>
+            gap-8
+            xl:gap-10
+          "
+        >
 
-          {/* VIDEO CARD */}
-          <div className="relative mt-6 rounded-[28px] overflow-hidden shadow-lg group">
+          {/* ================= LEFT ================= */}
+          <div className="flex-1 min-w-0">
 
-            {/* thumbnail */}
-            <img
-              src={
-                videoId
-                  ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-                  : "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
-              }
-              className="w-full h-[360px] object-cover transition duration-500 group-hover:scale-105"
-            />
-
-            {/* overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-
-            {/* ▶ play button */}
+            {/* BADGES */}
             <div
-              onClick={() => setOpen(true)}
-              className="absolute inset-0 flex items-center justify-center cursor-pointer"
+              className="
+                flex flex-wrap
+
+                items-center
+
+                gap-3
+              "
             >
-              <div className="w-[70px] h-[70px] bg-blue-600 rounded-full flex items-center justify-center text-white text-xl shadow-lg hover:scale-110 transition">
-                ▶
-              </div>
+
+              <span
+                className="
+                  bg-purple-100
+                  text-purple-600
+
+                  px-3 py-1
+
+                  rounded-full
+
+                  text-xs
+                  sm:text-sm
+
+                  font-medium
+                "
+              >
+                ADVANCED SERIES
+              </span>
+
+              <span
+                className="
+                  text-gray-400
+
+                  text-xs
+                  sm:text-sm
+                "
+              >
+                VIDEO_YOUTUBE Course via
+                YouTube Premium
+              </span>
+
             </div>
 
-            {/* bottom left */}
-            <div className="absolute bottom-5 left-5 bg-black/60 text-white px-4 py-1 rounded-full text-sm backdrop-blur">
-              Module {phase.phase_number}: {phase.phase_title}
+            {/* TITLE */}
+            <h1
+              className="
+                text-3xl
+                sm:text-4xl
+                xl:text-[42px]
+
+                font-bold
+
+                leading-[1.2]
+
+                mt-5
+
+                text-gray-900
+              "
+            >
+              {phase.phase_title}
+            </h1>
+
+            {/* STATS */}
+            <div
+              className="
+                flex flex-wrap
+
+                items-center
+
+                gap-5
+
+                mt-5
+
+                text-sm
+                text-gray-500
+              "
+            >
+
+              <span>
+                ⏱{" "}
+                {
+                  course?.estimated_hours
+                }
+                h total
+              </span>
+
+              <span>
+                ⭐ 4.9 (2.4k reviews)
+              </span>
+
+              <span>
+                👥 18k Students
+              </span>
+
+            </div>
+
+            {/* VIDEO */}
+            <div
+              className="
+                relative
+
+                mt-7
+
+                rounded-[24px]
+                sm:rounded-[28px]
+
+                overflow-hidden
+
+                shadow-lg
+
+                group
+              "
+            >
+
+              {/* THUMBNAIL */}
+              <img
+                src={
+                  videoId
+                    ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+                    : "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                }
+                className="
+                  w-full
+
+                  h-[240px]
+                  sm:h-[320px]
+                  lg:h-[420px]
+
+                  object-cover
+
+                  transition duration-500
+
+                  group-hover:scale-105
+                "
+              />
+
+              {/* OVERLAY */}
+              <div
+                className="
+                  absolute inset-0
+
+                  bg-gradient-to-t
+                  from-black/60
+                  to-transparent
+                "
+              />
+
+              {/* PLAY */}
+              <div
+                onClick={() =>
+                  setOpen(true)
+                }
+                className="
+                  absolute inset-0
+
+                  flex items-center justify-center
+
+                  cursor-pointer
+                "
+              >
+
+                <div
+                  className="
+                    w-[64px] h-[64px]
+                    sm:w-[74px] sm:h-[74px]
+
+                    bg-blue-600
+
+                    rounded-full
+
+                    flex items-center justify-center
+
+                    text-white
+
+                    text-xl
+
+                    shadow-lg
+
+                    hover:scale-110
+
+                    transition-all duration-300
+                  "
+                >
+                  ▶
+                </div>
+
+              </div>
+
+              {/* MODULE */}
+              <div
+                className="
+                  absolute bottom-5 left-5
+
+                  bg-black/60
+
+                  text-white
+
+                  px-4 py-2
+
+                  rounded-full
+
+                  text-xs
+                  sm:text-sm
+
+                  backdrop-blur
+                "
+              >
+                Module{" "}
+                {
+                  phase.phase_number
+                }
+                :{" "}
+                {phase.phase_title}
+              </div>
+
+            </div>
+
+            {/* CONTENT GRID */}
+            <div
+              className="
+                flex flex-col
+                lg:flex-row
+
+                gap-8
+                lg:gap-10
+
+                mt-10
+              "
+            >
+
+              {/* TEXT */}
+              <div className="flex-1 min-w-0">
+
+                {/* DESC */}
+                <div>
+
+                  <h2
+                    className="
+                      text-xl
+                      sm:text-2xl
+
+                      font-semibold
+
+                      mb-4
+
+                      text-gray-900
+                    "
+                  >
+                    Course Description
+                  </h2>
+
+                  <p
+                    className="
+                      text-gray-600
+
+                      leading-[1.9]
+
+                      text-sm
+                      sm:text-base
+                    "
+                  >
+                    {phase.objective}
+                  </p>
+
+                </div>
+
+                {/* TOPICS */}
+                <div className="mt-10">
+
+                  <h3
+                    className="
+                      text-xl
+                      sm:text-2xl
+
+                      font-semibold
+
+                      mb-5
+
+                      text-gray-900
+                    "
+                  >
+                    Course Topics
+                  </h3>
+
+                  <TopicsChecklist
+                    topics={
+                      course?.topics ||
+                      []
+                    }
+                    progress={
+                      progress
+                    }
+                    setProgress={
+                      setProgress
+                    }
+                  />
+
+                </div>
+
+              </div>
+
+              {/* SIDE CARD */}
+              <div
+                className="
+                  w-full
+                  lg:w-[300px]
+
+                  shrink-0
+                "
+              >
+
+                <div
+                  className="
+                    bg-white
+
+                    rounded-[24px]
+
+                    border border-gray-100
+
+                    shadow-sm
+
+                    p-5
+                    sm:p-6
+                  "
+                >
+
+                  <p
+                    className="
+                      text-sm
+                      text-gray-500
+                    "
+                  >
+                    Current Progress
+                  </p>
+
+                  {/* BAR */}
+                  <div
+                    className="
+                      mt-4
+
+                      h-3
+
+                      bg-gray-200
+
+                      rounded-full
+
+                      overflow-hidden
+                    "
+                  >
+
+                    <div
+                      className="
+                        h-full
+
+                        bg-blue-600
+
+                        rounded-full
+
+                        transition-all duration-500
+                      "
+                      style={{
+                        width: `${percent}%`,
+                      }}
+                    />
+
+                  </div>
+
+                  <p
+                    className="
+                      text-sm
+
+                      text-gray-500
+
+                      mt-2
+                    "
+                  >
+                    {percent}% completed
+                  </p>
+
+                  {/* BUTTON */}
+                  <button
+                    onClick={
+                      handleMarkCompleted
+                    }
+                    disabled={
+                      loadingProgress
+                    }
+                    className="
+                      mt-6
+
+                      w-full
+
+                      bg-green-500
+                      text-white
+
+                      py-3
+
+                      rounded-full
+
+                      font-medium
+
+                      hover:bg-green-600
+
+                      transition-all duration-300
+
+                      disabled:opacity-50
+                    "
+                  >
+                    {loadingProgress
+                      ? "Updating..."
+                      : "Mark as Completed"}
+                  </button>
+
+                  {/* SAVE */}
+                  <button
+                    className="
+                      mt-3
+
+                      w-full
+
+                      border border-gray-200
+
+                      py-3
+
+                      rounded-full
+
+                      text-sm
+
+                      hover:bg-gray-50
+
+                      transition-all duration-300
+                    "
+                  >
+                    Save for Reference
+                  </button>
+
+                  {/* INSTRUCTOR */}
+                  <div
+                    className="
+                      mt-7
+
+                      pt-5
+
+                      border-t
+                    "
+                  >
+
+                    <p
+                      className="
+                        text-xs
+                        text-gray-400
+                      "
+                    >
+                      COURSE INSTRUCTOR
+                    </p>
+
+                    <div
+                      className="
+                        flex items-center
+
+                        gap-3
+
+                        mt-4
+                      "
+                    >
+
+                      <div
+                        className="
+                          w-11 h-11
+
+                          bg-gray-300
+
+                          rounded-full
+                        "
+                      />
+
+                      <div>
+
+                        <p
+                          className="
+                            text-sm
+                            font-medium
+                          "
+                        >
+                          {
+                            course?.instructor
+                          }
+                        </p>
+
+                        <p
+                          className="
+                            text-xs
+                            text-gray-500
+                          "
+                        >
+                          {
+                            course?.platform
+                          }
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
             </div>
 
           </div>
 
-          {/* DESCRIPTION */}
-          <div className="mt-10 flex gap-10">
+          {/* ================= RIGHT ================= */}
+          <div
+            className="
+              w-full
+              xl:w-[320px]
 
-            {/* TEXT */}
-            <div className="flex-1">
+              shrink-0
+            "
+          >
 
-              <h2 className="text-xl font-semibold mb-3">
-                Course Description
-              </h2>
+            {/* NEXT */}
+            <div
+              className="
+                bg-white
 
-              <p className="text-gray-600 leading-relaxed">
-                {phase.objective}
-              </p>
+                p-5
+                sm:p-6
 
-              {/* WHAT YOU LEARN */}
-              <h3 className="text-lg font-semibold mt-8 mb-4">
-                What you'll learn
+                rounded-[24px]
+
+                shadow-sm
+
+                border border-gray-100
+              "
+            >
+
+              <h3
+                className="
+                  font-semibold
+
+                  text-gray-900
+
+                  mb-5
+                "
+              >
+                Next in your path
               </h3>
 
-              <h3 className="text-lg font-semibold mt-8 mb-4">
-                  Course Topics
-                </h3>
+              <div className="space-y-4">
 
-                <TopicsChecklist
-                  topics={course?.topics || []}
-                  progress={progress}
-                  setProgress={setProgress}
-                />
+                <div
+                  className="
+                    flex items-center
 
-            </div>
+                    gap-3
+                  "
+                >
 
-            {/* SIDE CARD */}
-            <div className="w-[260px] bg-white rounded-2xl shadow-md p-5">
+                  <div
+                    className="
+                      w-14 h-14
 
-              <p className="text-sm text-gray-500">
-                Current Progress
-              </p>
+                      bg-gray-200
 
-              <div className="mt-2 h-2 bg-gray-200 rounded-full">
-                    <div
-                      className="h-full bg-blue-600 rounded-full transition-all duration-500"
-                      style={{ width: `${percent}%` }}
-                    />
+                      rounded-xl
+                    "
+                  />
+
+                  <div>
+
+                    <p
+                      className="
+                        text-sm
+                        font-medium
+                      "
+                    >
+                      Next Module
+                    </p>
+
+                    <p
+                      className="
+                        text-xs
+                        text-gray-500
+                      "
+                    >
+                      Locked
+                    </p>
+
                   </div>
-              
+
+                </div>
+
+              </div>
 
               <button
-                  onClick={handleMarkCompleted}
-                  disabled={loadingProgress}
-                  className="mt-5 w-full bg-green-500 text-white py-2 rounded-full font-medium hover:bg-green-600 transition disabled:opacity-50"
-                >
-                  {loadingProgress ? "Updating..." : "Mark as Completed"}
-                </button>
+                className="
+                  mt-5
 
-              <button className="mt-3 w-full border py-2 rounded-full text-sm">
-                Save for Reference
+                  text-blue-600
+
+                  text-sm
+                  font-medium
+                "
+                onClick={
+                  handleOpenFullLearning
+                }
+              >
+                View Full Learning Path →
               </button>
 
-              {/* instructor */}
-              <div className="mt-6 pt-4 border-t">
-                <p className="text-xs text-gray-400">
-                  COURSE INSTRUCTOR
-                </p>
+            </div>
 
-                <div className="flex items-center gap-3 mt-3">
-                  <div className="w-10 h-10 bg-gray-300 rounded-full" />
-                  <div>
-                    <p className="text-sm font-medium">
-                      {course?.instructor}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      {course?.platform}
-                    </p>
-                  </div>
-                </div>
-              </div>
+            {/* NOTES */}
+            <div
+              className="
+                bg-blue-50
+
+                p-5
+                sm:p-6
+
+                rounded-[24px]
+
+                mt-6
+
+                border border-blue-100
+              "
+            >
+
+              <h4
+                className="
+                  font-semibold
+
+                  text-gray-900
+                "
+              >
+                Try Academic Notetaking
+              </h4>
+
+              <p
+                className="
+                  text-sm
+
+                  text-gray-600
+
+                  mt-3
+
+                  leading-relaxed
+                "
+              >
+                Boost retention with
+                structured notes.
+              </p>
+
+              <button
+                className="
+                  mt-4
+
+                  text-blue-600
+
+                  text-sm
+                  font-medium
+                "
+              >
+                Launch Notes Tool →
+              </button>
 
             </div>
 
-          </div>
-
-        </div>
-
-        {/* RIGHT */}
-        <div className="w-[300px]">
-
-          <div className="bg-white p-5 rounded-2xl shadow-md">
-
-            <h3 className="font-semibold mb-4">
-              Next in your path
-            </h3>
-
-            <div className="space-y-4">
-
-              <div className="flex gap-3 items-center">
-                <div className="w-14 h-14 bg-gray-200 rounded-xl" />
-                <div>
-                  <p className="text-sm font-medium">
-                    Next Module
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    Locked
-                  </p>
-                </div>
-              </div>
-
-            </div>
-
-            <button className="mt-4 text-blue-600 text-sm" onClick={handleOpenFullLearning}>
-              View Full Learning Path →
-            </button>
-
-          </div>
-
-          <div className="bg-blue-50 p-5 rounded-2xl mt-6">
-            <h4 className="font-medium">
-              Try Academic Notetaking
-            </h4>
-
-            <p className="text-sm text-gray-600 mt-2">
-              Boost retention with structured notes.
-            </p>
-
-            <button className="mt-3 text-blue-600 text-sm">
-              Launch Notes Tool →
-            </button>
           </div>
 
         </div>
 
       </div>
 
-      {/* ✅ MODAL VIDEO */}
+      {/* VIDEO MODAL */}
       {open && (
         <YoutubeModal
           videoId={videoId}
-          onClose={() => setOpen(false)}
+          onClose={() =>
+            setOpen(false)
+          }
         />
       )}
 
