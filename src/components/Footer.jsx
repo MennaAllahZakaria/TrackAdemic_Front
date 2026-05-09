@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 function Footer() {
+
   const navigate = useNavigate();
 
   const links = [
@@ -20,7 +21,6 @@ function Footer() {
       name: "About US",
       path: "/about",
     },
-
   ];
 
   return (
@@ -28,6 +28,7 @@ function Footer() {
       className="
         border-t border-gray-100
         bg-white
+
         mt-10
       "
     >
@@ -37,25 +38,36 @@ function Footer() {
           max-w-[1400px]
           mx-auto
 
-          px-8 py-6
+          px-4
+          sm:px-6
+          lg:px-8
+
+          py-6
 
           flex flex-col
-          md:flex-row
+          lg:flex-row
 
-          items-start
-          md:items-center
+          items-center
+          lg:items-center
 
           justify-between
-          gap-5
+
+          gap-6
         "
       >
 
         {/* LEFT */}
-        <div>
+        <div
+          className="
+            text-center
+            lg:text-left
+          "
+        >
 
           <h2
             className="
               text-[18px]
+
               font-bold
               text-[#111827]
             "
@@ -67,10 +79,16 @@ function Footer() {
             className="
               text-sm
               text-gray-500
+
               mt-2
+
+              leading-relaxed
             "
           >
-            © 2026 Trackademic Editorial.
+            © 2026 Trackademic
+            Editorial.
+            <br className="sm:hidden" />
+            {" "}
             All rights reserved.
           </p>
 
@@ -80,28 +98,44 @@ function Footer() {
         <div
           className="
             flex flex-wrap
+
+            justify-center
+            lg:justify-end
+
             items-center
-            gap-8
+
+            gap-x-5
+            gap-y-3
+
+            text-center
           "
         >
 
           {links.map((link) => (
+
             <button
               key={link.name}
               onClick={() =>
                 navigate(link.path)
               }
               className="
-                text-[15px]
+                text-sm
+                sm:text-[15px]
+
                 text-gray-500
 
                 hover:text-black
 
                 transition-all duration-300
+
+                whitespace-nowrap
               "
             >
+
               {link.name}
+
             </button>
+
           ))}
 
         </div>
