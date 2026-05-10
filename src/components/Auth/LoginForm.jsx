@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
 import Input from "./Input";
 import PasswordInput from "./PasswordInput";
-
 import api from "../../services/api";
-
 import { useAuth } from "../../context/AuthContext";
-
 import { useNavigate } from "react-router-dom";
 import useGoogleAuth from "../../hooks/useGoogleAuth";
 
@@ -20,14 +16,9 @@ function LoginForm() {
 
   // Render Google button once GSI script is ready
   useEffect(() => {
-    const tryRender = () => {
-      if (window.google) {
-        renderGoogleButton("google-login-btn");
-      } else {
-        setTimeout(tryRender, 200);
-      }
-    };
-    tryRender();
+    if (window.google) {
+      renderGoogleButton("google-login-btn");
+    }
   }, [renderGoogleButton]);
 
   const onSubmit = async (data) => {
@@ -88,6 +79,7 @@ function LoginForm() {
           type="submit"
           className="w-full py-3.5 rounded-full text-white font-semibold
           bg-gradient-to-r from-blue-600 to-blue-400"
+          onClick={(e) => e.stopPropagation()}
         >
           Login
         </button>

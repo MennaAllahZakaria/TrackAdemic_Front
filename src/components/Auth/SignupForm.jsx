@@ -21,18 +21,14 @@ function SignupForm() {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(signupSchema),
+    mode: "onSubmit",        // ✅ validation بس لما يضغط Submit
+    reValidateMode: "onSubmit",
   });
 
-  // Render Google button once GSI script is ready
   useEffect(() => {
-    const tryRender = () => {
-      if (window.google) {
-        renderGoogleButton("google-signup-btn");
-      } else {
-        setTimeout(tryRender, 200);
-      }
-    };
-    tryRender();
+    if (window.google) {
+      renderGoogleButton("google-login-btn");
+    }
   }, [renderGoogleButton]);
 
   const onSubmit = async (data) => {
@@ -56,18 +52,17 @@ function SignupForm() {
         Start your learning journey today.
       </p>
 
-      {/* ===== GOOGLE BUTTON ===== */}
+      {/* ===== GOOGLE BUTTON — برة الفورم تماماً ===== */}
       <div id="google-signup-btn" className="flex justify-center mb-4"></div>
 
       {/* Divider */}
       <div className="flex items-center gap-4 my-4">
         <div className="flex-1 h-px bg-gray-200"></div>
-        <span className="text-gray-400 text-xs">
-          OR SIGN UP WITH EMAIL
-        </span>
+        <span className="text-gray-400 text-xs">OR SIGN UP WITH EMAIL</span>
         <div className="flex-1 h-px bg-gray-200"></div>
       </div>
 
+      {/* ===== EMAIL FORM ===== */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
         <Input
@@ -117,6 +112,7 @@ function SignupForm() {
         >
           {isSubmitting ? "Creating..." : "Create Account"}
         </button>
+
       </form>
 
       <p className="text-center text-sm mt-4">
