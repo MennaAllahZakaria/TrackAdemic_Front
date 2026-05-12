@@ -1,10 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import {
+  useNavigate,
+} from "react-router-dom";
 
 function ActivePathCard({
   context,
 }) {
 
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
+
+  const safeContext =
+    context || {};
+
+  const progress =
+    safeContext
+      ?.overallProgressPercent || 0;
 
   return (
     <div
@@ -45,7 +55,11 @@ function ActivePathCard({
             leading-snug
           "
         >
-          {context.pathTitle}
+          {
+            safeContext
+              ?.pathTitle ||
+            "No Active Path"
+          }
         </h3>
 
         <p
@@ -56,7 +70,11 @@ function ActivePathCard({
           "
         >
           Currently diving deep into{" "}
-          {context.currentPhaseTitle}
+          {
+            safeContext
+              ?.currentPhaseTitle ||
+            "No active phase"
+          }
         </p>
 
         {/* PROGRESS */}
@@ -82,9 +100,7 @@ function ActivePathCard({
                 font-semibold
               "
             >
-              {context.overallProgressPercent?.toFixed(
-                0
-              )}
+              {progress.toFixed(0)}
               %
             </span>
 
@@ -105,10 +121,11 @@ function ActivePathCard({
                 h-2
                 bg-blue-600
                 rounded-full
+
                 transition-all duration-500
               "
               style={{
-                width: `${context.overallProgressPercent}%`,
+                width: `${progress}%`,
               }}
             />
 
@@ -122,7 +139,7 @@ function ActivePathCard({
       <div
         className="
           w-full
-          lg:w-[200px]
+          lg:w-[220px]
 
           bg-gray-100
           rounded-2xl
@@ -152,8 +169,8 @@ function ActivePathCard({
               mt-2
             "
           >
-            System Architect
-            Certificate
+            Complete your current
+            learning phase
           </p>
 
         </div>
@@ -164,12 +181,14 @@ function ActivePathCard({
             text-sm
             mt-4
             text-left
+
+            hover:underline
           "
           onClick={() =>
             navigate("/my-learning")
           }
         >
-          Resume Lesson →
+          Resume Learning →
         </button>
 
       </div>

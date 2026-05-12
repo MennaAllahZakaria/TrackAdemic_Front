@@ -4,8 +4,12 @@ import api from "../services/api";
 import { toast } from "react-hot-toast";
 import InputField from "../components/forgotPassword/InputField";
 import { Shield } from "lucide-react";
+import AdminLayout from "../admin/layouts/AdminLayout";
+
+import { useAuth } from "../context/AuthContext";
 
 function ChangePasswordPage() {
+  const { user } = useAuth();
   const [form, setForm] = useState({
     currentPassword: "",
     newPassword: "",
@@ -187,9 +191,10 @@ function ChangePasswordPage() {
       setLoading(false);
     }
   };
+  const Layout = user?.role === "admin"? AdminLayout : MainLayout;
 
   return (
-    <MainLayout>
+    <Layout>
 
       <div
         className="
@@ -673,7 +678,7 @@ function ChangePasswordPage() {
 
       </div>
 
-    </MainLayout>
+    </Layout>
   );
 }
 

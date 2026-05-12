@@ -43,6 +43,8 @@ import TracksManagementPage from "./admin/pages/TracksManagementPage";
 import NotificationsPage from "./admin/pages/NotificationsPage";
 import ContactsPage from "./admin/pages/ContactsPage";
 import QuizAnalyticsPage from "./admin/pages/QuizAnalyticsPage";
+import AdminProfilePage from "./admin/pages/AdminProfilePage";
+import AdminSettingsPage from "./admin/pages/AdminSettingsPage";
 
 import { ProgressProvider } from "./context/ProgressContext";
 import { UserProvider } from "./context/UserContext";
@@ -282,6 +284,19 @@ function App() {
                   }
                 />
 
+                <Route
+                  path="profile"
+                  element={
+                    <AdminProfilePage />
+                  }
+                />
+
+                <Route
+                  path="settings"
+                  element={
+                    <AdminSettingsPage />
+                  }
+                />
               </Route>
               <Route path="*" element={<Navigate to="/" replace />} />
 

@@ -1,19 +1,26 @@
-import { Outlet } from "react-router-dom";
+import { Outlet }
+from "react-router-dom";
 
-import AdminSidebar from "../components/AdminSidebar";
-import AdminTopbar from "../components/AdminTopbar";
+import AdminSidebar
+from "../components/AdminSidebar";
 
-function AdminLayout() {
+import AdminTopbar
+from "../components/AdminTopbar";
+
+function AdminLayout({
+  children,
+}) {
+
   return (
     <div
       className="
-          h-screen
+        h-screen
 
-          bg-gray-100
+        bg-gray-100
 
-          flex
+        flex
 
-          overflow-hidden
+        overflow-hidden
       "
     >
 
@@ -26,7 +33,9 @@ function AdminLayout() {
           shrink-0
         "
       >
+
         <AdminSidebar />
+
       </div>
 
       {/* MAIN */}
@@ -66,7 +75,7 @@ function AdminLayout() {
             "
           >
 
-            <Outlet />
+            {children || <Outlet />}
 
           </div>
 

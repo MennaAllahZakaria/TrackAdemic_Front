@@ -1,21 +1,39 @@
-import { Pencil } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import {
+  Pencil,
+} from "lucide-react";
 
-function ProfileHeader({ user }) {
+import {
+  useNavigate,
+} from "react-router-dom";
 
-  const navigate = useNavigate();
+function ProfileHeader({
+  user,
+  settingsPath =
+    "/settings",
+}) {
 
-  const formatSince = (date) => {
+  const navigate =
+    useNavigate();
 
-    return new Date(date).toLocaleDateString(
-      "en-US",
-      {
-        month: "short",
-        year: "numeric",
-      }
-    );
+  if (!user) return null;
 
-  };
+  const formatSince =
+    (date) => {
+
+      if (!date)
+        return "Unknown";
+
+      return new Date(
+        date
+      ).toLocaleDateString(
+        "en-US",
+        {
+          month: "short",
+          year: "numeric",
+        }
+      );
+
+    };
 
   return (
     <div
@@ -25,8 +43,8 @@ function ProfileHeader({ user }) {
         bg-white
         rounded-3xl
 
-        p-5
-        sm:p-6
+        p-6
+        sm:p-7
 
         shadow-sm
 
@@ -40,99 +58,114 @@ function ProfileHeader({ user }) {
       "
     >
 
-      {/* IMAGE */}
+      {/* LEFT */}
       <div
         className="
-          relative
-          sm:absolute
+          flex flex-col
+          sm:flex-row
 
-          sm:-top-6
-          sm:left-6
+          items-center
 
-          z-10
-
-          mx-auto sm:mx-0
+          gap-5
         "
       >
 
+        {/* IMAGE */}
         <img
-          src={user.imageProfile}
+          src={
+            user?.imageProfile ||
+            "https://res.cloudinary.com/dhlgpqcrb/image/upload/v1777564315/images_txkken.png"
+          }
+          alt="Profile"
           className="
             w-24 h-24
 
             rounded-full
             object-cover
 
-            border-4 border-white
+            border-4
+            border-white
 
             shadow-lg
           "
         />
 
-      </div>
-
-      {/* CONTENT */}
-      <div
-        className="
-          text-center
-          sm:text-left
-
-          sm:pl-28
-        "
-      >
-
-        <h2
-          className="
-            text-xl
-            font-semibold
-          "
-        >
-          {user.firstName}{" "}
-          {user.lastName}
-        </h2>
-
+        {/* INFO */}
         <div
           className="
-            flex flex-wrap
-            items-center
-            justify-center
-            sm:justify-start
-
-            gap-3
-            mt-1
+            text-center
+            sm:text-left
           "
         >
 
-          <span
+          <h2
             className="
-              bg-purple-100
-              text-purple-600
-
-              text-xs
-
-              px-2 py-1
-              rounded-full
-
-              font-medium
+              text-2xl
+              font-semibold
             "
           >
-            GOLD SCHOLAR
-          </span>
+            {user?.firstName}
+            {" "}
+            {user?.lastName}
+          </h2>
 
-          <span
+          <div
             className="
-              text-sm
-              text-gray-400
+              flex flex-wrap
+
+              items-center
+
+              justify-center
+              sm:justify-start
+
+              gap-3
+
+              mt-2
             "
           >
 
-            Since{" "}
+            <span
+              className="
+                bg-purple-100
+                text-purple-600
 
-            <span className="font-medium text-gray-500">
-              {formatSince(user.createdAt)}
+                text-xs
+
+                px-3 py-1
+
+                rounded-full
+
+                font-medium
+              "
+            >
+              ACTIVE MEMBER
             </span>
 
-          </span>
+            <span
+              className="
+                text-sm
+                text-gray-400
+              "
+            >
+
+              Since{" "}
+
+              <span
+                className="
+                  font-medium
+                  text-gray-500
+                "
+              >
+                {
+                  formatSince(
+                    user?.createdAt
+                  )
+                }
+              </span>
+
+            </span>
+
+          </div>
 
         </div>
 
@@ -144,22 +177,29 @@ function ProfileHeader({ user }) {
           w-full
           sm:w-auto
 
+          flex items-center
           justify-center
 
-          flex items-center
           gap-2
 
           bg-blue-600
+          hover:bg-blue-500
+
           text-white
 
-          px-4 py-2
+          px-5 py-3
+
           rounded-full
 
           text-sm
-          shadow
+          font-medium
+
+          transition-all duration-300
         "
         onClick={() =>
-          navigate("/settings")
+          navigate(
+            settingsPath
+          )
         }
       >
 

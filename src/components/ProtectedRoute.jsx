@@ -39,7 +39,8 @@ function ProtectedRoute({
 
   // ADMIN ممنوع يدخل صفحات اليوزر
   if (
-    user.role === "admin"
+    user.role === "admin" &&
+    location.pathname !== "/change-password"
   ) {
     return (
       <Navigate

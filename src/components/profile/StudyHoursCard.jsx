@@ -2,6 +2,13 @@ function StudyHoursCard({
   context,
 }) {
 
+  const safeContext =
+    context || {};
+
+  const weeklyHours =
+    safeContext
+      ?.hoursStudiedThisWeek || 0;
+
   return (
     <div
       className="
@@ -24,7 +31,11 @@ function StudyHoursCard({
         "
       >
 
-        <h4 className="font-medium">
+        <h4
+          className="
+            font-medium
+          "
+        >
           Study Hours
         </h4>
 
@@ -43,10 +54,20 @@ function StudyHoursCard({
 
       </div>
 
-      <div className="text-center mt-6">
+      <div
+        className="
+          text-center
+          mt-6
+        "
+      >
 
-        <p className="text-3xl font-bold">
-          {context.hoursStudiedThisWeek}
+        <p
+          className="
+            text-3xl
+            font-bold
+          "
+        >
+          {weeklyHours}
         </p>
 
         <p
@@ -56,7 +77,7 @@ function StudyHoursCard({
             mt-1
           "
         >
-          Total hours focused
+          Total focused hours
         </p>
 
       </div>
@@ -90,7 +111,10 @@ function StudyHoursCard({
             key={i}
             className={
               d === "W"
-                ? "text-blue-600 font-bold"
+                ? `
+                  text-blue-600
+                  font-bold
+                `
                 : ""
             }
           >
@@ -116,7 +140,9 @@ function StudyHoursCard({
         "
       >
 
-        You are 12% more active on Wednesdays.
+        Keep learning consistently
+        to improve your streak
+        and weekly productivity.
 
       </div>
 

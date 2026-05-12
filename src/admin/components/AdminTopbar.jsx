@@ -246,6 +246,11 @@ function AdminTopbar() {
 
             px-3 py-2
           "
+          onClick={() =>
+            navigate(
+              "/admin/profile"
+            )
+          }
         >
 
           <img

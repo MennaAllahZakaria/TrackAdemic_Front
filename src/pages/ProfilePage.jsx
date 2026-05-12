@@ -1,101 +1,31 @@
-import MainLayout from "../layouts/MainLayout";
-import { useAuth } from "../context/AuthContext";
-import { useUserContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import MainLayout
+from "../layouts/MainLayout";
 
-import ProfileHeader from "../components/profile/ProfileHeader";
-import ActivePathCard from "../components/profile/ActivePathCard";
-import StudyHoursCard from "../components/profile/StudyHoursCard";
-import AchievementsSection from "../components/profile/AchievementsSection";
+import {
+  useAuth,
+} from "../context/AuthContext";
+
+import useUserContext
+from "../hooks/useUserContext";
+
+import ProfileContent
+from "../components/profile/shared/ProfileContent";
 
 function ProfilePage() {
 
-  const navigate = useNavigate();
+  const { user } =
+    useAuth();
 
-  const {
-    user,
-    loading: authLoading,
-  } = useAuth();
-
-  const {
-    userContext,
-    loading: contextLoading,
-  } = useUserContext();
-
-  if (authLoading || contextLoading) {
-
-    return (
-      <MainLayout>
-
-        <p className="text-center mt-20">
-          Loading...
-        </p>
-
-      </MainLayout>
-    );
-  }
-
-  if (!user || !userContext)
-    return null;
+  const { context } =
+    useUserContext();
 
   return (
     <MainLayout>
 
-      <div
-        className="
-          max-w-[1100px]
-          mx-auto
-        "
-      >
-
-        {/* HEADER */}
-        <ProfileHeader user={user} />
-
-        {/* BODY */}
-        <div
-          className="
-            grid
-            grid-cols-1
-            md:grid-cols-3
-
-            gap-6
-            mt-8
-          "
-        >
-
-          {/* LEFT */}
-          <div
-            className="
-              md:col-span-2
-              space-y-6
-            "
-          >
-
-            {/* ACTIVE PATH */}
-            <ActivePathCard
-              context={userContext}
-            />
-
-            {/* ACHIEVEMENTS */}
-            <AchievementsSection
-              user={user}
-              context={userContext}
-            />
-
-          </div>
-
-          {/* RIGHT */}
-          <div className="space-y-6">
-
-            <StudyHoursCard
-              context={userContext}
-            />
-
-          </div>
-
-        </div>
-
-      </div>
+      <ProfileContent
+        user={user}
+        userContext={context}
+      />
 
     </MainLayout>
   );

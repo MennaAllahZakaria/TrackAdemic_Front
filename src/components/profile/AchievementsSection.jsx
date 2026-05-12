@@ -10,6 +10,60 @@ function AchievementsSection({
   context,
 }) {
 
+  const safeUser =
+    user || {};
+
+  const safeContext =
+    context || {};
+
+  const completedTopics =
+    safeContext
+      ?.completedTopics
+      ?.length || 0;
+
+  const streak =
+    safeUser?.streak
+      ?.count || 0;
+
+  const achievements = [
+    {
+      title: "Consistency Master",
+      value: `${streak} Day Streak`,
+      desc: "Keep your momentum alive.",
+      icon: Flame,
+      iconBg: "bg-orange-100",
+      iconColor:
+        "text-orange-500",
+    },
+    {
+      title: "Course Crusher",
+      value: `${completedTopics} Topics Completed`,
+      desc: "Learning never stops.",
+      icon: BookOpen,
+      iconBg: "bg-blue-100",
+      iconColor:
+        "text-blue-600",
+    },
+    {
+      title: "Quiz Champion",
+      value: "Assessment Ready",
+      desc: "Strong analytical growth.",
+      icon: CheckCircle,
+      iconBg: "bg-green-100",
+      iconColor:
+        "text-green-600",
+    },
+    {
+      title: "Fast Learner",
+      value: "High Progress Rate",
+      desc: "Rapid improvement detected.",
+      icon: Rocket,
+      iconBg: "bg-purple-100",
+      iconColor:
+        "text-purple-600",
+    },
+  ];
+
   return (
     <div>
 
@@ -27,21 +81,14 @@ function AchievementsSection({
         "
       >
 
-        <h3 className="text-lg font-semibold">
-          Top Achievements
-        </h3>
-
-        <button
+        <h3
           className="
-            text-blue-600
-            text-sm
-            font-medium
-
-            hover:underline
+            text-lg
+            font-semibold
           "
         >
-          View Gallery →
-        </button>
+          Top Achievements
+        </h3>
 
       </div>
 
@@ -57,204 +104,83 @@ function AchievementsSection({
         "
       >
 
-        {/* STREAK */}
-        <div
-          className="
-            bg-white
-            rounded-3xl
+        {achievements.map(
+          (item, index) => {
 
-            p-6
+            const Icon =
+              item.icon;
 
-            text-center
+            return (
+              <div
+                key={index}
+                className="
+                  bg-white
+                  rounded-3xl
 
-            shadow-[0_6px_20px_rgba(0,0,0,0.05)]
-          "
-        >
+                  p-6
 
-          <div
-            className="
-              w-14 h-14
-              mx-auto
+                  text-center
 
-              rounded-full
+                  shadow-sm
 
-              bg-orange-100
+                  hover:-translate-y-1
+                  hover:shadow-lg
 
-              flex items-center justify-center
+                  transition-all duration-300
+                "
+              >
 
-              mb-4
-            "
-          >
+                <div
+                  className={`
+                    w-14 h-14
+                    mx-auto
 
-            <Flame className="text-orange-500 w-6 h-6" />
+                    rounded-full
 
-          </div>
+                    flex items-center
+                    justify-center
 
-          <p className="font-semibold text-sm">
-            {user.streak?.count} Day
-            Streak
-          </p>
+                    mb-4
 
-          <p
-            className="
-              text-xs
-              text-gray-400
-              mt-1
-            "
-          >
-            Unstoppable energy!
-          </p>
+                    ${item.iconBg}
+                  `}
+                >
 
-        </div>
+                  <Icon
+                    className={`
+                      w-6 h-6
 
-        {/* COURSES */}
-        <div
-          className="
-            bg-white
-            rounded-3xl
+                      ${item.iconColor}
+                    `}
+                  />
 
-            p-6
+                </div>
 
-            text-center
+                <p
+                  className="
+                    font-semibold
+                    text-sm
+                  "
+                >
+                  {item.value}
+                </p>
 
-            shadow-[0_6px_20px_rgba(0,0,0,0.05)]
-          "
-        >
+                <p
+                  className="
+                    text-xs
+                    text-gray-400
 
-          <div
-            className="
-              w-14 h-14
-              mx-auto
+                    mt-1
+                  "
+                >
+                  {item.desc}
+                </p>
 
-              rounded-full
+              </div>
+            );
 
-              bg-blue-100
-
-              flex items-center justify-center
-
-              mb-4
-            "
-          >
-
-            <BookOpen className="text-blue-600 w-6 h-6" />
-
-          </div>
-
-          <p className="font-semibold text-sm">
-            Course Crusher
-          </p>
-
-          <p
-            className="
-              text-xs
-              text-gray-400
-              mt-1
-            "
-          >
-            {context.completedTopics
-              ?.length || 0}{" "}
-            Courses finished
-          </p>
-
-        </div>
-
-        {/* QUIZ */}
-        <div
-          className="
-            bg-white
-            rounded-3xl
-
-            p-6
-
-            text-center
-
-            shadow-[0_6px_20px_rgba(0,0,0,0.05)]
-          "
-        >
-
-          <div
-            className="
-              w-14 h-14
-              mx-auto
-
-              rounded-full
-
-              bg-green-100
-
-              flex items-center justify-center
-
-              mb-4
-            "
-          >
-
-            <CheckCircle className="text-green-600 w-6 h-6" />
-
-          </div>
-
-          <p className="font-semibold text-sm">
-            Perfect Quiz
-          </p>
-
-          <p
-            className="
-              text-xs
-              text-gray-400
-              mt-1
-            "
-          >
-            100% on final exam
-          </p>
-
-        </div>
-
-        {/* FAST */}
-        <div
-          className="
-            bg-white
-            rounded-3xl
-
-            p-6
-
-            text-center
-
-            shadow-[0_6px_20px_rgba(0,0,0,0.05)]
-          "
-        >
-
-          <div
-            className="
-              w-14 h-14
-              mx-auto
-
-              rounded-full
-
-              bg-purple-100
-
-              flex items-center justify-center
-
-              mb-4
-            "
-          >
-
-            <Rocket className="text-purple-600 w-6 h-6" />
-
-          </div>
-
-          <p className="font-semibold text-sm">
-            Fast Learner
-          </p>
-
-          <p
-            className="
-              text-xs
-              text-gray-400
-              mt-1
-            "
-          >
-            Module in 1 hour
-          </p>
-
-        </div>
+          }
+        )}
 
       </div>
 
