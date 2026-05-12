@@ -9,6 +9,7 @@ import {
 function QuizPerformanceChart({
   data,
 }) {
+
   return (
     <div
       className="
@@ -78,7 +79,7 @@ function QuizPerformanceChart({
 
             <Area
               type="monotone"
-              dataKey="score"
+              dataKey="value"
               stroke="#06B6D4"
               fillOpacity={1}
               fill="url(#quizChart)"

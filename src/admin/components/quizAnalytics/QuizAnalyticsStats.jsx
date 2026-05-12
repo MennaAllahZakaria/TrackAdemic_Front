@@ -1,27 +1,35 @@
 function QuizAnalyticsStats({
   stats,
 }) {
+
   const cards = [
     {
       title: "Total Attempts",
       value:
-        stats?.attempts || 0,
+        stats?.totalAttempts || 0,
       icon: "ri-file-list-3-line",
       bg: "from-cyan-500 to-blue-600",
     },
     {
       title: "Average Score",
       value:
-        `${stats?.average || 0}%`,
+        `${stats?.avgScore || 0}%`,
       icon: "ri-award-line",
       bg: "from-emerald-500 to-green-600",
     },
     {
-      title: "Completed",
+      title: "Success Rate",
       value:
-        stats?.completed || 0,
+        `${stats?.successRate || 0}%`,
       icon: "ri-check-line",
       bg: "from-violet-500 to-purple-600",
+    },
+    {
+      title: "Highest Score",
+      value:
+        `${stats?.highestScore || 0}%`,
+      icon: "ri-trophy-line",
+      bg: "from-amber-500 to-orange-600",
     },
   ];
 
@@ -30,13 +38,14 @@ function QuizAnalyticsStats({
       className="
         grid grid-cols-1
         sm:grid-cols-2
-        xl:grid-cols-3
+        xl:grid-cols-4
 
         gap-6
       "
     >
 
       {cards.map((card, i) => (
+
         <div
           key={i}
           className="
@@ -69,7 +78,11 @@ function QuizAnalyticsStats({
             `}
           >
 
-            <i className={card.icon}></i>
+            <i
+              className={
+                card.icon
+              }
+            ></i>
 
           </div>
 
@@ -100,6 +113,7 @@ function QuizAnalyticsStats({
           </h2>
 
         </div>
+
       ))}
 
     </div>

@@ -156,7 +156,7 @@ export const deleteQuiz =
 export const getQuizAnalytics =
   async (params) => {
     const res = await api.get(
-      "/admin/quiz-analytics",
+      "/admin/quizzes/quiz-analytics",
       {
         params,
       }
