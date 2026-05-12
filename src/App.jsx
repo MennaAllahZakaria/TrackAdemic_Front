@@ -33,6 +33,17 @@ import TermsPage from "./pages/TermsPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import AnalyticsPage from "./pages/AnalyticsPage"
 
+// ADMIN
+import AdminLayout from "./admin/layouts/AdminLayout";
+import AdminRoute from "./admin/routes/AdminRoute";
+
+import AdminDashboardPage from "./admin/pages/AdminDashboardPage";
+import UsersManagementPage from "./admin/pages/UsersManagementPage";
+import TracksManagementPage from "./admin/pages/TracksManagementPage";
+import NotificationsPage from "./admin/pages/NotificationsPage";
+import ContactsPage from "./admin/pages/ContactsPage";
+import QuizAnalyticsPage from "./admin/pages/QuizAnalyticsPage";
+
 import { ProgressProvider } from "./context/ProgressContext";
 import { UserProvider } from "./context/UserContext";
 import { AuthProvider } from "./context/AuthContext"
@@ -222,6 +233,56 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              {/* ================= ADMIN ================= */}
+
+              <Route
+                path="/admin"
+                element={
+                  <AdminRoute>
+                    <AdminLayout />
+                  </AdminRoute>
+                }
+              >
+
+                <Route
+                  index
+                  element={<AdminDashboardPage />}
+                />
+
+                <Route
+                  path="users"
+                  element={
+                    <UsersManagementPage />
+                  }
+                />
+
+                <Route
+                  path="tracks"
+                  element={
+                    <TracksManagementPage />
+                  }
+                />
+
+                <Route
+                  path="notifications"
+                  element={
+                    <NotificationsPage />
+                  }
+                />
+
+                <Route
+                  path="contacts"
+                  element={<ContactsPage />}
+                />
+
+                <Route
+                  path="quizzes"
+                  element={
+                    <QuizAnalyticsPage />
+                  }
+                />
+
+              </Route>
               <Route path="*" element={<Navigate to="/" replace />} />
 
             </Routes>
