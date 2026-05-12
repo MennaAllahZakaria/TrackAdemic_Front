@@ -21,7 +21,13 @@ function useGoogleAuth() {
 
         login(res.data);
 
+      const role = res.data.user?.role;
+
+      if (role === "admin") {
+        navigate("/admin");
+      } else {
         navigate("/");
+      }
 
       } catch (err) {
         console.error(err);

@@ -25,7 +25,12 @@ function LoginForm() {
     try {
       const res = await api.post("/auth/login", data);
       login(res.data);
-      navigate("/");
+      const role = res.data.user?.role;
+      if (role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     }

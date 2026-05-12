@@ -1,9 +1,10 @@
-import { Navigate } from "react-router-dom";
+import { Navigate }
+from "react-router-dom";
 
 import { useAuth }
-from "../context/AuthContext";
+from "../../context/AuthContext";
 
-function ProtectedRoute({
+function AdminRoute({
   children,
 }) {
   const {
@@ -37,13 +38,13 @@ function ProtectedRoute({
     );
   }
 
-  // ADMIN ممنوع يدخل صفحات اليوزر
+  // USER ممنوع يدخل الادمن
   if (
-    user.role === "admin"
+    user.role !== "admin"
   ) {
     return (
       <Navigate
-        to="/admin"
+        to="/"
         replace
       />
     );
@@ -52,4 +53,4 @@ function ProtectedRoute({
   return children;
 }
 
-export default ProtectedRoute;
+export default AdminRoute;
