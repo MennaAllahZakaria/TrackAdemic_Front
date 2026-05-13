@@ -187,50 +187,6 @@ function AdminTopbar() {
 
         </div>
 
-        {/* NOTIFICATIONS */}
-        <button
-          className="
-            relative
-
-            w-14 h-14
-
-            rounded-2xl
-
-            bg-white
-
-            border border-gray-200
-
-            flex items-center
-            justify-center
-
-            text-xl
-
-            hover:bg-gray-100
-
-            transition-all duration-300
-          "
-          onClick={() =>
-            navigate(
-              "/admin/notifications"
-            )
-          }
-        >
-
-          <i className="ri-notification-3-line"></i>
-
-          <span
-            className="
-              absolute top-3 right-3
-
-              w-2.5 h-2.5
-
-              rounded-full
-
-              bg-red-500
-            "
-          ></span>
-
-        </button>
 
         {/* PROFILE */}
         <div
