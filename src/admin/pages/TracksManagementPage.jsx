@@ -90,6 +90,7 @@ function TracksManagementPage() {
 
         const res = await getTracks(params);
 
+        console.log(res.data)
 
         setTracks(
           res.data || []

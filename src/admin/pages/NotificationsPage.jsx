@@ -79,13 +79,13 @@ function NotificationsPage() {
 
         setStats({
           total:
-            res.total || 0,
+            res.analytics.total || 0,
 
           today:
-            res.today || 0,
+            res.analytics.today || 0,
 
           unread:
-            res.unread || 0,
+            res.analytics.unread || 0,
         });
 
       } catch (err) {

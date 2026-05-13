@@ -62,7 +62,7 @@ function ContactsPage() {
 
         setStats({
           total:
-            res.total || 0,
+            res.paginationResult.totalItems || 0,
           pending:
             res.pending || 0,
           resolved:
