@@ -30,13 +30,23 @@ from "../components/notifications/NotificationsPagination";
 import NotificationsLoader
 from "../components/notifications/NotificationsLoader";
 
+import NotificationConfirmModal
+from "../components/notifications/NotificationConfirmModal";
+
 function NotificationsPage() {
+
   const [loading, setLoading] =
     useState(true);
 
-  const [notifications,
-    setNotifications] =
-    useState([]);
+  const [
+    createLoading,
+    setCreateLoading,
+  ] = useState(false);
+
+  const [
+    notifications,
+    setNotifications,
+  ] = useState([]);
 
   const [pagination,
     setPagination] =
@@ -54,12 +64,25 @@ function NotificationsPage() {
     useState({
       page: 1,
       limit: 9,
-      keyword: "",
     });
+
+  const [
+    deleteModal,
+    setDeleteModal,
+  ] = useState({
+    open: false,
+    id: null,
+  });
+
+  const [
+    deleteLoading,
+    setDeleteLoading,
+  ] = useState(false);
 
   // ================= FETCH =================
   const fetchNotifications =
     async () => {
+
       try {
 
         setLoading(true);
@@ -79,13 +102,13 @@ function NotificationsPage() {
 
         setStats({
           total:
-            res.analytics.total || 0,
+            res.analytics?.total || 0,
 
           today:
-            res.analytics.today || 0,
+            res.analytics?.today || 0,
 
           unread:
-            res.analytics.unread || 0,
+            res.analytics?.unread || 0,
         });
 
       } catch (err) {
@@ -106,46 +129,67 @@ function NotificationsPage() {
   // ================= CREATE =================
   const handleCreate =
     async (formData) => {
+
       try {
+
+        setCreateLoading(true);
 
         await createNotification(
           formData
         );
 
-        setModalOpen(false);
+        await fetchNotifications();
 
-        fetchNotifications();
+        setModalOpen(false);
 
       } catch (err) {
 
         console.log(err);
+
+      } finally {
+
+        setCreateLoading(false);
 
       }
     };
 
-  // ================= DELETE =================
+  // ================= OPEN DELETE MODAL =================
   const handleDelete =
-    async (id) => {
+    (id) => {
 
-      const confirmDelete =
-        window.confirm(
-          "Delete notification?"
-        );
+      setDeleteModal({
+        open: true,
+        id,
+      });
 
-      if (!confirmDelete)
-        return;
+    };
+
+  // ================= CONFIRM DELETE =================
+  const confirmDelete =
+    async () => {
 
       try {
 
+        setDeleteLoading(true);
+
         await deleteNotification(
-          id
+          deleteModal.id
         );
 
-        fetchNotifications();
+        await fetchNotifications();
+
+        setDeleteModal({
+          open: false,
+          id: null,
+        });
 
       } catch (err) {
 
         console.log(err);
+
+      } finally {
+
+        setDeleteLoading(false);
 
       }
     };
@@ -158,6 +202,7 @@ function NotificationsPage() {
   }
 
   return (
+
     <div
       className="
         space-y-8
@@ -193,6 +238,7 @@ function NotificationsPage() {
         pagination={pagination}
       />
 
+      {/* CREATE MODAL */}
       <NotificationModal
         open={modalOpen}
         onClose={() =>
@@ -200,6 +246,28 @@ function NotificationsPage() {
         }
         onSubmit={
           handleCreate
+        }
+        loading={
+          createLoading
+        }
+      />
+
+      {/* DELETE MODAL */}
+      <NotificationConfirmModal
+        open={deleteModal.open}
+        title="Delete Notification"
+        message="Are you sure you want to delete this notification?"
+        confirmText="Delete"
+        cancelText="Cancel"
+        loading={deleteLoading}
+        onConfirm={
+          confirmDelete
+        }
+        onClose={() =>
+          setDeleteModal({
+            open: false,
+            id: null,
+          })
         }
       />
 

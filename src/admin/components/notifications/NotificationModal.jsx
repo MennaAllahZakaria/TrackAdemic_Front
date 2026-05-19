@@ -1,22 +1,68 @@
-import {
-  useState,
-} from "react";
+import { useState } from "react";
 
 function NotificationModal({
   open,
   onClose,
   onSubmit,
+  loading = false,
 }) {
+
+  const initialForm = {
+    title: "",
+    message: "",
+    type: "GENERAL",
+    userEmail: "",
+    sendToAll: false,
+  };
+
   const [form, setForm] =
-    useState({
-      title: "",
-      message: "",
-      type: "general",
-    });
+    useState(initialForm);
 
   if (!open) return null;
 
+  // =========================
+  // HANDLE SUBMIT
+  // =========================
+  const handleSubmit = async () => {
+
+    // validation
+    if (!form.title.trim()) {
+      return alert(
+        "Title is required"
+      );
+    }
+
+    if (!form.message.trim()) {
+      return alert(
+        "Message is required"
+      );
+    }
+
+    if (
+      !form.sendToAll &&
+      !form.userEmail.trim()
+    ) {
+      return alert(
+        "User email is required"
+      );
+    }
+
+    try {
+
+      await onSubmit(form);
+
+      // reset form after success
+      setForm(initialForm);
+
+      onClose();
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
+
     <div
       className="
         fixed inset-0
@@ -41,11 +87,11 @@ function NotificationModal({
           w-full
           max-w-[700px]
 
-          p-6
-          sm:p-8
+          p-6 sm:p-8
         "
       >
 
+        {/* HEADER */}
         <div
           className="
             flex items-center
@@ -58,7 +104,6 @@ function NotificationModal({
           <h2
             className="
               text-3xl
-
               font-bold
             "
           >
@@ -66,9 +111,12 @@ function NotificationModal({
           </h2>
 
           <button
+            disabled={loading}
             onClick={onClose}
             className="
               text-2xl
+
+              disabled:opacity-50
             "
           >
             ✕
@@ -76,8 +124,10 @@ function NotificationModal({
 
         </div>
 
+        {/* FORM */}
         <div className="space-y-5">
 
+          {/* TITLE */}
           <input
             type="text"
             placeholder="Notification title"
@@ -85,8 +135,7 @@ function NotificationModal({
             onChange={(e) =>
               setForm({
                 ...form,
-                title:
-                  e.target.value,
+                title: e.target.value,
               })
             }
             className="
@@ -102,6 +151,7 @@ function NotificationModal({
             "
           />
 
+          {/* MESSAGE */}
           <textarea
             rows={6}
             placeholder="Notification message"
@@ -109,8 +159,7 @@ function NotificationModal({
             onChange={(e) =>
               setForm({
                 ...form,
-                message:
-                  e.target.value,
+                message: e.target.value,
               })
             }
             className="
@@ -123,16 +172,18 @@ function NotificationModal({
               bg-gray-100
 
               outline-none
+
+              resize-none
             "
           />
 
+          {/* TYPE */}
           <select
             value={form.type}
             onChange={(e) =>
               setForm({
                 ...form,
-                type:
-                  e.target.value,
+                type: e.target.value,
               })
             }
             className="
@@ -148,26 +199,109 @@ function NotificationModal({
             "
           >
 
-            <option value="general">
+            <option value="GENERAL">
               General
             </option>
 
-            <option value="announcement">
+            <option value="ANNOUNCEMENT">
               Announcement
             </option>
 
-            <option value="system">
+            <option value="SYSTEM_ALERT">
               System Alert
             </option>
 
           </select>
 
+          {/* SEND TO ALL */}
+          <label
+            className="
+              flex items-center
+              gap-3
+
+              text-sm
+              font-medium
+            "
+          >
+
+            <input
+              type="checkbox"
+              checked={form.sendToAll}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  sendToAll:
+                    e.target.checked,
+
+                  // clear email
+                  userEmail: "",
+                })
+              }
+            />
+
+            Send to all users
+
+          </label>
+
+          {/* WARNING */}
+          {form.sendToAll && (
+
+            <div
+              className="
+                bg-yellow-50
+
+                border border-yellow-200
+
+                text-yellow-700
+
+                rounded-2xl
+
+                px-4 py-3
+
+                text-sm
+              "
+            >
+              This notification will
+              be sent to all users.
+            </div>
+
+          )}
+
+          {/* USER EMAIL */}
+          {!form.sendToAll && (
+
+            <input
+              type="email"
+              placeholder="User email"
+              value={form.userEmail}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  userEmail:
+                    e.target.value,
+                })
+              }
+              className="
+                w-full
+
+                px-5 py-4
+
+                rounded-2xl
+
+                bg-gray-100
+
+                outline-none
+              "
+            />
+
+          )}
+
         </div>
 
+        {/* SUBMIT */}
         <button
-          onClick={() =>
-            onSubmit(form)
-          }
+          onClick={handleSubmit}
+          disabled={loading}
           className="
             w-full
 
@@ -182,9 +316,18 @@ function NotificationModal({
             text-white
 
             font-semibold
+
+            transition-all
+
+            disabled:opacity-60
+            disabled:cursor-not-allowed
           "
         >
-          Send Notification
+
+          {loading
+            ? "Sending..."
+            : "Send Notification"}
+
         </button>
 
       </div>

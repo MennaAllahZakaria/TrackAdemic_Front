@@ -5,7 +5,31 @@ function NotificationsList({
   notifications,
   handleDelete,
 }) {
+
+  if (!notifications.length) {
+    return (
+
+      <div
+        className="
+          bg-white
+
+          rounded-3xl
+
+          p-10
+
+          text-center
+
+          text-gray-500
+        "
+      >
+        No notifications found
+      </div>
+
+    );
+  }
+
   return (
+
     <div
       className="
         grid grid-cols-1
@@ -18,17 +42,21 @@ function NotificationsList({
 
       {notifications.map(
         (notification) => (
+
           <NotificationCard
             key={
               notification._id
             }
+
             notification={
               notification
             }
+
             handleDelete={
               handleDelete
             }
           />
+
         )
       )}
 
