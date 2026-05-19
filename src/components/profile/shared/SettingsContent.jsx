@@ -962,6 +962,11 @@ function SettingsContent({
                   `
               }
             "
+            onClick={() =>
+              navigate(
+                isAdmin ? "/admin" : "/subscription"
+              )
+            }
           >
             {
               isAdmin

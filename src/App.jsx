@@ -12,7 +12,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import MyLearning from "./pages/MyLearning";
 import CourseDetails from "./pages/CourseDetails";
 import ProgressPage from "./pages/ProgressPage";
-import FinalProject from "./pages/FinalProject";
 import PhaseProject from "./pages/PhaseProject";
 import SettingsPage from "./pages/SettingsPage";
 import ChangePassword from "./pages/ChangePasswordPage";
@@ -109,14 +108,6 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <ProgressPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/final-project"
-                element={
-                  <ProtectedRoute>
-                    <FinalProject />
                   </ProtectedRoute>
                 }
               />

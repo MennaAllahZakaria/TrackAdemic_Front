@@ -81,7 +81,7 @@ function UsersTable({
             font-semibold
           "
         >
-          {pagination?.total || 0} Users
+          {users?.length || 0} Users
         </div>
 
       </div>
