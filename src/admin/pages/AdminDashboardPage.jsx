@@ -100,7 +100,7 @@ function AdminDashboardPage() {
 
   const activityData = [
     {
-      name: "Users",
+      name: "Active",
       value:
         stats?.users?.active || 0,
     },

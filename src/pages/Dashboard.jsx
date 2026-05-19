@@ -153,6 +153,9 @@ function Dashboard() {
             </button>
 
             <button
+             onClick={() =>
+                navigate("/about")
+              }
               className="
                 w-full sm:w-auto
 

@@ -72,9 +72,9 @@ function UsersPieChart({
               outerRadius={110}
             >
 
-              <Cell fill="#06B6D4" />
-
               <Cell fill="#10B981" />
+
+              <Cell fill="#c3e83c" />
 
               <Cell fill="#EF4444" />
 

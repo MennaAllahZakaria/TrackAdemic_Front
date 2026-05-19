@@ -67,19 +67,23 @@ function ProfileContent({
           )}
 
           {/* ACHIEVEMENTS */}
-          <AchievementsSection
+          {!isAdmin && (
+            <AchievementsSection
             user={user}
             context={userContext}
           />
+          )}
 
         </div>
 
         {/* RIGHT */}
         <div className="space-y-6">
 
-          <StudyHoursCard
-            context={userContext}
-          />
+          {!isAdmin && (
+            <StudyHoursCard
+              context={userContext}
+            />
+          )}
 
         </div>
 
