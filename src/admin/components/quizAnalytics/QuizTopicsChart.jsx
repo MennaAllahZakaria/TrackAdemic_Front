@@ -6,10 +6,21 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+const COLORS = [
+  "#06B6D4",
+  "#10B981",
+  "#8B5CF6",
+  "#F97316",
+  "#EF4444",
+  "#3B82F6",
+];
+
 function QuizTopicsChart({
   data,
 }) {
+
   return (
+
     <div
       className="
         bg-white
@@ -20,24 +31,28 @@ function QuizTopicsChart({
 
         shadow-sm
 
-        p-6
-        sm:p-8
+        p-6 sm:p-8
       "
     >
 
       <h2
         className="
           text-2xl
-
           font-bold
-
           text-gray-900
         "
       >
         Topic Distribution
       </h2>
 
-      <div className="h-[320px] mt-8">
+      <div
+        className="
+          h-[320px]
+          w-full
+          min-w-0
+          mt-8
+        "
+      >
 
         <ResponsiveContainer
           width="100%"
@@ -52,10 +67,21 @@ function QuizTopicsChart({
               outerRadius={110}
             >
 
-              <Cell fill="#06B6D4" />
-              <Cell fill="#10B981" />
-              <Cell fill="#8B5CF6" />
-              <Cell fill="#F97316" />
+              {data.map(
+                (entry, index) => (
+
+                  <Cell
+                    key={index}
+                    fill={
+                      COLORS[
+                        index %
+                        COLORS.length
+                      ]
+                    }
+                  />
+
+                )
+              )}
 
             </Pie>
 

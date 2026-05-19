@@ -45,8 +45,6 @@ function QuizAnalyticsPage() {
         const res =
           await getQuizAnalytics();
 
-        console.log(res);
-
         setAnalytics(
           res.data
         );
