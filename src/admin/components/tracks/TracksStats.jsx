@@ -5,21 +5,21 @@ function TracksStats({
     {
       title: "Total Tracks",
       value:
-        stats?.tracks || 0,
+        stats?.totalTracks || 0,
       icon: "ri-stack-line",
       bg: "from-cyan-500 to-blue-600",
     },
     {
       title: "Total Students",
       value:
-        stats?.students || 0,
+        stats?.totalStudents || 0,
       icon: "ri-user-line",
       bg: "from-emerald-500 to-green-600",
     },
     {
-      title: "Active Paths",
+      title: "Total Learning Paths",
       value:
-        stats?.active || 0,
+        stats?.totalLearningPaths || 0,
       icon: "ri-flashlight-line",
       bg: "from-violet-500 to-purple-600",
     },

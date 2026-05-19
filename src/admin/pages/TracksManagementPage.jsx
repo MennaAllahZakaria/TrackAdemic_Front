@@ -90,7 +90,6 @@ function TracksManagementPage() {
 
         const res = await getTracks(params);
 
-        console.log(res.data)
 
         setTracks(
           res.data || []
@@ -100,16 +99,9 @@ function TracksManagementPage() {
           res.pagination
         );
 
-        setStats({
-          tracks:
-            res.totalTracks || 0,
-
-          students:
-            res.totalStudents || 0,
-
-          active:
-            res.activeTracks || 0,
-        });
+        setStats(
+          res.analytics
+        );
 
       } catch (err) {
 
