@@ -83,7 +83,7 @@ export const deleteUser =
 export const getContacts =
   async (params) => {
     const res = await api.get(
-      "/admin/contact",
+      "/contactUs",
       {
         params,
       }
@@ -105,6 +105,17 @@ export const deleteContact =
   async (id) => {
     const res = await api.delete(
       `/admin/contact/${id}`
+    );
+
+    return res.data;
+  };
+
+export const resolveContact =
+  async (id, data) => {
+
+    const res = await api.put(
+      `/contactUs/${id}/resolve`,
+      data
     );
 
     return res.data;

@@ -6,6 +6,7 @@ import {
 import {
   getContacts,
   getContactById,
+  resolveContact,
 } from "../services/adminService";
 
 import ContactsHero
@@ -22,6 +23,9 @@ from "../components/contacts/ContactsPagination";
 
 import ContactsLoader
 from "../components/contacts/ContactsLoader";
+
+import ResolveContactModal
+from "../components/contacts/ResolveContactModal";
 
 function ContactsPage() {
   const [loading, setLoading] =
@@ -41,6 +45,18 @@ function ContactsPage() {
       page: 1,
       limit: 10,
     });
+
+const [resolveModal, setResolveModal] =
+  useState({
+    open: false,
+    contactId: null,
+  });
+
+const [adminReply, setAdminReply] =
+  useState("");
+
+const [resolveLoading, setResolveLoading] =
+  useState(false);
 
   // ================= FETCH =================
   const fetchContacts =
@@ -62,11 +78,11 @@ function ContactsPage() {
 
         setStats({
           total:
-            res.paginationResult.totalItems || 0,
+            res.analytics.total || 0,
           pending:
-            res.pending || 0,
+            res.analytics.pending || 0,
           resolved:
-            res.resolved || 0,
+            res.analytics.resolved || 0,
         });
 
       } catch (err) {
@@ -85,24 +101,59 @@ function ContactsPage() {
   }, [filters]);
 
   // ================= RESOLVE =================
-  const handleResolve =
-    async (id) => {
-      try {
+  const handleResolve = (id) => {
 
-        await getContactById(id);
+    setResolveModal({
+      open: true,
+      contactId: id,
+    });
 
-        fetchContacts();
+  };
 
-      } catch (err) {
+const confirmResolve =
+  async () => {
 
-        console.log(err);
+    if (!adminReply.trim()) {
+      return alert(
+        "Admin reply is required"
+      );
+    }
 
-      }
-    };
+    try {
+
+      setResolveLoading(true);
+
+      await resolveContact(
+        resolveModal.contactId,
+        {
+          adminReply,
+        }
+      );
+
+      await fetchContacts();
+
+      setResolveModal({
+        open: false,
+        contactId: null,
+      });
+
+      setAdminReply("");
+
+    } catch (err) {
+
+      console.log(err);
+
+    } finally {
+
+      setResolveLoading(false);
+
+    }
+};
 
   if (loading) {
     return <ContactsLoader />;
   }
+
 
   return (
     <div
@@ -128,6 +179,24 @@ function ContactsPage() {
         filters={filters}
         setFilters={setFilters}
         pagination={pagination}
+      />
+
+      <ResolveContactModal
+        open={resolveModal.open}
+        adminReply={adminReply}
+        setAdminReply={setAdminReply}
+        loading={resolveLoading}
+        onConfirm={confirmResolve}
+        onClose={() => {
+
+          setResolveModal({
+            open: false,
+            contactId: null,
+          });
+
+          setAdminReply("");
+
+        }}
       />
 
     </div>
