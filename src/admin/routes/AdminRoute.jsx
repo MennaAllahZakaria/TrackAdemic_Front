@@ -44,7 +44,7 @@ function AdminRoute({
   ) {
     return (
       <Navigate
-        to="/"
+        to="/dashboard"
         replace
       />
     );

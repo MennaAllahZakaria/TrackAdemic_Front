@@ -1,6 +1,8 @@
 import { Routes, Route ,Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
+import {useAuth} from "./context/AuthContext";
+
 
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -48,9 +50,27 @@ import AdminSettingsPage from "./admin/pages/AdminSettingsPage";
 import { ProgressProvider } from "./context/ProgressContext";
 import { UserProvider } from "./context/UserContext";
 import { AuthProvider } from "./context/AuthContext"
+import HomeRedirect from "./components/HomeRedirect";
 
 function App() {
-  const location = useLocation();
+   const { loading } = useAuth();
+
+  // IMPORTANT
+  if (loading) {
+    return (
+      <div
+        className="
+          min-h-screen
+
+          flex items-center
+          justify-center
+
+          bg-gray-100
+        "
+      >
+        Loading...
+      </div>
+  );}
 
   return (
     <AuthProvider>
@@ -58,6 +78,7 @@ function App() {
         <ProgressProvider>
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<HomeRedirect />}/>
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
               <Route path="/verify" element={<Verify />} />
@@ -66,7 +87,7 @@ function App() {
               <Route path="/privacy" element={<PrivacyPage />} />
 
               <Route
-                path="/"
+                path="/dashboard"
                 element={
                     <Dashboard />
                 }

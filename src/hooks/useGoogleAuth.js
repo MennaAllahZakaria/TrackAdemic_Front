@@ -26,7 +26,7 @@ function useGoogleAuth() {
       if (role === "admin") {
         navigate("/admin");
       } else {
-        navigate("/");
+        navigate("/dashboard");
       }
 
       } catch (err) {

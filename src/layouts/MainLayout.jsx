@@ -1,10 +1,24 @@
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/Topbar";
-import Footer from "../components/Footer";
+import Sidebar
+from "../components/Sidebar";
 
-function MainLayout({ children }) {
+import Topbar
+from "../components/Topbar";
+
+import Footer
+from "../components/Footer";
+
+import { useAuth }
+from "../context/AuthContext";
+
+function MainLayout({
+  children,
+}) {
+
+  const { token } =
+    useAuth();
 
   return (
+
     <div
       className="
         min-h-screen
@@ -13,34 +27,44 @@ function MainLayout({ children }) {
     >
 
       {/* SIDEBAR */}
-      <Sidebar />
+      {token && <Sidebar />}
 
       {/* MAIN CONTENT */}
       <div
-        className="
+        className={`
           flex flex-col
           min-h-screen
 
-          sm:ml-64
-        "
+          ${
+            token
+              ? "sm:ml-64"
+              : ""
+          }
+        `}
       >
 
         {/* TOPBAR */}
-        <Topbar />
+        {token && <Topbar />}
 
         {/* PAGE CONTENT */}
         <main
-          className="
+          className={`
             flex-1
-
-            pt-20 sm:pt-6
 
             px-4 py-5
             md:px-6 md:py-6
             lg:px-8 lg:py-8
-          "
+
+            ${
+              token
+                ? "pt-20 sm:pt-6"
+                : "pt-6"
+            }
+          `}
         >
+
           {children}
+
         </main>
 
         {/* FOOTER */}

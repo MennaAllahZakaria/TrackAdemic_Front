@@ -29,7 +29,7 @@ function LoginForm() {
       if (role === "admin") {
         navigate("/admin");
       } else {
-        navigate("/");
+        navigate("/dashboard");
       }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
