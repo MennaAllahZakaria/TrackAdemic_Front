@@ -736,7 +736,7 @@ function SettingsContent({
                   <button
                     onClick={() =>
                       navigate(
-                        "/onboarding"
+                        "/growth-plan"
                       )
                     }
                     className="

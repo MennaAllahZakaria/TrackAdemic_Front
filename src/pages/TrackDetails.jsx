@@ -413,7 +413,7 @@ function TrackDetails() {
               transition
             "
             onClick={() =>
-              navigate("/onboarding", {
+              navigate("/growth-plan", {
                 state: {
                   field:
                     track.category,

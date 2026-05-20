@@ -27,7 +27,7 @@ function MyLearning() {
             ?.message ===
           "No active learning path found"
         ) {
-          navigate("/onboarding");
+          navigate("/growth-plan");
         }
       }
     };

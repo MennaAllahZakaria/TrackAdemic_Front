@@ -126,7 +126,7 @@ function Dashboard() {
 
             <button
               onClick={() =>
-                navigate("/onboarding")
+                navigate("/growth-plan")
               }
               className="
                 w-full sm:w-auto

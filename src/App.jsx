@@ -93,7 +93,7 @@ function App() {
                 }
               />
               <Route
-                path="/onboarding"
+                path="/growth-plan"
                 element={
                   <ProtectedRoute>
                     <Onboarding />

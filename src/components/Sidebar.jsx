@@ -9,7 +9,7 @@ const menu = [
   { name: "Tracks", icon: "ri-compass-3-line", path: "/tracks" },
   { name: "Analytics", icon: "ri-line-chart-line", path: "/analytics" },
   { name: "Settings", icon: "ri-settings-3-line", path: "/settings" },
-  { name: "Onboarding", icon: "ri-trophy-line", path: "/onboarding" },
+  { name: "Growth Plan", icon: "ri-trophy-line", path: "/growth-plan" },
   { name: "Profile", icon: "ri-user-3-line", path: "/profile" },
   { name: "About", icon: "ri-information-line", path: "/about" },
   { name: "Progress", icon: "ri-bar-chart-line", path: "/progress" },

@@ -79,7 +79,7 @@ function ProgressPage() {
 
         console.error("path error", err);
 
-        navigate("/onboarding");
+        navigate("/growth-plan");
 
       } finally {
 

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function useUserContext(options = {}) {
   const {
     redirectIfEmpty = false, 
-    redirectTo = "/onboarding",
+    redirectTo = "/growth-plan",
   } = options;
 
   const [context, setContext] = useState(null);
