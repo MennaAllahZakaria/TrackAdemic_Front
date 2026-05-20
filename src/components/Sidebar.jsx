@@ -14,7 +14,6 @@ const menu = [
   { name: "About", icon: "ri-information-line", path: "/about" },
   { name: "Progress", icon: "ri-bar-chart-line", path: "/progress" },
   { name: "Quizzes", icon: "ri-brain-line", path: "/quizzes" },
-  { name: "Logout", icon: "ri-logout-box-r-line", path: "/logout" },
   { name: "Support", icon: "ri-question-line", path: "/ContactUs" },
 ];
 
@@ -229,7 +228,7 @@ function Sidebar() {
         </div>
 
         {/* MENU */}
-        <nav className="flex flex-col gap-2 pb-10">
+        <nav className="flex flex-col gap-2 flex-1">
 
           {menu.map((item) => {
             const isActive =
@@ -305,6 +304,79 @@ function Sidebar() {
           })}
 
         </nav>
+        {/* LOGOUT */}
+        <div
+          className="
+            pt-4
+            mt-4
+
+            border-t border-gray-200
+          "
+        >
+
+          <button
+            onClick={() =>
+              setShowLogout(true)
+            }
+            className="
+              w-full
+
+              group
+
+              flex items-center
+              gap-3
+
+              px-4 py-3
+
+              rounded-2xl
+
+              transition-all
+              duration-300
+
+              text-red-500
+
+              hover:bg-red-50
+            "
+          >
+
+            {/* ICON */}
+            <div
+              className="
+                w-10 h-10
+
+                rounded-xl
+
+                flex items-center
+                justify-center
+
+                bg-red-100
+
+                text-red-500
+
+                transition-all
+                duration-300
+
+                group-hover:bg-red-200
+              "
+            >
+
+              <i className="ri-logout-box-r-line text-[18px]"></i>
+
+            </div>
+
+            {/* TEXT */}
+            <span
+              className="
+                text-sm
+                font-medium
+              "
+            >
+              Logout
+            </span>
+
+          </button>
+
+        </div>
       </aside>
 
       {/* LOGOUT MODAL */}
