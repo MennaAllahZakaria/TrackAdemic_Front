@@ -25,6 +25,13 @@ from "../components/users/UsersPagination";
 import UsersLoader
 from "../components/users/UsersLoader";
 
+import CreateUserModal
+from "../components/users/CreateUserModal";
+
+import {
+  createUserByAdmin,
+} from "../services/adminService";
+
 function UsersManagementPage() {
   const [loading, setLoading] =
     useState(true);
@@ -43,6 +50,9 @@ function UsersManagementPage() {
       status: "",
       keyword: "",
     });
+  const [createUserModal,setCreateUserModal] = useState(false);
+  const [createUserLoading,setCreateUserLoading] = useState(false);
+
 
   // ================= FETCH =================
   const fetchUsers =
@@ -140,6 +150,33 @@ function UsersManagementPage() {
       }
     };
 
+  // ================= CREATE USER =================
+  const handleCreateUser =
+  async (formData) => {
+
+    try {
+
+      setCreateUserLoading(true);
+
+      await createUserByAdmin(
+        formData
+      );
+
+      await fetchStats();
+
+      setCreateUserModal(false);
+
+    } catch (err) {
+
+      console.log(err);
+
+    } finally {
+
+      setCreateUserLoading(false);
+
+    }
+};
+
   // ================= LOADING =================
   if (loading) {
     return <UsersLoader />;
@@ -171,12 +208,23 @@ function UsersManagementPage() {
         handleDelete={
           handleDelete
         }
+        setCreateUserModal={
+          setCreateUserModal
+        }
       />
 
       <UsersPagination
         filters={filters}
         setFilters={setFilters}
         pagination={pagination}
+      />
+      <CreateUserModal
+        open={createUserModal}
+        onClose={() =>
+          setCreateUserModal(false)
+        }
+        onSubmit={handleCreateUser}
+        loading={createUserLoading}
       />
 
     </div>

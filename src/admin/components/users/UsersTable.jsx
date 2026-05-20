@@ -10,6 +10,7 @@ function UsersTable({
   handleRoleChange,
   handleStatusChange,
   handleDelete,
+  setCreateUserModal,
 }) {
   return (
     <div
@@ -67,6 +68,7 @@ function UsersTable({
           </h2>
 
         </div>
+        
 
         <div
           className="
@@ -82,6 +84,36 @@ function UsersTable({
           "
         >
           {users?.length || 0} Users
+        </div>
+                {/* CREATE USER BUTTON */}
+        <div
+          onClick={() =>
+            setCreateUserModal(true)
+          }
+          className="
+            w-14 h-14
+
+            rounded-2xl
+
+            bg-violet-100
+
+            flex items-center
+            justify-center
+
+            text-violet-600
+            text-2xl
+
+            cursor-pointer
+
+            hover:scale-105
+            hover:bg-violet-200
+
+            transition-all
+          "
+        >
+
+          <i className="ri-user-add-line"></i>
+
         </div>
 
       </div>

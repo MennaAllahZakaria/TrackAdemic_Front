@@ -3,6 +3,8 @@ import {
   Area,
   ResponsiveContainer,
   XAxis,
+  YAxis,
+  CartesianGrid,
   Tooltip,
 } from "recharts";
 
@@ -94,9 +96,7 @@ function ActivityChart({
           height="100%"
         >
 
-          <AreaChart
-            data={chartData}
-          >
+          <AreaChart data={chartData}>
 
             <defs>
 
@@ -124,18 +124,59 @@ function ActivityChart({
 
             </defs>
 
-            <XAxis
-              dataKey="name"
+            {/* GRID */}
+            <CartesianGrid
+              strokeDasharray="3 3"
+              vertical={false}
+              stroke="#E5E7EB"
             />
 
+            {/* X AXIS */}
+            <XAxis
+              dataKey="name"
+              padding={{
+                left: 20,
+                right: 20,
+              }}
+              tick={{
+                fill: "#6B7280",
+                fontSize: 14,
+              }}
+              axisLine={false}
+              tickLine={false}
+            />
+
+            {/* Y AXIS */}
+            <YAxis
+              tick={{
+                fill: "#9CA3AF",
+                fontSize: 13,
+              }}
+              axisLine={false}
+              tickLine={false}
+            />
+
+            {/* TOOLTIP */}
             <Tooltip />
 
+            {/* AREA */}
             <Area
               type="monotone"
               dataKey="value"
               stroke="#06B6D4"
+              strokeWidth={3}
               fillOpacity={1}
               fill="url(#colorValue)"
+
+              dot={{
+                r: 5,
+                fill: "#06B6D4",
+                strokeWidth: 0,
+              }}
+
+              activeDot={{
+                r: 7,
+              }}
             />
 
           </AreaChart>

@@ -1,7 +1,10 @@
 function RecentUsersCard({
   users,
+  setCreateUserModal,
 }) {
+
   return (
+
     <div
       className="
         bg-white
@@ -12,11 +15,11 @@ function RecentUsersCard({
 
         shadow-sm
 
-        p-6
-        sm:p-8
+        p-6 sm:p-8
       "
     >
 
+      {/* HEADER */}
       <div
         className="
           flex items-center
@@ -55,7 +58,11 @@ function RecentUsersCard({
 
         </div>
 
+        {/* CREATE USER BUTTON */}
         <div
+          onClick={() =>
+            setCreateUserModal(true)
+          }
           className="
             w-14 h-14
 
@@ -68,6 +75,13 @@ function RecentUsersCard({
 
             text-violet-600
             text-2xl
+
+            cursor-pointer
+
+            hover:scale-105
+            hover:bg-violet-200
+
+            transition-all
           "
         >
 
@@ -77,112 +91,107 @@ function RecentUsersCard({
 
       </div>
 
-      <div
-        className="
-          space-y-4
-        "
-      >
+      {/* USERS */}
+      <div className="space-y-4">
 
-        {users?.map(
-          (user) => (
+        {users?.map((user) => (
+
+          <div
+            key={user._id}
+            className="
+              flex items-center
+              justify-between
+
+              bg-gray-50
+
+              rounded-2xl
+
+              p-4
+            "
+          >
+
             <div
-              key={user._id}
               className="
                 flex items-center
-                justify-between
-
-                bg-gray-50
-
-                rounded-2xl
-
-                p-4
+                gap-4
               "
             >
 
-              <div
-                className="
-                  flex items-center
-                  gap-4
-                "
-              >
+              {user.imageProfile ? (
 
-                {user.imageProfile ? (
-                  <img
-                    src={
-                      user.imageProfile
-                    }
-                    alt="profile"
-                    className="
-                      w-12 h-12
+                <img
+                  src={user.imageProfile}
+                  alt="profile"
+                  className="
+                    w-12 h-12
 
-                      rounded-xl
+                    rounded-xl
 
-                      object-cover
-                    "
-                  />
-                ) : (
-                  <div
-                    className="
-                      w-12 h-12
+                    object-cover
+                  "
+                />
 
-                      rounded-xl
+              ) : (
 
-                      bg-cyan-100
+                <div
+                  className="
+                    w-12 h-12
 
-                      flex items-center
-                      justify-center
+                    rounded-xl
 
-                      text-cyan-700
-                    "
-                  >
+                    bg-cyan-100
 
-                    <i className="ri-user-line"></i>
+                    flex items-center
+                    justify-center
 
-                  </div>
-                )}
+                    text-cyan-700
+                  "
+                >
 
-                <div>
-
-                  <h3
-                    className="
-                      font-semibold
-
-                      text-gray-900
-                    "
-                  >
-                    {
-                      user.firstName
-                    }{" "}
-                    {
-                      user.lastName
-                    }
-                  </h3>
-
-                  <p
-                    className="
-                      text-sm
-                      text-gray-500
-                    "
-                  >
-                    {user.email}
-                  </p>
+                  <i className="ri-user-line"></i>
 
                 </div>
 
-              </div>
+              )}
 
-              <div
-                className="
-                  text-sm
-                  text-gray-400
-                "
-              >
-                New
+              <div>
+
+                <h3
+                  className="
+                    font-semibold
+
+                    text-gray-900
+                  "
+                >
+                  {user.firstName}{" "}
+                  {user.lastName}
+                </h3>
+
+                <p
+                  className="
+                    text-sm
+                    text-gray-500
+                  "
+                >
+                  {user.email}
+                </p>
+
               </div>
 
             </div>
-          )
-        )}
+
+            <div
+              className="
+                text-sm
+                text-gray-400
+              "
+            >
+              New
+            </div>
+
+          </div>
+
+        ))}
 
       </div>
 

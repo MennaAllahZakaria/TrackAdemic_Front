@@ -76,6 +76,17 @@ export const deleteUser =
     return res.data;
   };
 
+  export const createUserByAdmin =
+    async (data) => {
+
+      const res = await api.post(
+        "/admin/users",
+        data
+      );
+
+      return res.data;
+  };
+
 /* ======================================================
    CONTACTS
 ====================================================== */

@@ -28,39 +28,71 @@ from "../components/dashboard/TopStreaksCard";
 import RecentUsersCard
 from "../components/dashboard/RecentUsersCard";
 
+import CreateUserModal
+from "../components/users/CreateUserModal";
+
+import {
+  createUserByAdmin,
+} from "../services/adminService";
+
 function AdminDashboardPage() {
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState(null);
+  const [createUserModal,setCreateUserModal] = useState(false);
+  const [createUserLoading,setCreateUserLoading] = useState(false);
 
-  const [stats, setStats] =
-    useState(null);
+const fetchStats =
+  async () => {
 
-  useEffect(() => {
+    try {
 
-    const fetchStats =
-      async () => {
+      setLoading(true);
 
-        try {
+      const data =
+        await getDashboardStats();
 
-          const data =
-            await getDashboardStats();
+      setStats(data);
 
-          setStats(data);
+    } catch (err) {
 
-        } catch (err) {
+      console.log(err);
 
-          console.log(err);
+    } finally {
 
-        } finally {
+      setLoading(false);
 
-          setLoading(false);
+    }
+};
 
-        }
-      };
+useEffect(() => {
+  fetchStats();
+}, []);
 
-    fetchStats();
+const handleCreateUser =
+  async (formData) => {
 
-  }, []);
+    try {
+
+      setCreateUserLoading(true);
+
+      await createUserByAdmin(
+        formData
+      );
+
+      await fetchStats();
+
+      setCreateUserModal(false);
+
+    } catch (err) {
+
+      console.log(err);
+
+    } finally {
+
+      setCreateUserLoading(false);
+
+    }
+};
 
   if (loading) {
     return <DashboardLoader />;
@@ -189,9 +221,20 @@ function AdminDashboardPage() {
           users={
             stats?.recentUsers
           }
+          setCreateUserModal={
+            setCreateUserModal
+          }
         />
 
       </div>
+      <CreateUserModal
+        open={createUserModal}
+        onClose={() =>
+          setCreateUserModal(false)
+        }
+        onSubmit={handleCreateUser}
+        loading={createUserLoading}
+      />
 
     </div>
   );
