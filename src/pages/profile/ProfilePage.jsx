@@ -1,15 +1,15 @@
 import MainLayout
-from "../layouts/MainLayout";
+from "../../layouts/MainLayout";
 
 import {
   useAuth,
-} from "../context/AuthContext";
+} from "../../context/AuthContext";
 
 import useUserContext
-from "../hooks/useUserContext";
+from "../../hooks/useUserContext";
 
 import ProfileContent
-from "../components/profile/shared/ProfileContent";
+from "../../components/profile/shared/ProfileContent";
 
 function ProfilePage() {
 

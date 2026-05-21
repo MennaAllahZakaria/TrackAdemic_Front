@@ -34,8 +34,8 @@ import Onboarding from "../pages/learning/Onboarding";
 import ProgressPage from "../pages/progress/ProgressPage";
 import PhaseProject from "../pages/progress/PhaseProject";
 
-import SettingsPage from "../pages/SettingsPage";
-import ProfilePage from "../pages/ProfilePage";
+import SettingsPage from "../pages/profile/SettingsPage";
+import ProfilePage from "../pages/profile/ProfilePage";
 
 import ForgotPasswordPage from "../pages/ForgotPassword/ForgotPasswordPage";
 import VerifyCodePage from "../pages/ForgotPassword/VerifyCodePage";

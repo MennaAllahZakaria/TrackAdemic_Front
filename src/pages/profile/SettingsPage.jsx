@@ -1,11 +1,11 @@
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "../../layouts/MainLayout";
 
 import SettingsContent
-from "../components/profile/shared/SettingsContent";
+from "../../components/profile/shared/SettingsContent";
 
 import {
   useAuth,
-} from "../context/AuthContext";
+} from "../../context/AuthContext";
 
 function SettingsPage() {
     const { user } = useAuth();
