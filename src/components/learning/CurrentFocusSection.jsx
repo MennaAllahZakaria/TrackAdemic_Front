@@ -3,9 +3,40 @@ import PhaseCard from "./PhaseCard";
 function CurrentFocusSection({
   data,
 }) {
+
+  // =========================
+  // FLATTEN COURSES
+  // =========================
+  const allCourses =
+    data?.phases?.flatMap(
+      (phase) =>
+
+        phase.courses.map(
+          (course, index) => ({
+
+            ...course,
+
+            phase_number:
+              phase.phase_number,
+
+            phase_title:
+              phase.phase_title,
+
+            objective:
+              phase.objective,
+
+            courseIndex:
+              index,
+
+          })
+        )
+    ) || [];
+
   return (
+
     <div className="mb-12">
 
+      {/* HEADER */}
       <div
         className="
           flex flex-col
@@ -71,12 +102,12 @@ function CurrentFocusSection({
             w-fit
           "
         >
-          {data.phases.length} Active Phases
+          {allCourses.length} Courses
         </div>
 
       </div>
 
-      {/* LIST */}
+      {/* COURSES */}
       <div
         className="
           flex gap-5
@@ -91,20 +122,24 @@ function CurrentFocusSection({
         "
       >
 
-        {data.phases.map(
-          (phase) => (
+        {allCourses.map(
+          (course, index) => (
+
             <PhaseCard
-              key={
-                phase.phase_number
-              }
-              phase={phase}
+
+              key={`${course.title}-${index}`}
+
+              phase={course}
+
             />
+
           )
         )}
 
       </div>
 
     </div>
+
   );
 }
 

@@ -1,48 +1,81 @@
-import { useLocation } from "react-router-dom";
-import MainLayout from "../layouts/MainLayout";
-import { useEffect, useState } from "react";
-import { getYoutubeVideoId } from "../utils/youtube";
-import YoutubeModal from "../components/learning/YoutubeModal";
-import { useNavigate } from "react-router-dom";
-import TopicsChecklist from "../components/learning/TopicsChecklist";
-import { useProgress } from "../context/ProgressContext";
-import api from "../services/api";
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
+import MainLayout
+from "../layouts/MainLayout";
+
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  getYoutubeVideoId,
+} from "../utils/youtube";
+
+import YoutubeModal
+from "../components/learning/YoutubeModal";
+
+import TopicsChecklist
+from "../components/learning/TopicsChecklist";
+
+import {
+  useProgress,
+} from "../context/ProgressContext";
+
+import api
+from "../services/api";
 
 function CourseDetails() {
-  const { state } = useLocation();
+
+  const { state } =
+    useLocation();
+
+  const navigate =
+    useNavigate();
 
   const {
     progress,
     setProgress,
   } = useProgress();
 
-  const [loadingProgress, setLoadingProgress] =
+  const [loadingProgress,
+    setLoadingProgress] =
     useState(false);
 
-  const [videoId, setVideoId] =
+  const [videoId,
+    setVideoId] =
     useState(null);
 
-  const [open, setOpen] =
+  const [open,
+    setOpen] =
     useState(false);
 
-  const navigate =
-    useNavigate();
-
-  const phase = state?.phase;
-
-  if (!phase) return null;
-
+  // =========================
+  // COURSE
+  // =========================
   const course =
-    phase.courses?.[0];
+    state?.phase;
 
-  // ================= VIDEO =================
+  if (!course) {
+    return null;
+  }
+
+  // =========================
+  // VIDEO
+  // =========================
   useEffect(() => {
+
     const loadVideo =
       async () => {
+
         if (
           !course?.search_query
-        )
+        ) {
           return;
+        }
 
         const id =
           await getYoutubeVideoId(
@@ -50,16 +83,23 @@ function CourseDetails() {
           );
 
         setVideoId(id);
+
       };
 
     loadVideo();
+
   }, [course]);
 
-  // ================= PROGRESS =================
+  // =========================
+  // FETCH PROGRESS
+  // =========================
   useEffect(() => {
+
     const fetchProgress =
       async () => {
+
         try {
+
           const res =
             await api.get(
               "/progress/me"
@@ -70,27 +110,33 @@ function CourseDetails() {
           );
 
         } catch (err) {
+
           if (
             err.response?.data
               ?.message ===
             "No progress found"
           ) {
+
             setProgress({
               completedTopics: [],
             });
+
           }
         }
       };
 
     fetchProgress();
+
   }, []);
 
-  // ================= MARK COMPLETE =================
+  // =========================
+  // MARK COMPLETE
+  // =========================
   const handleMarkCompleted =
     async () => {
-      if (!course) return;
 
       try {
+
         setLoadingProgress(true);
 
         const completed =
@@ -98,12 +144,15 @@ function CourseDetails() {
           [];
 
         const nextTopic =
-          course.topics.find(
+          course?.topics?.find(
             (t) =>
-              !completed.includes(t)
+              !completed.includes(
+                t
+              )
           );
 
         if (!nextTopic) {
+
           alert(
             "All topics already completed ✅"
           );
@@ -125,23 +174,37 @@ function CourseDetails() {
         );
 
       } catch (err) {
+
         console.error(err);
+
       } finally {
+
         setLoadingProgress(false);
+
       }
     };
 
+  // =========================
+  // OPEN LEARNING
+  // =========================
   const handleOpenFullLearning =
     () => {
-      navigate("/my-learning");
+
+      navigate(
+        "/my-learning"
+      );
+
     };
 
+  // =========================
+  // PROGRESS %
+  // =========================
   const percent =
-    progress?.overallProgress?.toFixed(
-      0
-    ) || 0;
+    progress?.overallProgress
+      ?.toFixed(0) || 0;
 
   return (
+
     <MainLayout>
 
       <div
@@ -156,7 +219,7 @@ function CourseDetails() {
         "
       >
 
-        {/* MAIN GRID */}
+        {/* GRID */}
         <div
           className="
             flex flex-col
@@ -167,16 +230,14 @@ function CourseDetails() {
           "
         >
 
-          {/* ================= LEFT ================= */}
+          {/* LEFT */}
           <div className="flex-1 min-w-0">
 
             {/* BADGES */}
             <div
               className="
                 flex flex-wrap
-
                 items-center
-
                 gap-3
               "
             >
@@ -207,8 +268,7 @@ function CourseDetails() {
                   sm:text-sm
                 "
               >
-                VIDEO_YOUTUBE Course via
-                YouTube Premium
+                VIDEO_YOUTUBE Course
               </span>
 
             </div>
@@ -229,16 +289,14 @@ function CourseDetails() {
                 text-gray-900
               "
             >
-              {phase.phase_title}
+              {course.title}
             </h1>
 
             {/* STATS */}
             <div
               className="
                 flex flex-wrap
-
                 items-center
-
                 gap-5
 
                 mt-5
@@ -284,13 +342,13 @@ function CourseDetails() {
               "
             >
 
-              {/* THUMBNAIL */}
               <img
                 src={
                   videoId
                     ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
                     : "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                 }
+
                 className="
                   w-full
 
@@ -322,10 +380,12 @@ function CourseDetails() {
                 onClick={() =>
                   setOpen(true)
                 }
+
                 className="
                   absolute inset-0
 
-                  flex items-center justify-center
+                  flex items-center
+                  justify-center
 
                   cursor-pointer
                 "
@@ -340,7 +400,8 @@ function CourseDetails() {
 
                     rounded-full
 
-                    flex items-center justify-center
+                    flex items-center
+                    justify-center
 
                     text-white
 
@@ -379,15 +440,13 @@ function CourseDetails() {
               >
                 Module{" "}
                 {
-                  phase.phase_number
+                  course.phase_number
                 }
-                :{" "}
-                {phase.phase_title}
               </div>
 
             </div>
 
-            {/* CONTENT GRID */}
+            {/* CONTENT */}
             <div
               className="
                 flex flex-col
@@ -400,10 +459,10 @@ function CourseDetails() {
               "
             >
 
-              {/* TEXT */}
+              {/* LEFT */}
               <div className="flex-1 min-w-0">
 
-                {/* DESC */}
+                {/* DESCRIPTION */}
                 <div>
 
                   <h2
@@ -431,7 +490,10 @@ function CourseDetails() {
                       sm:text-base
                     "
                   >
-                    {phase.objective}
+                    {
+                      course.description ||
+                      course.objective
+                    }
                   </p>
 
                 </div>
@@ -459,9 +521,11 @@ function CourseDetails() {
                       course?.topics ||
                       []
                     }
+
                     progress={
                       progress
                     }
+
                     setProgress={
                       setProgress
                     }
@@ -531,7 +595,8 @@ function CourseDetails() {
                         transition-all duration-500
                       "
                       style={{
-                        width: `${percent}%`,
+                        width:
+                          `${percent}%`,
                       }}
                     />
 
@@ -549,14 +614,16 @@ function CourseDetails() {
                     {percent}% completed
                   </p>
 
-                  {/* BUTTON */}
+                  {/* COMPLETE */}
                   <button
                     onClick={
                       handleMarkCompleted
                     }
+
                     disabled={
                       loadingProgress
                     }
+
                     className="
                       mt-6
 
@@ -629,7 +696,6 @@ function CourseDetails() {
                     <div
                       className="
                         flex items-center
-
                         gap-3
 
                         mt-4
@@ -684,7 +750,7 @@ function CourseDetails() {
 
           </div>
 
-          {/* ================= RIGHT ================= */}
+          {/* RIGHT */}
           <div
             className="
               w-full
@@ -727,7 +793,6 @@ function CourseDetails() {
                 <div
                   className="
                     flex items-center
-
                     gap-3
                   "
                 >
@@ -769,6 +834,10 @@ function CourseDetails() {
               </div>
 
               <button
+                onClick={
+                  handleOpenFullLearning
+                }
+
                 className="
                   mt-5
 
@@ -777,9 +846,6 @@ function CourseDetails() {
                   text-sm
                   font-medium
                 "
-                onClick={
-                  handleOpenFullLearning
-                }
               >
                 View Full Learning Path →
               </button>
@@ -850,15 +916,18 @@ function CourseDetails() {
 
       {/* VIDEO MODAL */}
       {open && (
+
         <YoutubeModal
           videoId={videoId}
           onClose={() =>
             setOpen(false)
           }
         />
+
       )}
 
     </MainLayout>
+
   );
 }
 

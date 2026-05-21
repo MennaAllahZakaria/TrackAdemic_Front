@@ -181,7 +181,7 @@ function AppRoutes() {
         />
 
         <Route
-          path="/course/:id"
+          path="/course/:phaseNumber/:courseIndex"
           element={
             <ProtectedRoute>
               <CourseDetails />

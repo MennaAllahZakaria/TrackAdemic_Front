@@ -3,49 +3,71 @@ import {
   useState,
 } from "react";
 
-import { getYoutubeThumbnail } from "../../utils/youtube";
+import {
+  useNavigate,
+} from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
+import {
+  getYoutubeThumbnail,
+} from "../../utils/youtube";
 
-function PhaseCard({ phase }) {
+function PhaseCard({
+  phase,
+}) {
+
   const navigate =
     useNavigate();
 
-  const handleOpen = () => {
-    navigate(
-      `/course/${phase.phase_number}`,
-      {
-        state: { phase },
-      }
-    );
-  };
-
-  const [image, setImage] =
+  const [image,
+    setImage] =
     useState(null);
 
+  // =========================
+  // OPEN COURSE
+  // =========================
+  const handleOpen =
+    () => {
+
+      navigate(
+        `/course/${phase.phase_number}/${phase.courseIndex}`,
+        {
+          state: {
+            phase,
+          },
+        }
+      );
+
+    };
+
+  // =========================
+  // LOAD THUMBNAIL
+  // =========================
   useEffect(() => {
+
     const loadImage =
       async () => {
-        const firstCourse =
-          phase.courses?.[0];
 
         if (
-          !firstCourse?.search_query
-        )
+          !phase?.search_query
+        ) {
           return;
+        }
 
         const img =
           await getYoutubeThumbnail(
-            firstCourse.search_query
+            phase.search_query
           );
 
         setImage(img);
+
       };
 
     loadImage();
+
   }, [phase]);
 
   return (
+
     <div
       className="
         min-w-[280px]
@@ -66,6 +88,10 @@ function PhaseCard({ phase }) {
         snap-start
 
         flex flex-col
+
+        hover:shadow-xl
+
+        transition-all duration-300
       "
     >
 
@@ -74,33 +100,47 @@ function PhaseCard({ phase }) {
         className="
           w-full
 
-          h-[160px]
+          h-[180px]
 
           bg-gray-200
+
+          overflow-hidden
         "
       >
 
         {image ? (
+
           <img
             src={image}
+            alt={phase.title}
             className="
-              w-full h-full
+              w-full
+              h-full
 
               object-cover
+
+              hover:scale-105
+
+              transition-all duration-500
             "
           />
+
         ) : (
+
           <div
             className="
-              w-full h-full
+              w-full
+              h-full
 
-              flex items-center justify-center
+              flex items-center
+              justify-center
 
               text-gray-400
             "
           >
             Loading...
           </div>
+
         )}
 
       </div>
@@ -116,37 +156,88 @@ function PhaseCard({ phase }) {
         "
       >
 
+        {/* PHASE */}
+        <p
+          className="
+            text-xs
+
+            font-semibold
+
+            text-blue-600
+
+            tracking-wide
+
+            uppercase
+          "
+        >
+          Module {phase.phase_number}
+        </p>
+
+        {/* TITLE */}
         <h3
           className="
-            font-semibold
+            font-bold
 
             text-gray-900
 
-            text-lg
-          "
-        >
-          {phase.phase_title}
-        </h3>
-
-        <p
-          className="
-            text-sm
-            text-gray-500
+            text-xl
 
             mt-3
 
-            leading-relaxed
-
-            flex-1
+            leading-snug
           "
         >
-          {phase.objective}
-        </p>
+          {phase.title}
+        </h3>
 
+        {/* TOPICS */}
+        <div
+          className="
+            mt-4
+
+            flex flex-wrap
+
+            gap-2
+          "
+        >
+
+          {phase.topics
+            ?.slice(0, 4)
+            .map(
+              (
+                topic,
+                index
+              ) => (
+
+                <span
+                  key={index}
+                  className="
+                    px-3 py-1
+
+                    rounded-full
+
+                    bg-gray-100
+
+                    text-gray-600
+
+                    text-xs
+
+                    font-medium
+                  "
+                >
+                  {topic}
+                </span>
+
+              )
+            )}
+
+        </div>
+
+        {/* BUTTON */}
         <button
           onClick={handleOpen}
           className="
-            mt-5
+            mt-6
 
             h-11
 
@@ -167,12 +258,13 @@ function PhaseCard({ phase }) {
             w-full
           "
         >
-          Open →
+          Open Course →
         </button>
 
       </div>
 
     </div>
+
   );
 }
 
