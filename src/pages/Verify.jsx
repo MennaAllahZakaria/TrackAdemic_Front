@@ -13,6 +13,7 @@ import api from "../services/api";
 function Verify() {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -139,18 +140,17 @@ function Verify() {
         className="
           bg-white
 
-          p-6
-          sm:p-8
-          md:p-10
+          p-8
+          sm:p-10
 
-          rounded-2xl
+          rounded-3xl
 
-          shadow-md
+          shadow-xl
 
           text-center
 
           w-full
-          max-w-[400px]
+          max-w-[500px]
         "
       >
 
@@ -241,12 +241,10 @@ function Verify() {
             flex items-center
             justify-center
 
-            gap-2
-            sm:gap-3
+            gap-3
+            sm:gap-4
 
             mb-6
-
-            flex-wrap
           "
         >
 
@@ -276,20 +274,18 @@ function Verify() {
                 inputMode="numeric"
                 autoComplete="one-time-code"
                 className="
-                  w-11 h-11
-                  sm:w-12 sm:h-12
-                  md:w-14 md:h-14
+                  w-12 h-12
+                  sm:w-14 sm:h-14
 
                   text-center
 
-                  text-base
-                  sm:text-lg
+                  text-lg
 
                   font-semibold
 
                   bg-gray-100
 
-                  rounded-xl
+                  rounded-2xl
 
                   outline-none
 
@@ -298,8 +294,8 @@ function Verify() {
 
                   focus:bg-white
 
-                  transition-all duration-300
-                "
+                  transition-all
+                  "
               />
             )
           )}

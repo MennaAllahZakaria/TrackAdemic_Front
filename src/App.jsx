@@ -1,322 +1,35 @@
-import { Routes, Route ,Navigate } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
-import { useLocation } from "react-router-dom";
-import {useAuth} from "./context/AuthContext";
+import {
+  AuthProvider,
+} from "./context/AuthContext";
 
+import {
+  UserProvider,
+} from "./context/UserContext";
 
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import Verify from "./pages/Verify";
-import Dashboard from "./pages/Dashboard";
-import Onboarding from "./pages/Onboarding";
-import Chat from "./pages/Chat";
-import ProtectedRoute from "./components/ProtectedRoute";
-import MyLearning from "./pages/MyLearning";
-import CourseDetails from "./pages/CourseDetails";
-import ProgressPage from "./pages/ProgressPage";
-import PhaseProject from "./pages/PhaseProject";
-import SettingsPage from "./pages/SettingsPage";
-import ChangePassword from "./pages/ChangePasswordPage";
-import ForgotPasswordPage from "./pages/ForgotPassword/ForgotPasswordPage";
-import VerifyCodePage from "./pages/ForgotPassword/VerifyCodePage";
-import ResetPasswordPage from "./pages/ForgotPassword/ResetPasswordPage";
-import TracksPage from "./pages/TracksPage";
-import TrackDetails from "./pages/TrackDetails"
-import AboutPage from "./pages/AboutPage";
-import ProfilePage from "./pages/ProfilePage"
-import AssessmentPage from "./pages/Assessment/AssessmentPage"
-import AssessmentDetailsPage from "./pages/Assessment/AssessmentDetailsPage"
-import ContactUsPage from "./pages/ContactUsPage";
-import QuizzesPage from "./pages/quiz/QuizzesPage";
-import QuizDetailsPage from "./pages/quiz/QuizDetailsPage";
-import QuizResultPage from "./pages/quiz/QuizResultPage";
-import TermsPage from "./pages/TermsPage";
-import PrivacyPage from "./pages/PrivacyPage";
-import AnalyticsPage from "./pages/AnalyticsPage"
+import {
+  ProgressProvider,
+} from "./context/ProgressContext";
 
-// ADMIN
-import AdminLayout from "./admin/layouts/AdminLayout";
-import AdminRoute from "./admin/routes/AdminRoute";
-
-import AdminDashboardPage from "./admin/pages/AdminDashboardPage";
-import UsersManagementPage from "./admin/pages/UsersManagementPage";
-import TracksManagementPage from "./admin/pages/TracksManagementPage";
-import NotificationsPage from "./admin/pages/NotificationsPage";
-import ContactsPage from "./admin/pages/ContactsPage";
-import QuizAnalyticsPage from "./admin/pages/QuizAnalyticsPage";
-import AdminProfilePage from "./admin/pages/AdminProfilePage";
-import AdminSettingsPage from "./admin/pages/AdminSettingsPage";
-
-import { ProgressProvider } from "./context/ProgressContext";
-import { UserProvider } from "./context/UserContext";
-import { AuthProvider } from "./context/AuthContext"
-import HomeRedirect from "./components/HomeRedirect";
+import AppRoutes from "./Routes/AppRoutes";
 
 function App() {
-   const { loading } = useAuth();
-
-  // IMPORTANT
-  if (loading) {
-    return (
-      <div
-        className="
-          min-h-screen
-
-          flex items-center
-          justify-center
-
-          bg-gray-100
-        "
-      >
-        Loading...
-      </div>
-  );}
 
   return (
-    <AuthProvider>
-      <UserProvider>
-        <ProgressProvider>
-          <AnimatePresence mode="wait">
-            <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<HomeRedirect />}/>
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/verify" element={<Verify />} />
-              <Route path="/ContactUs" element={<ContactUsPage/>}/>
-              <Route path="/terms" element={<TermsPage />} />
-              <Route path="/privacy" element={<PrivacyPage />} />
 
-              <Route
-                path="/dashboard"
-                element={
-                    <Dashboard />
-                }
-              />
-              <Route
-                path="/growth-plan"
-                element={
-                  <ProtectedRoute>
-                    <Onboarding />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/chat"
-                element={
-                  <ProtectedRoute>
-                    <Chat />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/my-learning"
-                element={
-                  <ProtectedRoute>
-                    <MyLearning />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/course/:id"
-                element={
-                  <ProtectedRoute>
-                    <CourseDetails />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/progress"
-                element={
-                  <ProtectedRoute>
-                    <ProgressPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/project/:phaseNumber"
-                element={
-                  <ProtectedRoute>
-                    <PhaseProject />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/settings"
-                element={
-                  <ProtectedRoute>
-                    <SettingsPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute>
-                    < ProfilePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/change-password"
-                element={
-                  <ProtectedRoute>
-                    <ChangePassword />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/forgot-password"
-                element={
-                    <ForgotPasswordPage />
-                }
-              />
-              <Route
-                path="/verify-code"
-                element={
-                    <VerifyCodePage />
-                }
-              />
-              <Route
-                path="/reset-password"
-                element={
-                    <ResetPasswordPage />
-                }
-              />
-              <Route path="/about" element={<AboutPage />} />
-              <Route
-                path="/tracks"
-                element={
-                  <ProtectedRoute>
-                    <TracksPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/track/:id"
-                element={
-                  <ProtectedRoute>
-                    <TrackDetails  />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/assessments"
-                element={
-                  <ProtectedRoute>
-                    <AssessmentPage  />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/assessment/:id"
-                element={
-                  <ProtectedRoute>
-                    <AssessmentDetailsPage  />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/quizzes"
-                element={
-                  <ProtectedRoute>
-                    <QuizzesPage  />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/quiz/:id"
-                element={
-                  <ProtectedRoute>
-                    <QuizDetailsPage  />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/quiz/result/:id"
-                element={
-                  <ProtectedRoute>
-                    <QuizResultPage  />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/analytics"
-                element={
-                  <ProtectedRoute>
-                    <AnalyticsPage  />
-                  </ProtectedRoute>
-                }
-              />
-              {/* ================= ADMIN ================= */}
+      <AuthProvider>
 
-              <Route
-                path="/admin"
-                element={
-                  <AdminRoute>
-                    <AdminLayout />
-                  </AdminRoute>
-                }
-              >
+        <UserProvider>
 
-                <Route
-                  index
-                  element={<AdminDashboardPage />}
-                />
+          <ProgressProvider>
 
-                <Route
-                  path="users"
-                  element={
-                    <UsersManagementPage />
-                  }
-                />
+            <AppRoutes />
 
-                <Route
-                  path="tracks"
-                  element={
-                    <TracksManagementPage />
-                  }
-                />
+          </ProgressProvider>
 
-                <Route
-                  path="notifications"
-                  element={
-                    <NotificationsPage />
-                  }
-                />
+        </UserProvider>
 
-                <Route
-                  path="contacts"
-                  element={<ContactsPage />}
-                />
+      </AuthProvider>
 
-                <Route
-                  path="quizzes"
-                  element={
-                    <QuizAnalyticsPage />
-                  }
-                />
-
-                <Route
-                  path="profile"
-                  element={
-                    <AdminProfilePage />
-                  }
-                />
-
-                <Route
-                  path="settings"
-                  element={
-                    <AdminSettingsPage />
-                  }
-                />
-              </Route>
-              <Route path="*" element={<Navigate to="/" replace />} />
-
-            </Routes>
-          </AnimatePresence>
-        </ProgressProvider>
-      </UserProvider>
-    </AuthProvider>
   );
 }
 

@@ -5,13 +5,11 @@ import { signupSchema } from "../../utils/validation/signupSchema";
 import Input from "./Input";
 import PasswordInput from "./PasswordInput";
 import api from "../../services/api";
-import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import useGoogleAuth from "../../hooks/useGoogleAuth";
 
 function SignupForm() {
   const [serverError, setServerError] = useState("");
-  const { login } = useAuth();
   const navigate = useNavigate();
   const { renderGoogleButton } = useGoogleAuth();
 
@@ -27,19 +25,39 @@ function SignupForm() {
 
   useEffect(() => {
     if (window.google) {
-      renderGoogleButton("google-login-btn");
+      renderGoogleButton("google-signup-btn");
     }
   }, [renderGoogleButton]);
 
-  const onSubmit = async (data) => {
-    setServerError("");
-    try {
-      await api.post("/auth/signup", data);
-      navigate("/verify", { state: { email: data.email } });
-    } catch (err) {
-      setServerError(err.response?.data?.message || "Something went wrong");
-    }
-  };
+const onSubmit = async (data) => {
+
+  console.log("SUBMIT START");
+
+  setServerError("");
+
+  try {
+
+    const res =
+      await api.post(
+        "/auth/signup",
+        data
+      );
+
+    console.log("SUCCESS", res);
+
+    navigate("/verify", {
+      replace: true,
+      state: {
+        email: data.email,
+      },
+    });
+
+  } catch (err) {
+
+    console.log("ERROR", err);
+
+  }
+};
 
   return (
     <div className="w-[420px]">

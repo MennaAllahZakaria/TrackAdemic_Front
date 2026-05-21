@@ -2,38 +2,95 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { useAuth }
-from "../context/AuthContext";
-import Dashboard from "../pages/Dashboard";
+import {
+  useAuth,
+} from "../context/AuthContext";
+
+import {
+  useUserContext,
+} from "../context/UserContext";
+
+import Dashboard
+from "../pages/Dashboard";
 
 function HomeRedirect() {
 
-  const { user } =
-    useAuth();
+  const {
+    user,
+    loading: authLoading,
+  } = useAuth();
 
-  // guest
+  const {
+    userContext,
+    loading: contextLoading,
+  } = useUserContext();
+
+  // =========================
+  // LOADING
+  // =========================
+  if (
+    authLoading ||
+    contextLoading
+  ) {
+
+    return null;
+
+  }
+
+  // =========================
+  // GUEST
+  // =========================
   if (!user) {
+
     return (
       <Dashboard />
     );
+
   }
 
-  // admin
-  if (user.role === "admin") {
+  // =========================
+  // ADMIN
+  // =========================
+  if (
+    user.role === "admin"
+  ) {
+
     return (
       <Navigate
         to="/admin"
         replace
       />
     );
+
   }
 
-  // normal user
+  // =========================
+  // FIRST SETUP
+  // =========================
+  if (
+     user &&
+  !userContext?.currentPhaseTitle
+  ) {
+
+    return (
+      <Navigate
+        to="/growth-plan"
+        replace
+      />
+    );
+
+  }
+
+  // =========================
+  // NORMAL USER
+  // =========================
   return (
+
     <Navigate
       to="/dashboard"
       replace
     />
+
   );
 }
 
