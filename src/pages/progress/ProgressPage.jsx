@@ -4,25 +4,25 @@ import {
 } from "react";
 
 import MainLayout
-from "../layouts/MainLayout";
+from "../../layouts/MainLayout";
 
 import api
-from "../services/api";
+from "../../services/api";
 
 import ProgressHero
-from "../components/progress/ProgressHero";
+from "../../components/progress/ProgressHero";
 
 import ProgressTimeline
-from "../components/progress/ProgressTimeline";
+from "../../components/progress/ProgressTimeline";
 
 import FinalAssessmentCard
-from "../components/progress/FinalAssessmentCard";
+from "../../components/progress/FinalAssessmentCard";
 
 import ProgressLoader
-from "../components/progress/ProgressLoader";
+from "../../components/progress/ProgressLoader";
 
 import ProgressEmpty
-from "../components/progress/ProgressEmpty";
+from "../../components/progress/ProgressEmpty";
 
 import {
   useNavigate,

@@ -1,11 +1,11 @@
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "../../layouts/MainLayout";
 import { useEffect, useState } from "react";
-import api from "../services/api";
+import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
-import CurrentFocusSection from "../components/learning/CurrentFocusSection";
-import RecommendationCard from "../components/learning/RecommendationCard";
-import CurriculumSection from "../components/learning/CurriculumSection";
+import CurrentFocusSection from "../../components/learning/CurrentFocusSection";
+import RecommendationCard from "../../components/learning/RecommendationCard";
+import CurriculumSection from "../../components/learning/CurriculumSection";
 
 function MyLearning() {
   const [data, setData] = useState(null);

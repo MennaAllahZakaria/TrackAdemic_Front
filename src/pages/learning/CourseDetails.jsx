@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 
 import MainLayout
-from "../layouts/MainLayout";
+from "../../layouts/MainLayout";
 
 import {
   useEffect,
@@ -13,20 +13,20 @@ import {
 
 import {
   getYoutubeVideoId,
-} from "../utils/youtube";
+} from "../../utils/youtube";
 
 import YoutubeModal
-from "../components/learning/YoutubeModal";
+from "../../components/learning/YoutubeModal";
 
 import TopicsChecklist
-from "../components/learning/TopicsChecklist";
+from "../../components/learning/TopicsChecklist";
 
 import {
   useProgress,
-} from "../context/ProgressContext";
+} from "../../context/ProgressContext";
 
 import api
-from "../services/api";
+from "../../services/api";
 
 function CourseDetails() {
 

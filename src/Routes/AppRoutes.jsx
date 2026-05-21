@@ -14,33 +14,42 @@ import {
 } from "../context/AuthContext";
 
 // PAGES
-import Signup from "../pages/Signup";
-import Login from "../pages/Login";
-import Verify from "../pages/Verify";
+import Signup from "../pages/Auth/Signup";
+import Login from "../pages/Auth/Login";
+import Verify from "../pages/Auth/Verify";
+import ChangePassword from "../pages/Auth/ChangePasswordPage";
+
+import AboutPage from "../pages/public/AboutPage";
+import ContactUsPage from "../pages/public/ContactUsPage";
+import TermsPage from "../pages/public/TermsPage";
+import PrivacyPage from "../pages/public/PrivacyPage";
+
 import Dashboard from "../pages/Dashboard";
-import Onboarding from "../pages/Onboarding";
 import Chat from "../pages/Chat";
-import MyLearning from "../pages/MyLearning";
-import CourseDetails from "../pages/CourseDetails";
-import ProgressPage from "../pages/ProgressPage";
-import PhaseProject from "../pages/PhaseProject";
+
+import MyLearning from "../pages/learning/MyLearning";
+import CourseDetails from "../pages/learning/CourseDetails";
+import Onboarding from "../pages/learning/Onboarding";
+
+import ProgressPage from "../pages/progress/ProgressPage";
+import PhaseProject from "../pages/progress/PhaseProject";
+
 import SettingsPage from "../pages/SettingsPage";
-import ChangePassword from "../pages/ChangePasswordPage";
+import ProfilePage from "../pages/ProfilePage";
+
 import ForgotPasswordPage from "../pages/ForgotPassword/ForgotPasswordPage";
 import VerifyCodePage from "../pages/ForgotPassword/VerifyCodePage";
 import ResetPasswordPage from "../pages/ForgotPassword/ResetPasswordPage";
-import TracksPage from "../pages/TracksPage";
-import TrackDetails from "../pages/TrackDetails";
-import AboutPage from "../pages/AboutPage";
-import ProfilePage from "../pages/ProfilePage";
+
+import TracksPage from "../pages/tracks/TracksPage";
+import TrackDetails from "../pages/tracks/TrackDetails";
+
 import AssessmentPage from "../pages/Assessment/AssessmentPage";
 import AssessmentDetailsPage from "../pages/Assessment/AssessmentDetailsPage";
-import ContactUsPage from "../pages/ContactUsPage";
+
 import QuizzesPage from "../pages/quiz/QuizzesPage";
 import QuizDetailsPage from "../pages/quiz/QuizDetailsPage";
 import QuizResultPage from "../pages/quiz/QuizResultPage";
-import TermsPage from "../pages/TermsPage";
-import PrivacyPage from "../pages/PrivacyPage";
 import AnalyticsPage from "../pages/AnalyticsPage";
 
 // ADMIN

@@ -1,6 +1,6 @@
-import LoginForm from "../components/Auth/LoginForm";
+import SignupForm from "../../components/Auth/SignupForm";
 
-function Login() {
+function Signup() {
   return (
     <div
       className="
@@ -65,11 +65,15 @@ function Login() {
               leading-tight
             "
           >
-            Welcome Back to <br />
+            The Curated <br />
 
             <span className="text-blue-600">
-              Trackademic
-            </span>
+              Academic
+            </span>{" "}
+
+            <br />
+
+            Experience.
 
           </h1>
 
@@ -88,14 +92,16 @@ function Login() {
               leading-relaxed
             "
           >
-            Continue your journey and
-            stay on track with your
-            goals.
+            Join a community of focused
+            learners utilizing high-end
+            organizational tools designed
+            for deep study and rhythmic
+            progress.
           </p>
 
         </div>
 
-        {/* INFO CARD */}
+        {/* CARD */}
         <div
           className="
             bg-white/80
@@ -127,7 +133,7 @@ function Login() {
             {/* ICON */}
             <div
               className="
-                bg-blue-100
+                bg-green-100
 
                 p-2
 
@@ -137,7 +143,7 @@ function Login() {
               "
             >
 
-              <i className="ri-line-chart-line text-blue-600"></i>
+              <i className="ri-leaf-line text-green-600"></i>
 
             </div>
 
@@ -152,7 +158,7 @@ function Login() {
                   sm:text-base
                 "
               >
-                Stay Consistent
+                Curated Path
               </p>
 
               <p
@@ -165,9 +171,8 @@ function Login() {
                   leading-relaxed
                 "
               >
-                Track your progress,
-                maintain streaks, and
-                continue learning daily.
+                Your journey is mapped by
+                AI and refined by experts.
               </p>
 
             </div>
@@ -184,8 +189,7 @@ function Login() {
           w-full
           lg:w-1/2
 
-          flex items-center
-          justify-center
+          flex items-center justify-center
 
           px-6
           sm:px-10
@@ -195,7 +199,7 @@ function Login() {
         "
       >
 
-        <LoginForm />
+        <SignupForm />
 
       </div>
 
@@ -203,4 +207,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;

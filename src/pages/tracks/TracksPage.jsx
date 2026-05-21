@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import MainLayout from "../layouts/MainLayout";
-import api from "../services/api";
-import { useUserContext } from "../context/UserContext";
+import MainLayout from "../../layouts/MainLayout";
+import api from "../../services/api";
+import { useUserContext } from "../../context/UserContext";
 
-import TrackGrid from "../components/tracks/TrackGrid";
-import TrackFilters from "../components/tracks/TrackFilters";
-import RecommendedSection from "../components/tracks/RecommendedSection";
+import TrackGrid from "../../components/tracks/TrackGrid";
+import TrackFilters from "../../components/tracks/TrackFilters";
+import RecommendedSection from "../../components/tracks/RecommendedSection";
 
 const formatLevel = (level) => {
   if (!level) return "";

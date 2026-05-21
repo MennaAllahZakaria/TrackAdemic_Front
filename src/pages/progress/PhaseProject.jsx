@@ -1,5 +1,5 @@
-import MainLayout from "../layouts/MainLayout";
-import api from "../services/api";
+import MainLayout from "../../layouts/MainLayout";
+import api from "../../services/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 

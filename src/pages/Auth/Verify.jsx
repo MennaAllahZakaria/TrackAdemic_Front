@@ -8,7 +8,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import api from "../services/api";
+import api from "../../services/api";
 
 function Verify() {
   const [code, setCode] = useState(["", "", "", "", "", ""]);

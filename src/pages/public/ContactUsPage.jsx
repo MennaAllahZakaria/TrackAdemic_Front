@@ -1,6 +1,6 @@
 import { useState } from "react";
-import MainLayout from "../layouts/MainLayout";
-import api from "../services/api";
+import MainLayout from "../../layouts/MainLayout";
+import api from "../../services/api";
 import { toast } from "react-hot-toast";
 
 function ContactUsPage() {

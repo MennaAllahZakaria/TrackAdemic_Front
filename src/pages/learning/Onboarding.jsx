@@ -1,13 +1,13 @@
-import MainLayout from "../layouts/MainLayout";
-import FieldCard from "../components/onboarding/FieldCard";
-import ProgressOverlay from "../components/onboarding/ProgressOverlay";
+import MainLayout from "../../layouts/MainLayout";
+import FieldCard from "../../components/onboarding/FieldCard";
+import ProgressOverlay from "../../components/onboarding/ProgressOverlay";
 import { toast } from "react-hot-toast";
 import { useLocation } from "react-router-dom";
 
 import { useEffect, useState } from "react";
-import api from "../services/api";
+import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 function Onboarding() {
 

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../services/api";
-import MainLayout from "../layouts/MainLayout";
+import api from "../../services/api";
+import MainLayout from "../../layouts/MainLayout";
 import { useNavigate } from "react-router-dom";
 
 function TrackDetails() {

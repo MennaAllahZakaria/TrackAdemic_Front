@@ -1,12 +1,12 @@
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "../../layouts/MainLayout";
 import { useState, useEffect } from "react";
-import api from "../services/api";
+import api from "../../services/api";
 import { toast } from "react-hot-toast";
-import InputField from "../components/forgotPassword/InputField";
+import InputField from "../../components/forgotPassword/InputField";
 import { Shield } from "lucide-react";
-import AdminLayout from "../admin/layouts/AdminLayout";
+import AdminLayout from "../../admin/layouts/AdminLayout";
 
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 function ChangePasswordPage() {
   const { user } = useAuth();
