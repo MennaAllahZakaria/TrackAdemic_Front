@@ -140,12 +140,27 @@ function ProgressPage() {
 
   const phases = path.phases || [];
 
-  const safeProgress = progress || {
+  const safeProgress = {
+
     overallProgress: 0,
+
     totalHoursStudied: 0,
+
     completedTopics: [],
+
     strongTopics: [],
+
+    ...(progress || {}),
+
   };
+const completedTopics =
+  safeProgress.completedTopics || [];
+
+  const normalize =
+  (str) =>
+    str
+      ?.trim()
+      ?.toLowerCase();
 
   const title =
     path?.meta?.path_title ||
@@ -155,6 +170,11 @@ function ProgressPage() {
     title.includes(":")
       ? title.split(":")
       : [title, ""];
+
+  const isAssessmentUnlocked =
+  Number(
+    safeProgress.overallProgress || 0
+  ) >= 100;
 
   return (
     <MainLayout>
@@ -407,9 +427,36 @@ function ProgressPage() {
                                 "
                               >
 
-                                <span className="text-green-600">
-                                  ✓
-                                </span>
+                                {completedTopics.some(
+                                              (topic) =>
+                                                normalize(topic) ===
+                                                normalize(t)
+                                            ) ? (
+
+                                  <span
+                                    className="
+                                      text-green-600
+                                      font-bold
+                                    "
+                                  >
+                                    ✓
+                                  </span>
+
+                                ) : (
+
+                                  <span
+                                    className="
+                                      w-2 h-2
+
+                                      rounded-full
+
+                                      bg-gray-300
+
+                                      block
+                                    "
+                                  />
+
+                                )}
 
                                 {t}
 
@@ -581,11 +628,40 @@ function ProgressPage() {
                                   "
                                 >
 
-                                  <span className="text-green-600">
-                                    ✓
-                                  </span>
+                                  {
+                                  completedTopics.some(
+                                    (topic) =>
+                                      normalize(topic) ===
+                                      normalize(t)
+                                  ) ? (
 
-                                  {t}
+                                    <span
+                                      className="
+                                        text-green-600
+                                        font-bold
+                                      "
+                                    >
+                                      ✓
+                                    </span>
+
+                                  ) : (
+
+                                    <span
+                                      className="
+                                        w-2 h-2
+
+                                        rounded-full
+
+                                        bg-gray-300
+
+                                        block
+                                      "
+                                    />
+
+                                  )
+                                }
+
+                                {t}
 
                                 </div>
                               )
@@ -676,27 +752,55 @@ function ProgressPage() {
             </p>
 
             <button
-              onClick={() =>
-                navigate("/assessments", {
-                  state: {
-                    fromProgress: true,
-                  },
-                })
+
+              disabled={
+                !isAssessmentUnlocked
               }
-              className="
+
+              onClick={() => {
+
+                if (
+                  !isAssessmentUnlocked
+                ) return;
+
+                navigate(
+                  "/assessments",
+                  {
+                    state: {
+                      fromProgress: true,
+                    },
+                  }
+                );
+
+              }}
+
+              className={`
                 mt-6
 
-                bg-white
-                text-purple-600
-
                 px-6 py-3
+
                 rounded-full
 
                 font-semibold
 
-                hover:scale-105
                 transition-all duration-300
-              "
+
+                ${
+                  isAssessmentUnlocked
+                    ? `
+                      bg-white
+                      text-purple-600
+
+                      hover:scale-105
+                    `
+                    : `
+                      bg-white/30
+                      text-white/70
+
+                      cursor-not-allowed
+                    `
+                }
+              `}
             >
               Start Final Assessment →
             </button>
