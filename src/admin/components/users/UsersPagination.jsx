@@ -57,7 +57,7 @@ function UsersPagination({
 
       <button
         disabled={
-          !pagination?.nextPage
+          !pagination?.next
         }
         onClick={() =>
           setFilters({

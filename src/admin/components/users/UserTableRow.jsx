@@ -3,6 +3,8 @@ function UserTableRow({
   handleRoleChange,
   handleStatusChange,
   handleDelete,
+  setDeleteModal,
+  setSelectedUser,
 }) {
   return (
     <tr
@@ -176,11 +178,10 @@ function UserTableRow({
       >
 
         <button
-          onClick={() =>
-            handleDelete(
-              user._id
-            )
-          }
+          onClick={() => {
+            setSelectedUser(user);
+            setDeleteModal(true);
+          }}
           className="
             px-5 py-3
 

@@ -28,6 +28,9 @@ from "../components/users/UsersLoader";
 import CreateUserModal
 from "../components/users/CreateUserModal";
 
+import DeleteUserModal
+from "../components/users/DeleteUserModal";
+
 import {
   createUserByAdmin,
 } from "../services/adminService";
@@ -54,6 +57,10 @@ function UsersManagementPage() {
   const [createUserLoading,setCreateUserLoading] = useState(false);
 
 
+  const [deleteModal,setDeleteModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [deleteLoading, setDeleteLoading] =useState(false);
+
   // ================= FETCH =================
   const fetchUsers =
     async () => {
@@ -69,7 +76,7 @@ function UsersManagementPage() {
         );
 
         setPagination(
-          res.pagination
+          res.paginationResult
         );
 
       } catch (err) {
@@ -126,29 +133,21 @@ function UsersManagementPage() {
     };
 
   // ================= DELETE =================
-  const handleDelete =
-    async (id) => {
-
-      const confirmDelete =
-        window.confirm(
-          "Delete this user?"
-        );
-
-      if (!confirmDelete)
-        return;
-
-      try {
-
-        await deleteUser(id);
-
-        fetchUsers();
-
-      } catch (err) {
-
-        console.log(err);
-
-      }
-    };
+const handleDelete = async () => { 
+  if (!selectedUser) {
+     return; 
+    } try { 
+      setDeleteLoading(true); 
+      await deleteUser( selectedUser._id ); 
+      await fetchUsers(); 
+      setDeleteModal(false); 
+      setSelectedUser(null); 
+    } catch (err) { 
+      console.log(err); 
+    } finally { 
+      setDeleteLoading(false); 
+    } 
+  };
 
   // ================= CREATE USER =================
   const handleCreateUser =
@@ -205,9 +204,8 @@ function UsersManagementPage() {
         handleStatusChange={
           handleStatusChange
         }
-        handleDelete={
-          handleDelete
-        }
+        setDeleteModal={setDeleteModal}
+        setSelectedUser={setSelectedUser}
         setCreateUserModal={
           setCreateUserModal
         }
@@ -226,7 +224,15 @@ function UsersManagementPage() {
         onSubmit={handleCreateUser}
         loading={createUserLoading}
       />
-
+      <DeleteUserModal
+        open={deleteModal}
+        onClose={() =>
+          setDeleteModal(false)
+        }
+        onConfirm={handleDelete}
+        user={selectedUser}
+        loading={deleteLoading}
+      />
     </div>
   );
 }

@@ -11,6 +11,8 @@ function UsersTable({
   handleStatusChange,
   handleDelete,
   setCreateUserModal,
+  setDeleteModal,
+  setSelectedUser,
 }) {
   return (
     <div
@@ -83,7 +85,7 @@ function UsersTable({
             font-semibold
           "
         >
-          {users?.length || 0} Users
+          {pagination?.totalItems || users?.length || 0} Users
         </div>
                 {/* CREATE USER BUTTON */}
         <div
@@ -227,9 +229,8 @@ function UsersTable({
                 handleStatusChange={
                   handleStatusChange
                 }
-                handleDelete={
-                  handleDelete
-                }
+                setDeleteModal={setDeleteModal}
+                setSelectedUser={setSelectedUser}
               />
             ))}
 
