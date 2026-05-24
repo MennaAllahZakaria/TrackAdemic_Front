@@ -25,13 +25,19 @@ from "../components/quizAnalytics/QuizAttemptsTable";
 import QuizAnalyticsLoader
 from "../components/quizAnalytics/QuizAnalyticsLoader";
 
+import QuizAnalyticsPagination
+from "../components/quizAnalytics/QuizAnalyticsPagination";
+
 function QuizAnalyticsPage() {
 
   const [loading, setLoading] =
     useState(true);
 
-  const [analytics, setAnalytics] =
-    useState(null);
+  const [analytics, setAnalytics] =useState(null);
+
+  const [filters, setFilters] =useState({page: 1,});
+  const [pagination,setPagination] =useState(null);
+    
 
   // ================= FETCH =================
 
@@ -43,10 +49,15 @@ function QuizAnalyticsPage() {
         setLoading(true);
 
         const res =
-          await getQuizAnalytics();
+          await getQuizAnalytics(filters);
+          console.log(res);
 
         setAnalytics(
           res.data
+        );
+
+        setPagination(
+          res.pagination
         );
 
       } catch (err) {
@@ -65,7 +76,7 @@ function QuizAnalyticsPage() {
 
     fetchAnalytics();
 
-  }, []);
+  }, [filters]);
 
   // ================= LOADING =================
 
@@ -154,6 +165,11 @@ function QuizAnalyticsPage() {
         attempts={
           latestAttempts
         }
+      />
+      <QuizAnalyticsPagination
+          filters={filters}
+          setFilters={setFilters}
+          pagination={pagination}
       />
 
     </div>

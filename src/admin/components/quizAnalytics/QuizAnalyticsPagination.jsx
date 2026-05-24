@@ -15,7 +15,7 @@ function QuizAnalyticsPagination({
 
       <button
         disabled={
-          filters.page === 1
+          !pagination?.hasPrev
         }
         onClick={() =>
           setFilters({
@@ -57,7 +57,7 @@ function QuizAnalyticsPagination({
 
       <button
         disabled={
-          !pagination?.nextPage
+          !pagination?.hasNext
         }
         onClick={() =>
           setFilters({
