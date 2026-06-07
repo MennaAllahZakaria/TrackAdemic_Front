@@ -4,15 +4,18 @@ function DashboardHero() {
       className="
         relative overflow-hidden
 
-        rounded-[36px]
+        rounded-[24px]
+        sm:rounded-[32px]
+        lg:rounded-[36px]
 
         bg-gradient-to-br
         from-[#0F172A]
         via-[#111827]
         to-[#1E293B]
 
-        p-6
-        sm:p-8
+        p-4
+        sm:p-6
+        md:p-8
         lg:p-10
 
         text-white
@@ -24,7 +27,9 @@ function DashboardHero() {
         className="
           absolute top-0 right-0
 
-          w-[300px] h-[300px]
+          w-[200px] h-[200px]
+          sm:w-[250px] sm:h-[250px]
+          lg:w-[300px] lg:h-[300px]
 
           bg-cyan-400/20
 
@@ -58,9 +63,13 @@ function DashboardHero() {
         <div
           className="
             inline-flex items-center
-            gap-2
+            gap-1.5
+            sm:gap-2
 
-            px-4 py-2
+            px-3
+            sm:px-4
+            py-1.5
+            sm:py-2
 
             rounded-full
 
@@ -70,29 +79,35 @@ function DashboardHero() {
 
             text-cyan-300
 
-            text-sm
+            text-xs
+            sm:text-sm
           "
         >
 
-          <i className="ri-flashlight-line"></i>
+          <i className="ri-flashlight-line text-xs sm:text-sm"></i>
 
-          Live Analytics Dashboard
+          <span>Live Analytics Dashboard</span>
 
         </div>
 
         <h1
           className="
-            text-3xl
-            sm:text-5xl
-            lg:text-6xl
+            text-2xl
+            sm:text-3xl
+            md:text-4xl
+            lg:text-5xl
+            xl:text-6xl
 
             font-bold
 
             leading-tight
 
-            mt-6
+            mt-4
+            sm:mt-6
 
-            max-w-[900px]
+            max-w-full
+            sm:max-w-[600px]
+            lg:max-w-[900px]
           "
         >
           Monitor your platform
@@ -104,14 +119,21 @@ function DashboardHero() {
           className="
             text-white/70
 
-            text-base
-            sm:text-lg
+            text-xs
+            sm:text-sm
+            md:text-base
+            lg:text-lg
 
-            leading-[2]
+            leading-relaxed
+            sm:leading-[1.8]
+            lg:leading-[2]
 
-            mt-6
+            mt-4
+            sm:mt-6
 
-            max-w-[750px]
+            max-w-full
+            sm:max-w-[500px]
+            lg:max-w-[750px]
           "
         >
           Analyze platform

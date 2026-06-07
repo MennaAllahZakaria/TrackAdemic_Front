@@ -13,13 +13,18 @@ function NotificationsList({
         className="
           bg-white
 
-          rounded-3xl
+          rounded-[24px]
+          sm:rounded-[32px]
 
-          p-10
+          p-6
+          sm:p-8
+          lg:p-10
 
           text-center
 
           text-gray-500
+          text-sm
+          sm:text-base
         "
       >
         No notifications found
@@ -33,10 +38,13 @@ function NotificationsList({
     <div
       className="
         grid grid-cols-1
+        sm:grid-cols-2
         lg:grid-cols-2
-        2xl:grid-cols-3
+        xl:grid-cols-3
 
-        gap-6
+        gap-3
+        sm:gap-4
+        lg:gap-6
       "
     >
 

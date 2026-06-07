@@ -6,15 +6,19 @@ function UsersMobileCards({
   handleRoleChange,
   handleStatusChange,
   handleDelete,
+  setDeleteModal,
+  setSelectedUser,
 }) {
   return (
     <div
       className="
         lg:hidden
 
-        p-4
+        p-3
+        sm:p-4
 
-        space-y-4
+        space-y-2.5
+        sm:space-y-3
       "
     >
 
@@ -31,6 +35,8 @@ function UsersMobileCards({
           handleDelete={
             handleDelete
           }
+          setDeleteModal={setDeleteModal}
+          setSelectedUser={setSelectedUser}
         />
       ))}
 

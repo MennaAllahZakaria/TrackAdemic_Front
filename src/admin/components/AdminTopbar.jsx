@@ -11,7 +11,7 @@ import {
   useAuth,
 } from "../../context/AuthContext";
 
-function AdminTopbar() {
+function AdminTopbar({ onMenuClick }) {
   const location =
     useLocation();
 
@@ -43,7 +43,7 @@ function AdminTopbar() {
           "/admin/users"
         )
       ) {
-        return "Users Management";
+        return "Users";
       }
 
       if (
@@ -51,7 +51,7 @@ function AdminTopbar() {
           "/admin/tracks"
         )
       ) {
-        return "Tracks Management";
+        return "Tracks";
       }
 
       if (
@@ -59,7 +59,7 @@ function AdminTopbar() {
           "/admin/quizzes"
         )
       ) {
-        return "Quiz Analytics";
+        return "Quizzes";
       }
 
       if (
@@ -91,69 +91,96 @@ function AdminTopbar() {
 
         border-b border-gray-200
 
-        px-4
-        sm:px-6
+        px-3
+        sm:px-4
+        md:px-6
         lg:px-8
 
-        h-20
+        h-16
+        sm:h-20
 
         flex items-center
         justify-between
 
-        gap-4
+        gap-3
+        sm:gap-4
       "
     >
-
-      {/* LEFT */}
-      <div>
-
-        <p
+      {/* LEFT - Menu Button & Title */}
+      <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+        <button
+          onClick={onMenuClick}
           className="
-            text-sm
-            text-gray-400
+            lg:hidden
+            w-9 h-9
+            sm:w-10 sm:h-10
+            rounded-xl
+            bg-gray-100
+            flex items-center
+            justify-center
+            text-gray-600
+            hover:bg-gray-200
+            transition-colors
+            flex-shrink-0
           "
         >
-          Welcome Back 👋
-        </p>
+          <i className="ri-menu-2-line text-base sm:text-lg"></i>
+        </button>
 
-        <h1
-          className="
-            text-2xl
-            font-bold
+        <div className="min-w-0">
+          <p
+            className="
+              hidden sm:block
+              text-[10px]
+              text-gray-400
+            "
+          >
+            Welcome Back 👋
+          </p>
 
-            text-gray-900
-
-            mt-1
-          "
-        >
-          {getPageTitle()}
-        </h1>
-
+          <h1
+            className="
+              text-base
+              sm:text-xl
+              md:text-2xl
+              font-bold
+              text-gray-900
+              truncate
+            "
+          >
+            {getPageTitle()}
+          </h1>
+        </div>
       </div>
 
       {/* RIGHT */}
       <div
         className="
           flex items-center
-          gap-4
+          gap-2
+          sm:gap-3
+          lg:gap-4
+          flex-shrink-0
         "
       >
 
-        {/* SEARCH */}
+        {/* SEARCH - Desktop only */}
         <div
           className="
             hidden
-            md:flex
+            xl:flex
 
             items-center
 
-            w-[280px]
+            w-[200px]
+            lg:w-[240px]
 
             bg-gray-100
 
             rounded-2xl
 
-            px-4
+            px-3
+            lg:px-4
           "
         >
 
@@ -162,6 +189,7 @@ function AdminTopbar() {
               ri-search-line
 
               text-gray-400
+              text-sm
             "
           ></i>
 
@@ -177,11 +205,16 @@ function AdminTopbar() {
             className="
               w-full
 
-              px-3 py-3
+              px-2
+              lg:px-3
+              py-2
 
               bg-transparent
 
               outline-none
+
+              text-xs
+              lg:text-sm
             "
           />
 
@@ -192,7 +225,9 @@ function AdminTopbar() {
         <div
           className="
             flex items-center
-            gap-3
+            gap-1.5
+            sm:gap-2
+            lg:gap-3
 
             bg-white
 
@@ -200,7 +235,16 @@ function AdminTopbar() {
 
             rounded-2xl
 
-            px-3 py-2
+            px-2
+            sm:px-3
+            py-1.5
+            sm:py-2
+            
+            cursor-pointer
+            hover:border-cyan-400
+            transition-colors
+
+            flex-shrink-0
           "
           onClick={() =>
             navigate(
@@ -216,9 +260,12 @@ function AdminTopbar() {
             }
             alt="Admin"
             className="
-              w-12 h-12
+              w-7 h-7
+              sm:w-8 sm:h-8
+              lg:w-10 lg:h-10
 
-              rounded-xl
+              rounded-lg
+              lg:rounded-xl
 
               object-cover
             "
@@ -227,31 +274,34 @@ function AdminTopbar() {
           <div
             className="
               hidden
-              sm:block
+              md:block
             "
           >
 
             <h3
               className="
-                text-sm
+                text-[10px]
+                sm:text-xs
+                lg:text-sm
                 font-semibold
 
                 text-gray-900
+                truncate
+                max-w-[80px]
+                lg:max-w-[100px]
               "
             >
               {user?.firstName}
-              {" "}
-              {user?.lastName}
             </h3>
 
             <p
               className="
-                text-xs
+                text-[8px]
+                lg:text-[10px]
                 text-gray-400
-                mt-1
               "
             >
-              Administrator
+              Admin
             </p>
 
           </div>

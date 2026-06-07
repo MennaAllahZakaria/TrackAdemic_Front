@@ -14,21 +14,25 @@ function UsersPieChart({
       className="
         bg-white
 
-        rounded-[32px]
+        rounded-[24px]
+        sm:rounded-[32px]
 
         border border-gray-100
 
         shadow-sm
 
-        p-6
-        sm:p-8
+        p-4
+        sm:p-5
+        lg:p-6
+        lg:p-8
         min-w-0
       "
     >
 
       <p
         className="
-          text-sm
+          text-xs
+          sm:text-sm
           text-cyan-600
 
           font-semibold
@@ -39,13 +43,16 @@ function UsersPieChart({
 
       <h2
         className="
-          text-2xl
+          text-lg
+          sm:text-2xl
+          lg:text-3xl
 
           font-bold
 
           text-gray-900
 
-          mt-2
+          mt-1
+          sm:mt-2
         "
       >
         Audience Health
@@ -53,9 +60,12 @@ function UsersPieChart({
 
       <div
         className="
-          h-[320px]
+          h-[240px]
+          sm:h-[280px]
+          lg:h-[320px]
 
-          mt-6
+          mt-4
+          sm:mt-6
         "
       >
 
@@ -69,7 +79,7 @@ function UsersPieChart({
             <Pie
               data={activityData}
               dataKey="value"
-              outerRadius={110}
+              outerRadius={[80, 100, 120]}
             >
 
               <Cell fill="#10B981" />

@@ -171,7 +171,7 @@ const handleCreateUser =
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
 
       <DashboardHero />
 
@@ -184,9 +184,10 @@ const handleCreateUser =
       <div
         className="
           grid grid-cols-1
-          xl:grid-cols-[1.5fr_.8fr]
+          lg:grid-cols-[1.5fr_.8fr]
 
-          gap-6
+          gap-4
+          sm:gap-6
         "
       >
 
@@ -205,9 +206,10 @@ const handleCreateUser =
       <div
         className="
           grid grid-cols-1
-          xl:grid-cols-2
+          lg:grid-cols-2
 
-          gap-6
+          gap-4
+          sm:gap-6
         "
       >
 

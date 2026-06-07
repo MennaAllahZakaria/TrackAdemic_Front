@@ -9,7 +9,8 @@ function OverviewCard({
       className="
         relative overflow-hidden
 
-        rounded-[30px]
+        rounded-[24px]
+        sm:rounded-[30px]
 
         bg-white
 
@@ -17,7 +18,9 @@ function OverviewCard({
 
         shadow-sm
 
-        p-6
+        p-4
+        sm:p-5
+        lg:p-6
 
         hover:-translate-y-1
         hover:shadow-xl
@@ -28,7 +31,9 @@ function OverviewCard({
 
       <div
         className={`
-          w-16 h-16
+          w-12 h-12
+          sm:w-14 sm:h-14
+          lg:w-16 lg:h-16
 
           rounded-2xl
 
@@ -36,7 +41,9 @@ function OverviewCard({
           justify-center
 
           text-white
-          text-3xl
+          text-xl
+          sm:text-2xl
+          lg:text-3xl
 
           bg-gradient-to-br
           ${bg}
@@ -51,9 +58,12 @@ function OverviewCard({
         className="
           text-gray-400
 
-          text-sm
+          text-xs
+          sm:text-sm
 
-          mt-6
+          mt-4
+          sm:mt-5
+          lg:mt-6
         "
       >
         {title}
@@ -61,13 +71,16 @@ function OverviewCard({
 
       <h2
         className="
-          text-4xl
+          text-2xl
+          sm:text-3xl
+          lg:text-4xl
 
           font-bold
 
           text-gray-900
 
-          mt-2
+          mt-1
+          sm:mt-2
         "
       >
         {value}

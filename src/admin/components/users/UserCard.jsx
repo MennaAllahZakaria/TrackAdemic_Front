@@ -3,6 +3,8 @@ function UserCard({
   handleRoleChange,
   handleStatusChange,
   handleDelete,
+  setDeleteModal,
+  setSelectedUser,
 }) {
   return (
     <div
@@ -11,15 +13,22 @@ function UserCard({
 
         border border-gray-100
 
-        p-5
+        p-4
+        sm:p-5
+
+        bg-white
+        hover:shadow-md
+        transition-shadow
       "
     >
 
-      {/* TOP */}
+      {/* TOP - User Info */}
       <div
         className="
           flex items-center
-          gap-4
+          gap-3
+          sm:gap-4
+          min-w-0
         "
       >
 
@@ -30,17 +39,20 @@ function UserCard({
             }
             alt="profile"
             className="
-              w-14 h-14
+              w-12 h-12
+              sm:w-14 sm:h-14
 
               rounded-2xl
 
               object-cover
+              flex-shrink-0
             "
           />
         ) : (
           <div
             className="
-              w-14 h-14
+              w-12 h-12
+              sm:w-14 sm:h-14
 
               rounded-2xl
 
@@ -50,21 +62,25 @@ function UserCard({
               justify-center
 
               text-cyan-700
+              flex-shrink-0
             "
           >
 
-            <i className="ri-user-line text-xl"></i>
+            <i className="ri-user-line text-lg sm:text-xl"></i>
 
           </div>
         )}
 
-        <div>
+        <div className="min-w-0 flex-1">
 
           <h3
             className="
               font-bold
 
               text-gray-900
+              text-sm
+              sm:text-base
+              truncate
             "
           >
             {user.firstName}{" "}
@@ -73,8 +89,10 @@ function UserCard({
 
           <p
             className="
-              text-sm
+              text-xs
+              sm:text-sm
               text-gray-500
+              truncate
             "
           >
             {user.email}
@@ -87,10 +105,14 @@ function UserCard({
       {/* ACTIONS */}
       <div
         className="
-          mt-5
+          mt-4
+          sm:mt-5
 
-          flex flex-wrap
-          gap-3
+          flex flex-col
+          gap-2
+          sm:flex-wrap
+          sm:flex-row
+          sm:gap-3
         "
       >
 
@@ -104,13 +126,25 @@ function UserCard({
             )
           }
           className="
-            px-4 py-3
+            px-3 py-2
+            sm:px-4 sm:py-3
 
             rounded-xl
 
             bg-gray-100
 
             outline-none
+
+            focus:ring-2
+            focus:ring-cyan-400
+
+            text-xs
+            sm:text-sm
+
+            flex-1
+            sm:flex-none
+
+            cursor-pointer
           "
         >
 
@@ -134,13 +168,25 @@ function UserCard({
             )
           }
           className="
-            px-4 py-3
+            px-3 py-2
+            sm:px-4 sm:py-3
 
             rounded-xl
 
             bg-gray-100
 
             outline-none
+
+            focus:ring-2
+            focus:ring-cyan-400
+
+            text-xs
+            sm:text-sm
+
+            flex-1
+            sm:flex-none
+
+            cursor-pointer
           "
         >
 
@@ -160,13 +206,17 @@ function UserCard({
 
         {/* DELETE */}
         <button
-          onClick={() =>
-            handleDelete(
-              user._id
-            )
-          }
+          onClick={() => {
+            if (setDeleteModal && setSelectedUser) {
+              setSelectedUser(user);
+              setDeleteModal(true);
+            } else {
+              handleDelete(user._id);
+            }
+          }}
           className="
-            px-5 py-3
+            px-3 py-2
+            sm:px-5 sm:py-3
 
             rounded-xl
 
@@ -178,7 +228,14 @@ function UserCard({
 
             hover:bg-red-200
 
-            transition-all duration-300
+            transition-all 
+            duration-300
+
+            text-xs
+            sm:text-sm
+
+            flex-1
+            sm:flex-none
           "
         >
           Delete

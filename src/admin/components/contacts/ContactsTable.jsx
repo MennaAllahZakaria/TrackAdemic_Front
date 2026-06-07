@@ -13,7 +13,8 @@ function ContactsTable({
       className="
         bg-white
 
-        rounded-[32px]
+        rounded-[24px]
+        sm:rounded-[32px]
 
         border border-gray-100
 
@@ -25,7 +26,9 @@ function ContactsTable({
 
       <div
         className="
-          px-6 py-5
+          px-4 py-3
+          sm:px-5 sm:py-4
+          lg:px-6 lg:py-5
 
           border-b border-gray-100
         "
@@ -33,7 +36,9 @@ function ContactsTable({
 
         <h2
           className="
-            text-2xl
+            text-lg
+            sm:text-xl
+            lg:text-2xl
 
             font-bold
 

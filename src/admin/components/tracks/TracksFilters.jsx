@@ -8,32 +8,41 @@ function TracksFilters({
       className="
         bg-white
 
-        rounded-[32px]
+        rounded-[24px]
+        sm:rounded-[32px]
 
         border border-gray-100
 
         shadow-sm
 
-        p-5
-        sm:p-6
+        p-4
+        sm:p-5
+        lg:p-6
 
         flex flex-col
-        xl:flex-row
+        gap-3
+        sm:gap-4
+        md:flex-row
+        md:items-center
 
-        gap-4
+        w-full
       "
     >
 
-      <div className="relative flex-1">
+      <div className="relative flex-1 min-w-0">
 
         <i
           className="
             ri-search-line
 
-            absolute left-4 top-1/2
+            absolute left-3
+            sm:left-4
+            top-1/2
             -translate-y-1/2
 
             text-gray-400
+            text-sm
+            pointer-events-none
           "
         ></i>
 
@@ -52,7 +61,13 @@ function TracksFilters({
           className="
             w-full
 
-            pl-12 pr-4 py-4
+            pl-10
+            sm:pl-12
+            pr-3
+            sm:pr-4
+            py-2.5
+            sm:py-3
+            lg:py-4
 
             rounded-2xl
 
@@ -62,6 +77,9 @@ function TracksFilters({
 
             focus:ring-2
             focus:ring-cyan-400
+
+            text-xs
+            sm:text-sm
           "
         />
 
@@ -70,7 +88,12 @@ function TracksFilters({
       <button
         onClick={openCreateModal}
         className="
-          px-6 py-4
+          px-4
+          sm:px-5
+          lg:px-6
+          py-2.5
+          sm:py-3
+          lg:py-4
 
           rounded-2xl
 
@@ -83,6 +106,13 @@ function TracksFilters({
           hover:bg-cyan-600
 
           transition-all duration-300
+
+          text-xs
+          sm:text-sm
+
+          flex-1
+          md:flex-none
+          whitespace-nowrap
         "
       >
         + Create Track

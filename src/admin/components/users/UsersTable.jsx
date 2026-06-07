@@ -32,21 +32,27 @@ function UsersTable({
       {/* HEADER */}
       <div
         className="
-          px-6
-          py-5
+          px-4 py-3
+          sm:px-5 sm:py-4
+          lg:px-6 lg:py-5
 
           border-b border-gray-100
 
           flex items-center
           justify-between
+          gap-2
+          sm:gap-3
+          flex-wrap
         "
       >
 
-        <div>
+        <div className="min-w-0">
 
           <p
             className="
-              text-sm
+              text-[10px]
+              sm:text-xs
+              lg:text-sm
               text-cyan-600
 
               font-semibold
@@ -57,13 +63,16 @@ function UsersTable({
 
           <h2
             className="
-              text-2xl
+              text-sm
+              sm:text-lg
+              lg:text-2xl
 
               font-bold
 
               text-gray-900
 
-              mt-1
+              mt-0.5
+              sm:mt-1
             "
           >
             Platform Members
@@ -71,10 +80,11 @@ function UsersTable({
 
         </div>
         
-
         <div
           className="
-            px-4 py-2
+            px-2.5 py-1.5
+            sm:px-3 sm:py-2
+            lg:px-4 lg:py-2
 
             rounded-xl
 
@@ -83,17 +93,26 @@ function UsersTable({
             text-cyan-700
 
             font-semibold
+
+            text-[10px]
+            sm:text-xs
+            lg:text-sm
+
+            whitespace-nowrap
           "
         >
           {pagination?.totalItems || users?.length || 0} Users
         </div>
-                {/* CREATE USER BUTTON */}
+
+        {/* CREATE USER BUTTON */}
         <div
           onClick={() =>
             setCreateUserModal(true)
           }
           className="
-            w-14 h-14
+            w-10 h-10
+            sm:w-12 sm:h-12
+            lg:w-14 lg:h-14
 
             rounded-2xl
 
@@ -103,7 +122,9 @@ function UsersTable({
             justify-center
 
             text-violet-600
-            text-2xl
+            text-lg
+            sm:text-xl
+            lg:text-2xl
 
             cursor-pointer
 
@@ -111,6 +132,8 @@ function UsersTable({
             hover:bg-violet-200
 
             transition-all
+
+            flex-shrink-0
           "
         >
 
@@ -120,7 +143,7 @@ function UsersTable({
 
       </div>
 
-      {/* MOBILE */}
+      {/* MOBILE CARDS */}
       <UsersMobileCards
         users={users}
         handleRoleChange={
@@ -132,9 +155,11 @@ function UsersTable({
         handleDelete={
           handleDelete
         }
+        setDeleteModal={setDeleteModal}
+        setSelectedUser={setSelectedUser}
       />
 
-      {/* DESKTOP */}
+      {/* DESKTOP TABLE */}
       <div
         className="
           hidden lg:block

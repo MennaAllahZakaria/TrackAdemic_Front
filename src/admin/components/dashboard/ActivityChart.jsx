@@ -16,14 +16,17 @@ function ActivityChart({
       className="
         bg-white
 
-        rounded-[32px]
+        rounded-[24px]
+        sm:rounded-[32px]
 
         border border-gray-100
 
         shadow-sm
 
-        p-6
-        sm:p-8
+        p-4
+        sm:p-5
+        lg:p-6
+        lg:p-8
         min-w-0
       "
     >
@@ -32,8 +35,11 @@ function ActivityChart({
         className="
           flex items-center
           justify-between
+          gap-2
+          sm:gap-4
 
-          mb-8
+          mb-6
+          sm:mb-8
         "
       >
 
@@ -41,7 +47,8 @@ function ActivityChart({
 
           <p
             className="
-              text-sm
+              text-xs
+              sm:text-sm
               text-cyan-600
 
               font-semibold
@@ -52,14 +59,16 @@ function ActivityChart({
 
           <h2
             className="
-              text-2xl
-              sm:text-3xl
+              text-lg
+              sm:text-2xl
+              lg:text-3xl
 
               font-bold
 
               text-gray-900
 
-              mt-2
+              mt-1
+              sm:mt-2
             "
           >
             System Overview
@@ -69,7 +78,8 @@ function ActivityChart({
 
         <div
           className="
-            w-14 h-14
+            w-12 h-12
+            sm:w-14 sm:h-14
 
             rounded-2xl
 
@@ -79,7 +89,10 @@ function ActivityChart({
             justify-center
 
             text-cyan-600
-            text-2xl
+            text-lg
+            sm:text-2xl
+
+            flex-shrink-0
           "
         >
 
@@ -89,7 +102,7 @@ function ActivityChart({
 
       </div>
 
-      <div className="h-[320px]">
+      <div className="h-[240px] sm:h-[280px] lg:h-[320px] w-full">
 
         <ResponsiveContainer
           width="100%"
@@ -135,12 +148,12 @@ function ActivityChart({
             <XAxis
               dataKey="name"
               padding={{
-                left: 20,
-                right: 20,
+                left: 10,
+                right: 10,
               }}
               tick={{
                 fill: "#6B7280",
-                fontSize: 14,
+                fontSize: 12,
               }}
               axisLine={false}
               tickLine={false}
@@ -150,7 +163,7 @@ function ActivityChart({
             <YAxis
               tick={{
                 fill: "#9CA3AF",
-                fontSize: 13,
+                fontSize: 12,
               }}
               axisLine={false}
               tickLine={false}
@@ -164,18 +177,18 @@ function ActivityChart({
               type="monotone"
               dataKey="value"
               stroke="#06B6D4"
-              strokeWidth={3}
+              strokeWidth={2}
               fillOpacity={1}
               fill="url(#colorValue)"
 
               dot={{
-                r: 5,
+                r: 4,
                 fill: "#06B6D4",
                 strokeWidth: 0,
               }}
 
               activeDot={{
-                r: 7,
+                r: 6,
               }}
             />
 
