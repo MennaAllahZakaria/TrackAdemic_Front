@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 function NotificationModal({
   open,
@@ -27,24 +28,18 @@ function NotificationModal({
 
     // validation
     if (!form.title.trim()) {
-      return alert(
-        "Title is required"
-      );
+      return toast.error("Title is required");
     }
 
     if (!form.message.trim()) {
-      return alert(
-        "Message is required"
-      );
+      return toast.error("Message is required");
     }
 
     if (
       !form.sendToAll &&
       !form.userEmail.trim()
     ) {
-      return alert(
-        "User email is required"
-      );
+      return toast.error("User email is required");
     }
 
     try {
@@ -55,9 +50,11 @@ function NotificationModal({
       setForm(initialForm);
 
       onClose();
+      toast.success("Notification sent successfully!");
 
     } catch (err) {
       console.error(err);
+      toast.error(err.response?.data?.message || "Failed to send notification");
     }
   };
 
@@ -240,7 +237,6 @@ function NotificationModal({
             />
 
             Send to all users
-
           </label>
 
           {/* WARNING */}

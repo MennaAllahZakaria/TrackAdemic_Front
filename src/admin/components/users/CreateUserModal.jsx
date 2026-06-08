@@ -1,6 +1,7 @@
 import {
   useState,
 } from "react";
+import toast from "react-hot-toast";
 
 function CreateUserModal({
   open,
@@ -33,21 +34,15 @@ function CreateUserModal({
     async () => {
 
       if (!form.firstName.trim()) {
-        return alert(
-          "First name is required"
-        );
+        return toast.error("First name is required");
       }
 
       if (!form.lastName.trim()) {
-        return alert(
-          "Last name is required"
-        );
+        return toast.error("Last name is required");
       }
 
       if (!form.email.trim()) {
-        return alert(
-          "Email is required"
-        );
+        return toast.error("Email is required");
       }
 
       try {
@@ -57,11 +52,11 @@ function CreateUserModal({
         setForm(initialForm);
 
         onClose();
+        toast.success("User created successfully!");
 
       } catch (err) {
-
         console.log(err);
-
+        toast.error(err.response?.data?.message || "Failed to create user");
       }
     };
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import Input from "./Input";
 import PasswordInput from "./PasswordInput";
 import api from "../../services/api";
@@ -22,17 +23,24 @@ function LoginForm() {
   }, [renderGoogleButton]);
 
   const onSubmit = async (data) => {
+    const loginToast = toast.loading("Logging in...");
     try {
       const res = await api.post("/auth/login", data);
       login(res.data);
+      
+      toast.success("Welcome back!", { id: loginToast });
+      
       const role = res.data.user?.role;
       if (role === "admin") {
         navigate("/admin");
       } else {
-        navigate("/dashboard");
+        // We navigate to "/" and let HomeRedirect decide based on the path
+        navigate("/");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      const message = err.response?.data?.message || "Login failed";
+      setError(message);
+      toast.error(message, { id: loginToast });
     }
   };
 

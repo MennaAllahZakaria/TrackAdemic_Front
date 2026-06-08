@@ -74,7 +74,7 @@ function HomeRedirect() {
 
     return (
       <Navigate
-        to="/growth-plan"
+        to="/my-learning"
         replace
       />
     );

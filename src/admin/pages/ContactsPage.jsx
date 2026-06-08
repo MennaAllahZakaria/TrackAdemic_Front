@@ -2,6 +2,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import toast from "react-hot-toast";
 
 import {
   getContacts,
@@ -114,9 +115,7 @@ const confirmResolve =
   async () => {
 
     if (!adminReply.trim()) {
-      return alert(
-        "Admin reply is required"
-      );
+      return toast.error("Admin reply is required");
     }
 
     try {
@@ -138,11 +137,11 @@ const confirmResolve =
       });
 
       setAdminReply("");
+      toast.success("Contact resolved successfully!");
 
     } catch (err) {
-
       console.log(err);
-
+      toast.error(err.response?.data?.message || "Failed to resolve contact");
     } finally {
 
       setResolveLoading(false);

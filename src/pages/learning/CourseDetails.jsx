@@ -2,6 +2,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import MainLayout
 from "../../layouts/MainLayout";
@@ -152,11 +153,7 @@ function CourseDetails() {
           );
 
         if (!nextTopic) {
-
-          alert(
-            "All topics already completed ✅"
-          );
-
+          toast.success("All topics already completed ✅");
           return;
         }
 
@@ -172,11 +169,11 @@ function CourseDetails() {
         setProgress(
           res.data.data.progress
         );
+        toast.success(`Topic "${nextTopic}" marked as completed!`);
 
       } catch (err) {
-
         console.error(err);
-
+        toast.error(err.response?.data?.message || "Failed to update progress");
       } finally {
 
         setLoadingProgress(false);
@@ -501,410 +498,261 @@ function CourseDetails() {
                 {/* TOPICS */}
                 <div className="mt-10">
 
-                  <h3
+                  <h2
                     className="
                       text-xl
                       sm:text-2xl
 
                       font-semibold
 
-                      mb-5
+                      mb-6
 
                       text-gray-900
                     "
                   >
-                    Course Topics
-                  </h3>
+                    What you'll learn
+                  </h2>
 
-                  <TopicsChecklist
-                    topics={
-                      course?.topics ||
-                      []
-                    }
+                  <div
+                    className="
+                      grid grid-cols-1
+                      sm:grid-cols-2
 
-                    progress={
-                      progress
-                    }
+                      gap-x-10
+                      gap-y-4
+                    "
+                  >
 
-                    setProgress={
-                      setProgress
-                    }
-                  />
+                    {course.topics?.map(
+                      (topic, i) => (
+
+                        <div
+                          key={i}
+                          className="
+                            flex
+                            items-start
+                            gap-3
+
+                            text-gray-600
+                            text-sm
+                            sm:text-base
+                          "
+                        >
+
+                          <span className="text-blue-500 mt-1">
+                            ✓
+                          </span>
+
+                          <span>
+                            {topic}
+                          </span>
+
+                        </div>
+
+                      )
+                    )}
+
+                  </div>
 
                 </div>
 
               </div>
 
-              {/* SIDE CARD */}
+              {/* RIGHT - SIDEBAR */}
               <div
                 className="
                   w-full
-                  lg:w-[300px]
+                  lg:w-[380px]
 
-                  shrink-0
+                  flex-shrink-0
                 "
               >
 
                 <div
                   className="
+                    sticky top-24
+
                     bg-white
 
-                    rounded-[24px]
+                    rounded-[32px]
 
                     border border-gray-100
 
-                    shadow-sm
+                    p-6
+                    sm:p-8
 
-                    p-5
-                    sm:p-6
+                    shadow-sm
                   "
                 >
 
-                  <p
-                    className="
-                      text-sm
-                      text-gray-500
-                    "
-                  >
-                    Current Progress
-                  </p>
-
-                  {/* BAR */}
+                  {/* PRICE */}
                   <div
                     className="
-                      mt-4
-
-                      h-3
-
-                      bg-gray-200
-
-                      rounded-full
-
-                      overflow-hidden
+                      flex items-baseline
+                      gap-2
                     "
                   >
 
-                    <div
+                    <span
                       className="
-                        h-full
-
-                        bg-blue-600
-
-                        rounded-full
-
-                        transition-all duration-500
+                        text-3xl
+                        font-bold
                       "
-                      style={{
-                        width:
-                          `${percent}%`,
-                      }}
-                    />
+                    >
+                      Free
+                    </span>
+
+                    <span
+                      className="
+                        text-gray-400
+                        line-through
+                      "
+                    >
+                      $99.00
+                    </span>
 
                   </div>
 
-                  <p
-                    className="
-                      text-sm
-
-                      text-gray-500
-
-                      mt-2
-                    "
-                  >
-                    {percent}% completed
-                  </p>
-
-                  {/* COMPLETE */}
-                  <button
-                    onClick={
-                      handleMarkCompleted
-                    }
-
-                    disabled={
-                      loadingProgress
-                    }
-
-                    className="
-                      mt-6
-
-                      w-full
-
-                      bg-green-500
-                      text-white
-
-                      py-3
-
-                      rounded-full
-
-                      font-medium
-
-                      hover:bg-green-600
-
-                      transition-all duration-300
-
-                      disabled:opacity-50
-                    "
-                  >
-                    {loadingProgress
-                      ? "Updating..."
-                      : "Mark as Completed"}
-                  </button>
-
-                  {/* SAVE */}
-                  <button
-                    className="
-                      mt-3
-
-                      w-full
-
-                      border border-gray-200
-
-                      py-3
-
-                      rounded-full
-
-                      text-sm
-
-                      hover:bg-gray-50
-
-                      transition-all duration-300
-                    "
-                  >
-                    Save for Reference
-                  </button>
-
-                  {/* INSTRUCTOR */}
-                  <div
-                    className="
-                      mt-7
-
-                      pt-5
-
-                      border-t
-                    "
-                  >
-
-                    <p
-                      className="
-                        text-xs
-                        text-gray-400
-                      "
-                    >
-                      COURSE INSTRUCTOR
-                    </p>
+                  {/* PROGRESS BAR */}
+                  <div className="mt-8">
 
                     <div
                       className="
                         flex items-center
-                        gap-3
+                        justify-between
 
-                        mt-4
+                        mb-2
+
+                        text-sm
+                      "
+                    >
+
+                      <span className="font-medium">
+                        Your Progress
+                      </span>
+
+                      <span className="text-blue-600 font-bold">
+                        {percent}%
+                      </span>
+
+                    </div>
+
+                    <div
+                      className="
+                        h-2
+
+                        bg-gray-100
+
+                        rounded-full
+
+                        overflow-hidden
                       "
                     >
 
                       <div
                         className="
-                          w-11 h-11
+                          h-full
 
-                          bg-gray-300
+                          bg-blue-600
 
                           rounded-full
+
+                          transition-all duration-500
                         "
+                        style={{
+                          width: `${percent}%`,
+                        }}
                       />
-
-                      <div>
-
-                        <p
-                          className="
-                            text-sm
-                            font-medium
-                          "
-                        >
-                          {
-                            course?.instructor
-                          }
-                        </p>
-
-                        <p
-                          className="
-                            text-xs
-                            text-gray-500
-                          "
-                        >
-                          {
-                            course?.platform
-                          }
-                        </p>
-
-                      </div>
 
                     </div>
 
                   </div>
 
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          {/* RIGHT */}
-          <div
-            className="
-              w-full
-              xl:w-[320px]
-
-              shrink-0
-            "
-          >
-
-            {/* NEXT */}
-            <div
-              className="
-                bg-white
-
-                p-5
-                sm:p-6
-
-                rounded-[24px]
-
-                shadow-sm
-
-                border border-gray-100
-              "
-            >
-
-              <h3
-                className="
-                  font-semibold
-
-                  text-gray-900
-
-                  mb-5
-                "
-              >
-                Next in your path
-              </h3>
-
-              <div className="space-y-4">
-
-                <div
-                  className="
-                    flex items-center
-                    gap-3
-                  "
-                >
-
+                  {/* ACTIONS */}
                   <div
                     className="
-                      w-14 h-14
+                      flex flex-col
+                      gap-3
 
-                      bg-gray-200
-
-                      rounded-xl
+                      mt-8
                     "
-                  />
+                  >
 
-                  <div>
-
-                    <p
+                    <button
+                      disabled={
+                        loadingProgress
+                      }
+                      onClick={
+                        handleMarkCompleted
+                      }
                       className="
-                        text-sm
-                        font-medium
+                        w-full
+
+                        bg-blue-600
+                        text-white
+
+                        py-4
+
+                        rounded-2xl
+
+                        font-semibold
+
+                        hover:bg-blue-700
+
+                        transition-all
+
+                        disabled:opacity-50
                       "
                     >
-                      Next Module
-                    </p>
+                      {loadingProgress
+                        ? "Updating..."
+                        : "Mark Next Topic Complete"}
+                    </button>
 
-                    <p
+                    <button
+                      onClick={
+                        handleOpenFullLearning
+                      }
                       className="
-                        text-xs
-                        text-gray-500
+                        w-full
+
+                        bg-gray-50
+                        text-gray-900
+
+                        py-4
+
+                        rounded-2xl
+
+                        font-semibold
+
+                        hover:bg-gray-100
+
+                        transition-all
                       "
                     >
-                      Locked
-                    </p>
+                      View Full Curriculum
+                    </button>
 
                   </div>
 
+                  {/* GUARANTEE */}
+                  <p
+                    className="
+                      text-center
+                      text-xs
+                      text-gray-400
+
+                      mt-6
+                    "
+                  >
+                    30-Day Money-Back
+                    Guarantee • Lifetime
+                    Access
+                  </p>
+
                 </div>
 
               </div>
-
-              <button
-                onClick={
-                  handleOpenFullLearning
-                }
-
-                className="
-                  mt-5
-
-                  text-blue-600
-
-                  text-sm
-                  font-medium
-                "
-              >
-                View Full Learning Path →
-              </button>
-
-            </div>
-
-            {/* NOTES */}
-            <div
-              className="
-                bg-blue-50
-
-                p-5
-                sm:p-6
-
-                rounded-[24px]
-
-                mt-6
-
-                border border-blue-100
-              "
-            >
-
-              <h4
-                className="
-                  font-semibold
-
-                  text-gray-900
-                "
-              >
-                Try Academic Notetaking
-              </h4>
-
-              <p
-                className="
-                  text-sm
-
-                  text-gray-600
-
-                  mt-3
-
-                  leading-relaxed
-                "
-              >
-                Boost retention with
-                structured notes.
-              </p>
-
-              <button
-                className="
-                  mt-4
-
-                  text-blue-600
-
-                  text-sm
-                  font-medium
-                "
-              >
-                Launch Notes Tool →
-              </button>
 
             </div>
 
@@ -914,20 +762,16 @@ function CourseDetails() {
 
       </div>
 
-      {/* VIDEO MODAL */}
-      {open && (
-
-        <YoutubeModal
-          videoId={videoId}
-          onClose={() =>
-            setOpen(false)
-          }
-        />
-
-      )}
+      {/* MODAL */}
+      <YoutubeModal
+        open={open}
+        onClose={() =>
+          setOpen(false)
+        }
+        videoId={videoId}
+      />
 
     </MainLayout>
-
   );
 }
 
