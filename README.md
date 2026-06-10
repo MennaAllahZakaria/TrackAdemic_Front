@@ -71,12 +71,6 @@ The application will be accessible at `http://localhost:5173` (or another port i
 
 This frontend application interacts with the `TrackAdemic` backend. The backend provides the learning path generation, progress tracking, assessment logic, and user management. Ensure your backend is running and accessible for the frontend to function correctly.
 
-## Known Issues and Improvements
-
-During the review, a minor issue was identified and fixed:
-
-- **Assignment/Phase Title Display**: The `CurriculumSection.jsx` component was attempting to render `phase.title` instead of `phase.phase_title`, leading to incorrect display of phase titles. This has been corrected.
-- **Progress Update Response Handling**: The `CourseDetails.jsx` and `TopicsChecklist.jsx` components were expecting the `/progress/update` endpoint to return a flat progress object, but the backend was returning a nested object `{ progress, currentPhase }`. The frontend code has been updated to correctly access `res.data.data.progress`.
 
 ## Contributing
 
